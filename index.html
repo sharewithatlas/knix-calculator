@@ -1,280 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Knix × Meta — Budget Calculator</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #F3F4F6; color: #111827; }
-    input, select, button { font-family: inherit; }
-    input[type=number]::-webkit-inner-spin-button { opacity: 0.5; }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Knix × Meta — Budget Calculator</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F3F4F6;color:#111827;font-size:14px}
+input,select,button{font-family:inherit;font-size:14px}
+.header{background:#1E3A8A;padding:20px 28px;color:white}
+.header-inner{max-width:980px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.header-kicker{font-size:11px;color:#BFDBFE;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.header-title{font-size:22px;font-weight:800}
+.header-sub{font-size:13px;color:#93C5FD;margin-top:3px}
+.header-meta{text-align:right;font-size:12px;color:#BFDBFE;line-height:1.7}
+.main{max-width:980px;margin:0 auto;padding:20px 16px 40px}
+.tabs{display:inline-flex;gap:4px;margin-bottom:20px;background:#E5E7EB;padding:4px;border-radius:10px}
+.tab{padding:8px 20px;border-radius:8px;border:none;cursor:pointer;font-weight:400;font-size:14px;background:transparent;color:#6B7280;transition:all .15s}
+.tab.active{font-weight:600;background:#1E40AF;color:white}
+.card{background:white;border:1px solid #E5E7EB;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.card-title{font-size:16px;font-weight:700;color:#111827;margin-bottom:4px}
+.card-sub{font-size:13px;color:#6B7280;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+.lbl{font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.inp-wrap{display:flex;align-items:center;border:1px solid #D1D5DB;border-radius:8px;overflow:hidden;background:white}
+.inp-prefix{padding:8px 10px;background:#F9FAFB;color:#6B7280;font-size:14px;border-right:1px solid #D1D5DB;white-space:nowrap}
+.inp-wrap input{flex:1;padding:8px 12px;border:none;outline:none;font-size:15px;background:transparent;width:0;min-width:0}
+select.field{width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:8px;background:white;outline:none;cursor:pointer}
+.metric{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:10px;padding:12px 16px}
+.metric.accent{background:#1E40AF;border-color:#1E40AF}
+.metric-lbl{font-size:11px;color:#6B7280;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.metric.accent .metric-lbl{color:#BFDBFE}
+.metric-val{font-size:22px;font-weight:700;color:#111827;line-height:1.2}
+.metric.accent .metric-val{color:white}
+.metric-sub{font-size:12px;color:#9CA3AF;margin-top:2px}
+.metric.accent .metric-sub{color:#BFDBFE}
+.quick-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.quick-btn{padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid #D1D5DB;background:white;color:#6B7280;cursor:pointer}
+.quick-btn.active{background:#EFF6FF;color:#2563EB;border-color:#BFDBFE}
+.results-box{background:#F9FAFB;border-radius:10px;padding:16px}
+.results-lbl{font-size:11px;color:#6B7280;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.insight{background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:10px 14px;font-size:13px;color:#92400E;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{padding:6px 8px;color:#6B7280;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid #E5E7EB}
+th.r,td.r{text-align:right}
+td{padding:7px 8px;border-bottom:1px solid #F3F4F6}
+tr.total-row td{border-top:2px solid #111827;background:#F9FAFB;font-weight:700}
+.inv-cell{background:#FFF7ED;color:#92400E;font-weight:600}
+.roas-good{color:#16A34A;font-weight:600}
+.roas-warn{color:#D97706;font-weight:600}
+.roas-bad{color:#DC2626;font-weight:600}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
+.bar-chart{margin-top:8px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bar-label{font-size:12px;color:#374151;width:110px;text-align:right;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;background:#F3F4F6;border-radius:4px;height:18px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .3s}
+.bar-val{font-size:11px;color:#374151;width:60px;flex-shrink:0}
+.alloc-ok{background:#F0FDF4;border-radius:10px;padding:10px 16px}
+.alloc-err{background:#FEF2F2;border-radius:10px;padding:10px 16px}
+.alloc-num-ok{font-size:22px;font-weight:700;color:#15803D}
+.alloc-num-err{font-size:22px;font-weight:700;color:#DC2626}
+.page{display:none}.page.active{display:block}
+.note{background:#FEF3C7;border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;font-size:12px;color:#92400E}
+.attr-box-warn{background:#FEF3C7;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;color:#92400E;line-height:1.6}
+.attr-box-info{background:#EFF6FF;border-radius:8px;padding:10px 12px;font-size:12px;color:#1E40AF;line-height:1.6}
+.range-wrap{text-align:center;margin:4px 0}
+input[type=range]{width:100%;margin:8px 0 4px}
+.range-val{font-size:26px;font-weight:700;color:#D97706}
+.cpa-input{width:58px;padding:3px 5px;border:1px solid #E5E7EB;border-radius:5px;text-align:right;font-size:13px;background:#FFFBEB}
+.share-input{width:52px;padding:3px 5px;border:1px solid #E5E7EB;border-radius:5px;text-align:right;font-size:13px}
+</style>
 </head>
 <body>
-  <div id="root"></div>
-
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <script type="text/babel">
-    const { useState, useMemo } = React;
-    const { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } = Recharts;
-
-    const DEFAULT_PRODUCTS = [
-      { id: "leakproof",  name: "Leakproof Core", cpa: 145, share: 29.88 },
-      { id: "dpa",        name: "DPA",             cpa: 115, share: 18.17 },
-      { id: "sculptrib",  name: "Sculpt Rib",       cpa: 100, share: 16.09 },
-      { id: "freeflex",   name: "FreeFlex",         cpa: 140, share: 10.90 },
-      { id: "dreamshort", name: "Dream Short",      cpa: 165, share: 10.58 },
-      { id: "revolution", name: "Revolution",       cpa: 148, share: 5.79  },
-      { id: "swim",       name: "Swim",             cpa: 130, share: 5.46  },
-      { id: "dreamboxer", name: "Dream Boxer",      cpa: 85,  share: 1.32  },
-      { id: "thighsaver", name: "Thigh Saver",      cpa: 140, share: 1.19  },
-      { id: "other",      name: "Other",            cpa: 175, share: 1.06  },
-      { id: "nursingbra", name: "Nursing Bra",      cpa: 77,  share: 0.71  },
-    ];
-
-    const COLORS = ["#2563EB","#D97706","#059669","#DB2777","#7C3AED","#DC2626","#0891B2","#EA580C","#65A30D","#9333EA","#6B7280"];
-
-    const fmt    = (n, d=0) => (isNaN(n)||!isFinite(n)) ? "—" : n.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
-    const fmtC   = (n)      => (isNaN(n)||!isFinite(n)) ? "—" : "$"+fmt(Math.round(n));
-    const fmtR   = (n)      => (isNaN(n)||!isFinite(n)) ? "—" : n.toFixed(2)+"x";
-
-    const Card = ({title,sub,children,style={}}) => (
-      <div style={{background:"white",border:"1px solid #E5E7EB",borderRadius:12,padding:"20px 24px",marginBottom:20,...style}}>
-        {title && <div style={{marginBottom:16}}>
-          <div style={{fontSize:16,fontWeight:700,color:"#111827"}}>{title}</div>
-          {sub && <div style={{fontSize:13,color:"#6B7280",marginTop:2}}>{sub}</div>}
-        </div>}
-        {children}
-      </div>
-    );
-
-    const Metric = ({label,value,sub,accent}) => (
-      <div style={{background:accent?"#1E40AF":"#F9FAFB",border:"1px solid #E5E7EB",borderRadius:10,padding:"12px 16px",flex:1,minWidth:110}}>
-        <div style={{fontSize:11,color:accent?"#BFDBFE":"#6B7280",fontWeight:600,marginBottom:4,textTransform:"uppercase",letterSpacing:"0.06em"}}>{label}</div>
-        <div style={{fontSize:22,fontWeight:700,color:accent?"white":"#111827",lineHeight:1.2}}>{value}</div>
-        {sub&&<div style={{fontSize:12,color:accent?"#BFDBFE":"#9CA3AF",marginTop:2}}>{sub}</div>}
-      </div>
-    );
-
-    const Tab = ({active,onClick,children}) => (
-      <button onClick={onClick} style={{padding:"8px 20px",borderRadius:8,border:"none",cursor:"pointer",fontWeight:active?600:400,fontSize:14,background:active?"#1E40AF":"transparent",color:active?"white":"#6B7280",transition:"all 0.15s"}}>
-        {children}
-      </button>
-    );
-
-    const Lbl = ({children}) => (
-      <div style={{fontSize:11,fontWeight:600,color:"#6B7280",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:5}}>{children}</div>
-    );
-
-    const Inp = ({value,onChange,prefix,min,step="1"}) => (
-      <div style={{display:"flex",alignItems:"center",border:"1px solid #D1D5DB",borderRadius:8,overflow:"hidden",background:"white"}}>
-        {prefix&&<span style={{padding:"8px 10px",background:"#F9FAFB",color:"#6B7280",fontSize:14,borderRight:"1px solid #D1D5DB",whiteSpace:"nowrap"}}>{prefix}</span>}
-        <input type="number" value={value} onChange={onChange} min={min} step={step}
-          style={{flex:1,padding:"8px 12px",border:"none",outline:"none",fontSize:15,background:"transparent",width:0}} />
-      </div>
-    );
-
-    const Sel = ({value,onChange,children}) => (
-      <select value={value} onChange={onChange}
-        style={{width:"100%",padding:"9px 12px",border:"1px solid #D1D5DB",borderRadius:8,fontSize:14,background:"white",outline:"none",cursor:"pointer"}}>
-        {children}
-      </select>
-    );
-
-    const Grid = ({cols,gap=16,children,style={}}) => (
-      <div style={{display:"grid",gridTemplateColumns:`repeat(${cols},1fr)`,gap,...style}}>{children}</div>
-    );
-
-    function ProductTab({products,onCpa}) {
-      const [sel,setSel]   = useState("leakproof");
-      const [budget,setBudget] = useState(50000);
-      const [aov,setAov]   = useState(85);
-      const [tRoas,setTRoas] = useState(2.5);
-      const p    = products.find(x=>x.id===sel);
-      const cpa  = p?.cpa||1;
-      const ord  = budget/cpa;
-      const rev  = ord*aov;
-      const roas = rev/budget;
-      const needAov  = (tRoas*budget)/ord;
-      const needBudg = (ord*aov)/tRoas;
-      return (
-        <div>
-          <Card title="Select Product" sub="Historical CPAs are from your Meta account — edit any value to model scenarios">
-            <Grid cols={3}>
-              <div><Lbl>Product</Lbl><Sel value={sel} onChange={e=>setSel(e.target.value)}>{products.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</Sel></div>
-              <div><Lbl>Avg CPA (7-day click)</Lbl><Inp prefix="$" value={p?.cpa} onChange={e=>onCpa(sel,+e.target.value)} min={1} /></div>
-              <div><Lbl>Average Order Value</Lbl><Inp prefix="$" value={aov} onChange={e=>setAov(+e.target.value)} min={1} /></div>
-            </Grid>
-          </Card>
-          <Card title="Budget → Performance">
-            <Grid cols={2} gap={24}>
-              <div>
-                <Lbl>Ad Spend Budget</Lbl>
-                <Inp prefix="$" value={budget} onChange={e=>setBudget(+e.target.value)} min={0} />
-                <div style={{display:"flex",gap:8,marginTop:8,flexWrap:"wrap"}}>
-                  {[10000,25000,50000,100000,250000].map(v=>(
-                    <button key={v} onClick={()=>setBudget(v)} style={{padding:"4px 10px",fontSize:12,borderRadius:6,border:"1px solid #D1D5DB",background:budget===v?"#EFF6FF":"white",color:budget===v?"#2563EB":"#6B7280",cursor:"pointer"}}>${v>=1000?(v/1000).toFixed(0)+"K":v}</button>
-                  ))}
-                </div>
-              </div>
-              <div style={{background:"#F9FAFB",borderRadius:10,padding:16}}>
-                <div style={{fontSize:11,color:"#6B7280",fontWeight:600,marginBottom:10,textTransform:"uppercase",letterSpacing:"0.06em"}}>At {fmtC(cpa)} CPA · {fmtC(aov)} AOV</div>
-                <Grid cols={2} gap={10}>
-                  <Metric label="Est. Orders" value={fmt(ord)} />
-                  <Metric label="Est. Revenue" value={fmtC(rev)} />
-                  <Metric label="ROAS" value={fmtR(roas)} sub={roas>=2?"✓ Healthy":"Below 2x"} accent={roas>=2} />
-                  <Metric label="Return / $1" value={"$"+roas.toFixed(2)} />
-                </Grid>
-              </div>
-            </Grid>
-          </Card>
-          <Card title="ROAS Target Planner" sub="Work backwards from a desired return">
-            <Grid cols={3} style={{marginBottom:16}}>
-              <div><Lbl>Target ROAS</Lbl><Inp prefix="×" value={tRoas} onChange={e=>setTRoas(+e.target.value)} min={0.1} step="0.1" /></div>
-              <div style={{background:"#F9FAFB",borderRadius:10,padding:"12px 16px"}}><Lbl>AOV needed to hit {tRoas}x at {fmtC(budget)} spend</Lbl><div style={{fontSize:22,fontWeight:700,color:"#111827"}}>{fmtC(needAov)}</div><div style={{fontSize:12,color:"#6B7280",marginTop:2}}>{fmt(ord)} orders</div></div>
-              <div style={{background:"#F9FAFB",borderRadius:10,padding:"12px 16px"}}><Lbl>Budget to hit {tRoas}x at {fmtC(aov)} AOV</Lbl><div style={{fontSize:22,fontWeight:700,color:"#111827"}}>{fmtC(needBudg)}</div><div style={{fontSize:12,color:"#6B7280",marginTop:2}}>{fmt(ord)} orders × {fmtC(aov)}</div></div>
-            </Grid>
-            <div style={{background:"#FFF7ED",border:"1px solid #FED7AA",borderRadius:8,padding:"10px 14px",fontSize:13,color:"#92400E",lineHeight:1.6}}><strong>Insight:</strong> {p?.name} at {fmtC(cpa)} CPA needs a <strong>{fmtC(cpa*tRoas)}</strong> AOV to hit {tRoas}x ROAS{cpa*tRoas<=aov?" — achievable at your current AOV.":` — vs. your ${fmtC(aov)} AOV. Consider bundles, upsells, or a lower CPA target.`}</div>
-          </Card>
-        </div>
-      );
-    }
-
-    function PortfolioTab({products,onCpa}) {
-      const [total,setTotal] = useState(333000);
-      const [aov,setAov] = useState(85);
-      const [shares,setShares] = useState(()=>Object.fromEntries(products.map(p=>[p.id,p.share])));
-      const totalSh = useMemo(()=>Object.values(shares).reduce((a,b)=>a+b,0),[shares]);
-      const upd = (id,v) => setShares(p=>({...p,[id]:Math.max(0,v)}));
-      const rows = useMemo(()=>products.map((p,i)=>{
-        const w=(shares[p.id]||0)/totalSh; const spend=total*w; const orders=spend/p.cpa; const rev=orders*aov; const roas=rev/spend;
-        return {...p,w,spend,orders,rev,roas,color:COLORS[i]};
-      }),[products,shares,totalSh,total,aov]);
-      const totOrd=rows.reduce((s,r)=>s+r.orders,0); const totRev=rows.reduce((s,r)=>s+r.rev,0);
-      const blendCpa=total/totOrd; const blendRoas=totRev/total;
-      const chartData=[...rows].filter(r=>r.spend>500).sort((a,b)=>b.spend-a.spend);
-      const balanced=Math.abs(totalSh-100)<0.5;
-      return (
-        <div>
-          <Card title="Channel Budget &amp; AOV">
-            <Grid cols={3}>
-              <div><Lbl>Total Meta Budget</Lbl><Inp prefix="$" value={total} onChange={e=>setTotal(+e.target.value)} min={0} /></div>
-              <div><Lbl>Blended AOV</Lbl><Inp prefix="$" value={aov} onChange={e=>setAov(+e.target.value)} min={1} /></div>
-              <div style={{background:balanced?"#F0FDF4":"#FEF2F2",borderRadius:10,padding:"10px 16px"}}>
-                <div style={{fontSize:11,fontWeight:600,color:balanced?"#166534":"#991B1B",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:4}}>Allocation check</div>
-                <div style={{fontSize:22,fontWeight:700,color:balanced?"#15803D":"#DC2626"}}>{fmt(totalSh,1)}%</div>
-                <div style={{fontSize:12,color:"#6B7280"}}>{balanced?"Balanced ✓":"Adjust to reach 100%"}</div>
-              </div>
-            </Grid>
-          </Card>
-          <Grid cols={4} gap={12} style={{marginBottom:20}}>
-            <Metric label="Total Est. Orders" value={fmt(totOrd)} sub={fmtC(total)+" spend"} />
-            <Metric label="Total Est. Revenue" value={fmtC(totRev)} />
-            <Metric label="Blended CPA" value={fmtC(blendCpa)} sub="weighted avg" />
-            <Metric label="Channel ROAS" value={fmtR(blendRoas)} accent={blendRoas>=2} />
-          </Grid>
-          <Grid cols={2} gap={20}>
-            <Card title="Allocation & Projections" sub="Edit % and CPA per product — recalculates live">
-              <div style={{overflowX:"auto"}}>
-                <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
-                  <thead><tr style={{borderBottom:"2px solid #E5E7EB"}}>{["Product","CPA ($)","% Alloc","Budget","Orders","Revenue","ROAS"].map(h=>(<th key={h} style={{padding:"6px 6px",textAlign:h==="Product"?"left":"right",color:"#6B7280",fontWeight:600,fontSize:11,textTransform:"uppercase",letterSpacing:"0.04em",whiteSpace:"nowrap"}}>{h}</th>))}</tr></thead>
-                  <tbody>{rows.map((r,i)=>(<tr key={r.id} style={{borderBottom:"1px solid #F3F4F6"}}><td style={{padding:"6px 6px",whiteSpace:"nowrap"}}><span style={{display:"inline-flex",alignItems:"center",gap:5,fontWeight:500}}><span style={{width:9,height:9,borderRadius:"50%",background:r.color,flexShrink:0,display:"inline-block"}}/>{r.name}</span></td><td style={{padding:"4px 6px",textAlign:"right"}}><input type="number" value={r.cpa} min={1} onChange={e=>onCpa(r.id,+e.target.value)} style={{width:58,padding:"3px 5px",border:"1px solid #E5E7EB",borderRadius:5,textAlign:"right",fontSize:13,background:"#FFFBEB"}} /></td><td style={{padding:"4px 6px",textAlign:"right"}}><input type="number" value={(shares[r.id]||0).toFixed(1)} min={0} step="0.5" onChange={e=>upd(r.id,parseFloat(e.target.value)||0)} style={{width:52,padding:"3px 5px",border:"1px solid #E5E7EB",borderRadius:5,textAlign:"right",fontSize:13}} /></td><td style={{padding:"6px 6px",textAlign:"right",color:"#374151"}}>{fmtC(r.spend)}</td><td style={{padding:"6px 6px",textAlign:"right",color:"#374151"}}>{fmt(r.orders)}</td><td style={{padding:"6px 6px",textAlign:"right",color:"#374151"}}>{fmtC(r.rev)}</td><td style={{padding:"6px 6px",textAlign:"right",fontWeight:600,color:r.roas>=2?"#16A34A":r.roas>=1?"#D97706":"#DC2626"}}>{fmtR(r.roas)}</td></tr>))}</tbody>
-                </table>
-              </div>
-            </Card>
-            <Card title="Budget by Product">
-              <div style={{height:320}}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} layout="vertical" margin={{left:0,right:40,top:0,bottom:0}}>
-                    <XAxis type="number" tickFormatter={v=>"$"+(v/1000).toFixed(0)+"K"} tick={{fontSize:11}} />
-                    <YAxis type="category" dataKey="name" tick={{fontSize:11}} width={88} />
-                    <Tooltip formatter={v=>["$"+fmt(v),"Budget"]} />
-                    <Bar dataKey="spend" radius={[0,4,4,0]}>{chartData.map((_,i)=><Cell key={i} fill={COLORS[i]} />)}</Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </Card>
-          </Grid>
-        </div>
-      );
-    }
-
-    function GoalsTab({products}) {
-      const [goalType,setGoalType]=useState("revenue"); const [goal,setGoal]=useState(1000000);
-      const [aov,setAov]=useState(85); const [focus,setFocus]=useState("all"); const [buf,setBuf]=useState(20);
-      const active=focus==="all"?products:products.filter(p=>p.id===focus);
-      const totSh=active.reduce((s,p)=>s+p.share,0);
-      const rows=useMemo(()=>active.map(p=>{ const w=p.share/totSh; const orders=goalType==="revenue"?(goal*w)/aov:goal*w; return {...p,w,orders,rev:orders*aov,spend:orders*p.cpa}; }),[active,goalType,goal,aov,totSh]);
-      const tOrd=rows.reduce((s,r)=>s+r.orders,0); const tRev=rows.reduce((s,r)=>s+r.rev,0); const tSpend=rows.reduce((s,r)=>s+r.spend,0);
-      const roas=tRev/tSpend; const buffSpend=tSpend*(1+buf/100); const inv=tOrd*(1+buf/100);
-      return (
-        <div>
-          <Card title="Define Your Goal">
-            <Grid cols={4}>
-              <div><Lbl>Goal Type</Lbl><Sel value={goalType} onChange={e=>setGoalType(e.target.value)}><option value="revenue">Revenue Target ($)</option><option value="orders">Order Volume (#)</option></Sel></div>
-              <div><Lbl>{goalType==="revenue"?"Target Revenue":"Target Orders"}</Lbl><Inp prefix={goalType==="revenue"?"$":"#"} value={goal} onChange={e=>setGoal(+e.target.value)} min={1} /></div>
-              <div><Lbl>Average Order Value</Lbl><Inp prefix="$" value={aov} onChange={e=>setAov(+e.target.value)} min={1} /></div>
-              <div><Lbl>Product Focus</Lbl><Sel value={focus} onChange={e=>setFocus(e.target.value)}><option value="all">All Products (historical mix)</option>{products.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</Sel></div>
-            </Grid>
-          </Card>
-          <Grid cols={4} gap={12} style={{marginBottom:20}}>
-            <Metric label="Budget Needed" value={fmtC(buffSpend)} sub={"incl. "+buf+"% buffer"} accent />
-            <Metric label="Base Budget" value={fmtC(tSpend)} sub="before buffer" />
-            <Metric label="Est. Orders" value={fmt(tOrd)} sub="7-day attributed" />
-            <Metric label="Projected ROAS" value={fmtR(roas)} sub={"at $"+aov+" AOV"} />
-          </Grid>
-          <Grid cols={2} gap={20}>
-            <Card title="Budget &amp; Inventory by Product">
-              <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
-                <thead><tr style={{borderBottom:"2px solid #E5E7EB"}}>{["Product","% Mix","Budget","Est. Orders","Revenue","Inventory*"].map(h=>(<th key={h} style={{padding:"6px 8px",textAlign:h==="Product"?"left":"right",color:"#6B7280",fontWeight:600,fontSize:11,textTransform:"uppercase",letterSpacing:"0.04em"}}>{h}</th>))}</tr></thead>
-                <tbody>{rows.map(r=>(<tr key={r.id} style={{borderBottom:"1px solid #F3F4F6"}}><td style={{padding:"7px 8px",fontWeight:500}}>{r.name}</td><td style={{padding:"7px 8px",textAlign:"right",color:"#6B7280"}}>{fmt(r.w*100,1)}%</td><td style={{padding:"7px 8px",textAlign:"right",fontWeight:600}}>{fmtC(r.spend)}</td><td style={{padding:"7px 8px",textAlign:"right"}}>{fmt(r.orders)}</td><td style={{padding:"7px 8px",textAlign:"right",color:"#15803D"}}>{fmtC(r.rev)}</td><td style={{padding:"7px 8px",textAlign:"right",background:"#FFF7ED",color:"#92400E",fontWeight:600}}>{fmt(r.orders*(1+buf/100))}</td></tr>))}
-                <tr style={{borderTop:"2px solid #111827",background:"#F9FAFB",fontWeight:700}}><td style={{padding:"7px 8px"}}>Total</td><td style={{padding:"7px 8px",textAlign:"right"}}>100%</td><td style={{padding:"7px 8px",textAlign:"right"}}>{fmtC(buffSpend)}</td><td style={{padding:"7px 8px",textAlign:"right"}}>{fmt(tOrd)}</td><td style={{padding:"7px 8px",textAlign:"right",color:"#15803D"}}>{fmtC(tRev)}</td><td style={{padding:"7px 8px",textAlign:"right",background:"#FFF7ED",color:"#92400E"}}>{fmt(inv)}</td></tr>
-                </tbody>
-              </table>
-              <div style={{fontSize:12,color:"#9CA3AF",marginTop:8}}>*Includes {buf}% safety buffer</div>
-            </Card>
-            <div>
-              <Card title="Inventory Buffer"><Lbl>Safety buffer (%)</Lbl><input type="range" min={0} max={50} step={5} value={buf} onChange={e=>setBuf(+e.target.value)} style={{width:"100%",margin:"8px 0 4px"}} /><div style={{textAlign:"center",fontSize:26,fontWeight:700,color:"#D97706"}}>{buf}%</div><div style={{textAlign:"center",fontSize:13,color:"#6B7280",marginTop:4}}>+{fmtC(buffSpend-tSpend)} budget cushion<br/>+{fmt(inv-tOrd)} extra inventory units</div></Card>
-              <Card title="Attribution Gaps"><div style={{fontSize:13,color:"#374151",lineHeight:1.8}}><div style={{fontWeight:600,marginBottom:6}}>Factors not counted in Meta reporting:</div><div style={{background:"#FEF3C7",borderRadius:8,padding:"10px 12px",marginBottom:8,fontSize:12,color:"#92400E",lineHeight:1.6}}><strong>Coupon affiliates</strong> (Honey, RetailMeNot) steal last-click attribution — est. <strong>10–25%</strong> of Meta-attributed orders may be miscredited</div><div style={{background:"#EFF6FF",borderRadius:8,padding:"10px 12px",fontSize:12,color:"#1E40AF",lineHeight:1.6}}><strong>Amazon halo</strong> — Meta awareness drives untracked Amazon purchases, typically adding <strong>5–15%</strong> to true channel contribution</div><div style={{marginTop:10,fontSize:12,color:"#6B7280"}}>Adjust your reported ROAS up by <strong>15–20%</strong> for a truer economic picture.</div></div></Card>
-            </div>
-          </Grid>
-        </div>
-      );
-    }
-
-    function App() {
-      const [tab,setTab]=useState("product");
-      const [products,setProducts]=useState(DEFAULT_PRODUCTS);
-      const updateCpa=(id,val)=>setProducts(p=>p.map(x=>x.id===id?{...x,cpa:val}:x));
-      return (
-        <div style={{fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif",background:"#F3F4F6",minHeight:"100vh",paddingBottom:40}}>
-          <div style={{background:"#1E3A8A",padding:"20px 28px",marginBottom:24}}>
-            <div style={{maxWidth:980,margin:"0 auto",display:"flex",alignItems:"flex-end",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
-              <div><div style={{fontSize:11,color:"#BFDBFE",fontWeight:600,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>Knix × Meta</div><div style={{fontSize:22,fontWeight:800,color:"white"}}>Budget &amp; Performance Calculator</div><div style={{fontSize:13,color:"#93C5FD",marginTop:3}}>Historical CPAs loaded from your Meta account · all values are editable</div></div>
-              <div style={{textAlign:"right",fontSize:12,color:"#BFDBFE",lineHeight:1.7}}>Data: May 2025 – Jan 2026<br/>Attribution: 7-day click</div>
-            </div>
-          </div>
-          <div style={{maxWidth:980,margin:"0 auto",padding:"0 16px"}}>
-            <div style={{display:"inline-flex",gap:4,marginBottom:20,background:"#E5E7EB",padding:4,borderRadius:10}}>
-              <Tab active={tab==="product"} onClick={()=>setTab("product")}>Single Product</Tab>
-              <Tab active={tab==="portfolio"} onClick={()=>setTab("portfolio")}>Portfolio Mix</Tab>
-              <Tab active={tab==="goals"} onClick={()=>setTab("goals")}>Financial Goals</Tab>
-            </div>
-            {tab==="product" && <ProductTab products={products} onCpa={updateCpa} />}
-            {tab==="portfolio" && <PortfolioTab products={products} onCpa={updateCpa} />}
-            {tab==="goals" && <GoalsTab products={products} />}
-            <div style={{background:"#FEF3C7",border:"1px solid #FDE68A",borderRadius:10,padding:"12px 16px",fontSize:12,color:"#92400E"}}><strong>Data note:</strong> CPAs are 7-day click attribution averages (May 2025 – Jan 2026). Edit any CPA value directly — changes persist within your session.</div>
-          </div>
-        </div>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-  </script>
+<div class="header"><div class="header-inner"><div><div class="header-kicker">Knix × Meta</div><div class="header-title">Budget &amp; Performance Calculator</div><div class="header-sub">Historical CPAs loaded from your Meta account · all values are editable</div></div><div class="header-meta">Data: May 2025 – Jan 2026<br>Attribution: 7-day click</div></div></div>
+<div class="main">
+  <div class="tabs"><button class="tab active" onclick="showTab('product')">Single Product</button><button class="tab" onclick="showTab('portfolio')">Portfolio Mix</button><button class="tab" onclick="showTab('goals')">Financial Goals</button></div>
+  <div id="page-product" class="page active">
+    <div class="card"><div class="card-title">Select Product</div><div class="card-sub">Historical CPAs from your Meta account — edit any value to model scenarios</div><div class="grid3"><div><div class="lbl">Product</div><select class="field" id="p1-product" onchange="updateProduct1()"></select></div><div><div class="lbl">Avg CPA (7-day click)</div><div class="inp-wrap"><span class="inp-prefix">$</span><input type="number" id="p1-cpa" min="1" onchange="calcProduct1()"></div></div><div><div class="lbl">Average Order Value</div><div class="inp-wrap"><span class="inp-prefix">$</span><input type="number" id="p1-aov" value="85" min="1" oninput="calcProduct1()"></div></div></div></div>
+    <div class="card"><div class="card-title">Budget → Performance</div><div class="grid2" style="gap:24px"><div><div class="lbl">Ad Spend Budget</div><div class="inp-wrap"><span class="inp-prefix">$</span><input type="number" id="p1-budget" value="50000" min="0" oninput="calcProduct1()"></div><div class="quick-btns" id="p1-quick"></div></div><div class="results-box"><div class="results-lbl" id="p1-results-lbl">At $145 CPA · $85 AOV</div><div class="grid2" style="gap:10px"><div class="metric"><div class="metric-lbl">Est. Orders</div><div class="metric-val" id="p1-orders">—</div></div><div class="metric"><div class="metric-lbl">Est. Revenue</div><div class="metric-val" id="p1-rev">—</div></div><div class="metric" id="p1-roas-card"><div class="metric-lbl">ROAS</div><div class="metric-val" id="p1-roas">—</div><div class="metric-sub" id="p1-roas-sub"></div></div><div class="metric"><div class="metric-lbl">Return / $1</div><div class="metric-val" id="p1-return">—</div></div></div></div></div></div>
+    <div class="card"><div class="card-title">ROAS Target Planner</div><div class="card-sub">Work backwards from a desired return</div><div class="grid3" style="margin-bottom:16px"><div><div class="lbl">Target ROAS</div><div class="inp-wrap"><span class="inp-prefix">×</span><input type="number" id="p1-troas" value="2.5" min="0.1" step="0.1" oninput="calcProduct1()"></div></div><div class="results-box"><div class="lbl">AOV needed to hit target ROAS</div><div id="p1-need-aov" style="font-size:22px;font-weight:700;color:#111827">—</div><div style="font-size:12px;color:#6B7280;margin-top:2px" id="p1-orders-small"></div></div><div class="results-box"><div class="lbl">Budget to hit target ROAS</div><div id="p1-need-budget" style="font-size:22px;font-weight:700;color:#111827">—</div><div style="font-size:12px;color:#6B7280;margin-top:2px" id="p1-budget-small"></div></div></div><div class="insight" id="p1-insight"></div></div>
+  </div>
+  <div id="page-portfolio" class="page">
+    <div class="card"><div class="card-title">Channel Budget &amp; AOV</div><div class="grid3"><div><div class="lbl">Total Meta Budget</div><div class="inp-wrap"><span class="inp-prefix">$</span><input type="number" id="pf-budget" value="333000" min="0" oninput="calcPortfolio()"></div></div><div><div class="lbl">Blended AOV</div><div class="inp-wrap"><span class="inp-prefix">$</span><input type="number" id="pf-aov" value="85" min="1" oninput="calcPortfolio()"></div></div><div id="pf-alloc-check" class="alloc-ok"><div class="lbl" id="pf-alloc-lbl" style="color:#166534">Allocation check</div><div id="pf-alloc-num" class="alloc-num-ok">100.0%</div><div style="font-size:12px;color:#6B7280" id="pf-alloc-msg">Balanced ✓</div></div></div></div>
+    <div class="grid4"><div class="metric"><div class="metric-lbl">Total Est. Orders</div><div class="metric-val" id="pf-tot-ord">—</div></div><div class="metric"><div class="metric-lbl">Total Est. Revenue</div><div class="metric-val" id="pf-tot-rev">—</div></div><div class="metric"><div class="metric-lbl">Blended CPA</div><div class="metric-val" id="pf-blend-cpa">—</div><div class="metric-sub">weighted avg</div></div><div class="metric" id="pf-roas-card"><div class="metric-lbl">Channel ROAS</div><div class="metric-val" id="pf-roas">—</div></div></div>
+    <div class="grid2" style="gap:20px"><div class="card" style="margin-bottom:0"><div class="card-title">Allocation &amp; Projections</div><div class="card-sub">Edit % and CPA per product — recalculates live</div><div style="overflow-x:auto"><table><thead><tr><th>Product</th><th class="r">CPA ($)</th><th class="r">% Alloc</th><th class="r">Budget</th><th class="r">Orders</th><th class="r">Revenue</th><th class="r">ROAS</th></tr></thead><tbody id="pf-table-body"></tbody></table></div></div><div class="card" style="margin-bottom:0"><div class="card-title">Budget by Product</div><div id="pf-chart" class="bar-chart"></div></div></div>
+  </div>
+  <div id="page-goals" class="page">
+    <div class="card"><div class="card-title">Define Your Goal</div><div class="grid4"><div><div class="lbl">Goal Type</div><select class="field" id="g-type" onchange="calcGoals()"><option value="revenue">Revenue Target ($)</option><option value="orders">Order Volume (#)</option></select></div><div><div class="lbl" id="g-goal-lbl">Target Revenue</div><div class="inp-wrap"><span class="inp-prefix" id="g-goal-prefix">$</span><input type="number" id="g-goal" value="1000000" min="1" oninput="calcGoals()"></div></div><div><div class="lbl">Average Order Value</div><div class="inp-wrap"><span class="inp-prefix">$</span><input type="number" id="g-aov" value="85" min="1" oninput="calcGoals()"></div></div><div><div class="lbl">Product Focus</div><select class="field" id="g-focus" onchange="calcGoals()"></select></div></div></div>
+    <div class="grid4" style="margin-bottom:20px"><div class="metric accent"><div class="metric-lbl">Budget Needed</div><div class="metric-val" id="g-budget">—</div><div class="metric-sub" id="g-buf-sub"></div></div><div class="metric"><div class="metric-lbl">Base Budget</div><div class="metric-val" id="g-base">—</div><div class="metric-sub">before buffer</div></div><div class="metric"><div class="metric-lbl">Est. Orders</div><div class="metric-val" id="g-orders">—</div><div class="metric-sub">7-day attributed</div></div><div class="metric" id="g-roas-card"><div class="metric-lbl">Projected ROAS</div><div class="metric-val" id="g-roas">—</div><div class="metric-sub" id="g-roas-sub"></div></div></div>
+    <div class="grid2" style="gap:20px"><div class="card" style="margin-bottom:0"><div class="card-title">Budget &amp; Inventory by Product</div><table><thead><tr><th>Product</th><th class="r">% Mix</th><th class="r">Budget</th><th class="r">Est. Orders</th><th class="r">Revenue</th><th class="r">Inventory*</th></tr></thead><tbody id="g-table-body"></tbody></table><div style="font-size:12px;color:#9CA3AF;margin-top:8px" id="g-inv-note"></div></div><div><div class="card" style="margin-bottom:16px"><div class="card-title">Inventory Buffer</div><div class="lbl">Safety buffer (%)</div><input type="range" min="0" max="50" step="5" value="20" id="g-buf" oninput="calcGoals()"><div class="range-wrap"><div class="range-val" id="g-buf-val">20%</div><div style="font-size:13px;color:#6B7280;margin-top:4px" id="g-buf-detail"></div></div></div><div class="card" style="margin-bottom:0"><div class="card-title">Attribution Gaps</div><div style="font-size:13px;color:#374151;line-height:1.8"><div style="font-weight:600;margin-bottom:6px">Factors not counted in Meta reporting:</div><div class="attr-box-warn"><strong>Coupon affiliates</strong> (Honey, RetailMeNot) steal last-click attribution — est. <strong>10–25%</strong> of Meta-attributed orders may be miscredited</div><div class="attr-box-info"><strong>Amazon halo</strong> — Meta awareness drives untracked Amazon purchases, typically adding <strong>5–15%</strong> to true channel contribution</div><div style="margin-top:10px;font-size:12px;color:#6B7280">Adjust your reported ROAS up by <strong>15–20%</strong> for a truer economic picture.</div></div></div></div></div>
+  </div>
+  <div class="note" style="margin-top:20px"><strong>Data note:</strong> CPAs are 7-day click attribution averages (May 2025 – Jan 2026). Edit any CPA value directly — changes persist within your session.</div>
+</div>
+<script>
+const PRODUCTS=[{id:"leakproof",name:"Leakproof Core",cpa:145,share:29.88},{id:"dpa",name:"DPA",cpa:115,share:18.17},{id:"sculptrib",name:"Sculpt Rib",cpa:100,share:16.09},{id:"freeflex",name:"FreeFlex",cpa:140,share:10.90},{id:"dreamshort",name:"Dream Short",cpa:165,share:10.58},{id:"revolution",name:"Revolution",cpa:148,share:5.79},{id:"swim",name:"Swim",cpa:130,share:5.46},{id:"dreamboxer",name:"Dream Boxer",cpa:85,share:1.32},{id:"thighsaver",name:"Thigh Saver",cpa:140,share:1.19},{id:"other",name:"Other",cpa:175,share:1.06},{id:"nursingbra",name:"Nursing Bra",cpa:77,share:0.71}];
+const COLORS=["#2563EB","#D97706","#059669","#DB2777","#7C3AED","#DC2626","#0891B2","#EA580C","#65A30D","#9333EA","#6B7280"];
+let cpas={},shares={};
+PRODUCTS.forEach(p=>{cpas[p.id]=p.cpa;shares[p.id]=p.share;});
+const fN=(n,d=0)=>isNaN(n)||!isFinite(n)?"—":n.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+const fC=(n)=>isNaN(n)||!isFinite(n)?"—":"$"+fN(Math.round(n));
+const fR=(n)=>isNaN(n)||!isFinite(n)?"—":n.toFixed(2)+"x";
+function showTab(t){document.querySelectorAll('.tab').forEach((b,i)=>{b.classList.toggle('active',['product','portfolio','goals'][i]===t)});document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+t).classList.add('active');}
+function initDropdowns(){const s1=document.getElementById('p1-product');PRODUCTS.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.name;s1.appendChild(o);});const gf=document.getElementById('g-focus');const all=document.createElement('option');all.value='all';all.textContent='All Products (historical mix)';gf.appendChild(all);PRODUCTS.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.name;gf.appendChild(o);});const qb=document.getElementById('p1-quick');[10000,25000,50000,100000,250000].forEach(v=>{const b=document.createElement('button');b.className='quick-btn'+(v===50000?' active':'');b.textContent='$'+(v/1000).toFixed(0)+'K';b.onclick=()=>{document.getElementById('p1-budget').value=v;document.querySelectorAll('.quick-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');calcProduct1();};qb.appendChild(b);});}
+function updateProduct1(){const id=document.getElementById('p1-product').value;document.getElementById('p1-cpa').value=cpas[id];calcProduct1();}
+function calcProduct1(){const id=document.getElementById('p1-product').value;const cpa=+document.getElementById('p1-cpa').value||1;cpas[id]=cpa;const aov=+document.getElementById('p1-aov').value||1;const budget=+document.getElementById('p1-budget').value||0;const tRoas=+document.getElementById('p1-troas').value||2.5;const ord=budget/cpa;const rev=ord*aov;const roas=rev/budget;document.getElementById('p1-results-lbl').textContent='At '+fC(cpa)+' CPA · '+fC(aov)+' AOV';document.getElementById('p1-orders').textContent=fN(ord);document.getElementById('p1-rev').textContent=fC(rev);document.getElementById('p1-roas').textContent=fR(roas);document.getElementById('p1-roas-sub').textContent=roas>=2?'✓ Healthy':'Below 2x';document.getElementById('p1-roas-card').classList.toggle('accent',roas>=2);document.getElementById('p1-return').textContent='$'+roas.toFixed(2);document.getElementById('p1-need-aov').textContent=fC((tRoas*budget)/ord);document.getElementById('p1-orders-small').textContent=fN(ord)+' orders';document.getElementById('p1-need-budget').textContent=fC((ord*aov)/tRoas);document.getElementById('p1-budget-small').textContent=fN(ord)+' orders × '+fC(aov);const pname=PRODUCTS.find(p=>p.id===id)?.name||'';const n=cpa*tRoas;document.getElementById('p1-insight').innerHTML='<strong>Insight:</strong> '+pname+' at '+fC(cpa)+' CPA needs a <strong>'+fC(n)+'</strong> AOV to hit '+tRoas+'x ROAS'+(n<=aov?' — achievable at your current AOV.':' — vs. your '+fC(aov)+' AOV. Consider bundles, upsells, or a lower CPA target.');}
+function calcPortfolio(){const total=+document.getElementById('pf-budget').value||0;const aov=+document.getElementById('pf-aov').value||1;const totalSh=Object.values(shares).reduce((a,b)=>a+b,0);const ok=Math.abs(totalSh-100)<0.5;document.getElementById('pf-alloc-check').className=ok?'alloc-ok':'alloc-err';document.getElementById('pf-alloc-lbl').style.color=ok?'#166534':'#991B1B';const an=document.getElementById('pf-alloc-num');an.className=ok?'alloc-num-ok':'alloc-num-err';an.textContent=fN(totalSh,1)+'%';document.getElementById('pf-alloc-msg').textContent=ok?'Balanced ✓':'Adjust to reach 100%';const rows=PRODUCTS.map((p,i)=>{const w=(shares[p.id]||0)/totalSh;const spend=total*w;const orders=spend/cpas[p.id];const rev=orders*aov;const roas=rev/spend;return{...p,w,spend,orders,rev,roas,color:COLORS[i]};});const totOrd=rows.reduce((s,r)=>s+r.orders,0);const totRev=rows.reduce((s,r)=>s+r.rev,0);const blendRoas=totRev/total;document.getElementById('pf-tot-ord').textContent=fN(totOrd);document.getElementById('pf-tot-rev').textContent=fC(totRev);document.getElementById('pf-blend-cpa').textContent=fC(total/totOrd);document.getElementById('pf-roas').textContent=fR(blendRoas);document.getElementById('pf-roas-card').classList.toggle('accent',blendRoas>=2);const tb=document.getElementById('pf-table-body');tb.innerHTML='';rows.forEach((r,i)=>{const tr=document.createElement('tr');const rc=r.roas>=2?'roas-good':r.roas>=1?'roas-warn':'roas-bad';tr.innerHTML='<td><span style="display:inline-flex;align-items:center;gap:5px;font-weight:500"><span class="dot" style="background:'+r.color+'"></span>'+r.name+'</span></td><td class="r"><input class="cpa-input" type="number" value="'+cpas[r.id]+'" min="1" data-id="'+r.id+'" onchange="onCpaChange(this)"></td><td class="r"><input class="share-input" type="number" value="'+(shares[r.id]||0).toFixed(1)+'" min="0" step="0.5" data-id="'+r.id+'" onchange="onShareChange(this)"></td><td class="r">'+fC(r.spend)+'</td><td class="r">'+fN(r.orders)+'</td><td class="r">'+fC(r.rev)+'</td><td class="r '+rc+'">'+fR(r.roas)+'</td>';tb.appendChild(tr);});const max=Math.max(...rows.map(r=>r.spend));document.getElementById('pf-chart').innerHTML=rows.filter(r=>r.spend>500).sort((a,b)=>b.spend-a.spend).map(r=>'<div class="bar-row"><div class="bar-label">'+r.name+'</div><div class="bar-track"><div class="bar-fill" style="width:'+(r.spend/max*100).toFixed(1)+'%;background:'+r.color+'"></div></div><div class="bar-val">$'+fN(r.spend/1000,0)+'K</div></div>').join('');}
+function onCpaChange(el){cpas[el.dataset.id]=+el.value||1;calcPortfolio();}
+function onShareChange(el){shares[el.dataset.id]=parseFloat(el.value)||0;calcPortfolio();}
+function calcGoals(){const gt=document.getElementById('g-type').value;const goal=+document.getElementById('g-goal').value||0;const aov=+document.getElementById('g-aov').value||1;const focus=document.getElementById('g-focus').value;const buf=+document.getElementById('g-buf').value||0;document.getElementById('g-goal-lbl').textContent=gt==='revenue'?'Target Revenue':'Target Orders';document.getElementById('g-goal-prefix').textContent=gt==='revenue'?'$':'#';document.getElementById('g-buf-val').textContent=buf+'%';const active=focus==='all'?PRODUCTS:PRODUCTS.filter(p=>p.id===focus);const totSh=active.reduce((s,p)=>s+p.share,0);const rows=active.map(p=>{const w=p.share/totSh;const orders=gt==='revenue'?(goal*w)/aov:goal*w;return{...p,w,orders,rev:orders*aov,spend:orders*cpas[p.id]};});const tOrd=rows.reduce((s,r)=>s+r.orders,0);const tRev=rows.reduce((s,r)=>s+r.rev,0);const tSpend=rows.reduce((s,r)=>s+r.spend,0);const roas=tRev/tSpend;const buffSpend=tSpend*(1+buf/100);const inv=tOrd*(1+buf/100);document.getElementById('g-budget').textContent=fC(buffSpend);document.getElementById('g-buf-sub').textContent='incl. '+buf+'% buffer';document.getElementById('g-base').textContent=fC(tSpend);document.getElementById('g-orders').textContent=fN(tOrd);document.getElementById('g-roas').textContent=fR(roas);document.getElementById('g-roas-sub').textContent='at $'+aov+' AOV';document.getElementById('g-roas-card').classList.toggle('accent',roas>=2);document.getElementById('g-buf-detail').innerHTML='+'+fC(buffSpend-tSpend)+' budget cushion<br>+'+fN(inv-tOrd)+' extra inventory units';document.getElementById('g-inv-note').textContent='*Includes '+buf+'% safety buffer';const tb=document.getElementById('g-table-body');tb.innerHTML='';rows.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML='<td style="font-weight:500">'+r.name+'</td><td class="r" style="color:#6B7280">'+fN(r.w*100,1)+'%</td><td class="r" style="font-weight:600">'+fC(r.spend)+'</td><td class="r">'+fN(r.orders)+'</td><td class="r" style="color:#15803D">'+fC(r.rev)+'</td><td class="r inv-cell">'+fN(r.orders*(1+buf/100))+'</td>';tb.appendChild(tr);});const tot=document.createElement('tr');tot.className='total-row';tot.innerHTML='<td>Total</td><td class="r">100%</td><td class="r">'+fC(buffSpend)+'</td><td class="r">'+fN(tOrd)+'</td><td class="r" style="color:#15803D">'+fC(tRev)+'</td><td class="r inv-cell">'+fN(inv)+'</td>';tb.appendChild(tot);}
+initDropdowns();document.getElementById('p1-cpa').value=145;calcProduct1();calcPortfolio();calcGoals();
+</script>
 </body>
 </html>
