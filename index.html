@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knix × Meta — Budget Calculator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #F3F4F6; color: #111827; }
+    input, select, button { font-family: inherit; }
+    input[type=number]::-webkit-inner-spin-button { opacity: 0.5; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+    const { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } = Recharts;
+
+    const DEFAULT_PRODUCTS = [
+      { id: "leakproof",  name: "Leakproof Core", cpa: 145, share: 29.88 },
+      { id: "dpa",        name: "DPA",             cpa: 115, share: 18.17 },
+      { id: "sculptrib",  name: "Sculpt Rib",       cpa: 100, share: 16.09 },
+      { id: "freeflex",   name: "FreeFlex",         cpa: 140, share: 10.90 },
+      { id: "dreamshort", name: "Dream Short",      cpa: 165, share: 10.58 },
+      { id: "revolution", name: "Revolution",       cpa: 148, share: 5.79  },
+      { id: "swim",       name: "Swim",             cpa: 130, share: 5.46  },
+      { id: "dreamboxer", name: "Dream Boxer",      cpa: 85,  share: 1.32  },
+      { id: "thighsaver", name: "Thigh Saver",      cpa: 140, share: 1.19  },
+      { id: "other",      name: "Other",            cpa: 175, share: 1.06  },
+      { id: "nursingbra", name: "Nursing Bra",      cpa: 77,  share: 0.71  },
+    ];
+
+    const COLORS = ["#2563EB","#D97706","#059669","#DB2777","#7C3AED","#DC2626","#0891B2","#EA580C","#65A30D","#9333EA","#6B7280"];
+
+    const fmt    = (n, d=0) => (isNaN(n)||!isFinite(n)) ? "—" : n.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+    const fmtC   = (n)      => (isNaN(n)||!isFinite(n)) ? "—" : "$"+fmt(Math.round(n));
+    const fmtR   = (n)      => (isNaN(n)||!isFinite(n)) ? "—" : n.toFixed(2)+"x";
+
+    const Card = ({title,sub,children,style={}}) => (
+      <div style={{background:"white",border:"1px solid #E5E7EB",borderRadius:12,padding:"20px 24px",marginBottom:20,...style}}>
+        {title && <div style={{marginBottom:16}}>
+          <div style={{fontSize:16,fontWeight:700,color:"#111827"}}>{title}</div>
+          {sub && <div style={{fontSize:13,color:"#6B7280",marginTop:2}}>{sub}</div>}
+        </div>}
+        {children}
+      </div>
+    );
+
+    const Metric = ({label,value,sub,accent}) => (
+      <div style={{background:accent?"#1E40AF":"#F9FAFB",border:"1px solid #E5E7EB",borderRadius:10,padding:"12px 16px",flex:1,minWidth:110}}>
+        <div style={{fontSize:11,color:accent?"#BFDBFE":"#6B7280",fontWeight:600,marginBottom:4,textTransform:"uppercase",letterSpacing:"0.06em"}}>{label}</div>
+        <div style={{fontSize:22,fontWeight:700,color:accent?"white":"#111827",lineHeight:1.2}}>{value}</div>
+        {sub&&<div style={{fontSize:12,color:accent?"#BFDBFE":"#9CA3AF",marginTop:2}}>{sub}</div>}
+      </div>
+    );
+
+    const Tab = ({active,onClick,children}) => (
+      <button onClick={onClick} style={{padding:"8px 20px",borderRadius:8,border:"none",cursor:"pointer",fontWeight:active?600:400,fontSize:14,background:active?"#1E40AF":"transparent",color:active?"white":"#6B7280",transition:"all 0.15s"}}>
+        {children}
+      </button>
+    );
+
+    const Lbl = ({children}) => (
+      <div style={{fontSize:11,fontWeight:600,color:"#6B7280",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:5}}>{children}</div>
+    );
+
+    const Inp = ({value,onChange,prefix,min,step="1"}) => (
+      <div style={{display:"flex",alignItems:"center",border:"1px solid #D1D5DB",borderRadius:8,overflow:"hidden",background:"white"}}>
+        {prefix&&<span style={{padding:"8px 10px",background:"#F9FAFB",color:"#6B7280",fontSize:14,borderRight:"1px solid #D1D5DB",whiteSpace:"nowrap"}}>{prefix}</span>}
+        <input type="number" value={value} onChange={onChange} min={min} step={step}
+          style={{flex:1,padding:"8px 12px",border:"none",outline:"none",fontSize:15,background:"transparent",width:0}} />
+      </div>
+    );
+
+    const Sel = ({value,onChange,children}) => (
+      <select value={value} onChange={onChange}
+        style={{width:"100%",padding:"9px 12px",border:"1px solid #D1D5DB",borderRadius:8,fontSize:14,background:"white",outline:"none",cursor:"pointer"}}>
+        {children}
+      </select>
+    );
+
+    const Grid = ({cols,gap=16,children,style={}}) => (
+      <div style={{display:"grid",gridTemplateColumns:`repeat(${cols},1fr)`,gap,...style}}>{children}</div>
+    );
+
+    function ProductTab({products,onCpa}) {
+      const [sel,setSel]   = useState("leakproof");
+      const [budget,setBudget] = useState(50000);
+      const [aov,setAov]   = useState(85);
+      const [tRoas,setTRoas] = useState(2.5);
+      const p    = products.find(x=>x.id===sel);
+      const cpa  = p?.cpa||1;
+      const ord  = budget/cpa;
+      const rev  = ord*aov;
+      const roas = rev/budget;
+      const needAov  = (tRoas*budget)/ord;
+      const needBudg = (ord*aov)/tRoas;
+      return (
+        <div>
+          <Card title="Select Product" sub="Historical CPAs are from your Meta account — edit any value to model scenarios">
+            <Grid cols={3}>
+              <div><Lbl>Product</Lbl><Sel value={sel} onChange={e=>setSel(e.target.value)}>{products.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</Sel></div>
+              <div><Lbl>Avg CPA (7-day click)</Lbl><Inp prefix="$" value={p?.cpa} onChange={e=>onCpa(sel,+e.target.value)} min={1} /></div>
+              <div><Lbl>Average Order Value</Lbl><Inp prefix="$" value={aov} onChange={e=>setAov(+e.target.value)} min={1} /></div>
+            </Grid>
+          </Card>
+          <Card title="Budget → Performance">
+            <Grid cols={2} gap={24}>
+              <div>
+                <Lbl>Ad Spend Budget</Lbl>
+                <Inp prefix="$" value={budget} onChange={e=>setBudget(+e.target.value)} min={0} />
+                <div style={{display:"flex",gap:8,marginTop:8,flexWrap:"wrap"}}>
+                  {[10000,25000,50000,100000,250000].map(v=>(
+                    <button key={v} onClick={()=>setBudget(v)} style={{padding:"4px 10px",fontSize:12,borderRadius:6,border:"1px solid #D1D5DB",background:budget===v?"#EFF6FF":"white",color:budget===v?"#2563EB":"#6B7280",cursor:"pointer"}}>${v>=1000?(v/1000).toFixed(0)+"K":v}</button>
+                  ))}
+                </div>
+              </div>
+              <div style={{background:"#F9FAFB",borderRadius:10,padding:16}}>
+                <div style={{fontSize:11,color:"#6B7280",fontWeight:600,marginBottom:10,textTransform:"uppercase",letterSpacing:"0.06em"}}>At {fmtC(cpa)} CPA · {fmtC(aov)} AOV</div>
+                <Grid cols={2} gap={10}>
+                  <Metric label="Est. Orders" value={fmt(ord)} />
+                  <Metric label="Est. Revenue" value={fmtC(rev)} />
+                  <Metric label="ROAS" value={fmtR(roas)} sub={roas>=2?"✓ Healthy":"Below 2x"} accent={roas>=2} />
+                  <Metric label="Return / $1" value={"$"+roas.toFixed(2)} />
+                </Grid>
+              </div>
+            </Grid>
+          </Card>
+          <Card title="ROAS Target Planner" sub="Work backwards from a desired return">
+            <Grid cols={3} style={{marginBottom:16}}>
+              <div><Lbl>Target ROAS</Lbl><Inp prefix="×" value={tRoas} onChange={e=>setTRoas(+e.target.value)} min={0.1} step="0.1" /></div>
+              <div style={{background:"#F9FAFB",borderRadius:10,padding:"12px 16px"}}><Lbl>AOV needed to hit {tRoas}x at {fmtC(budget)} spend</Lbl><div style={{fontSize:22,fontWeight:700,color:"#111827"}}>{fmtC(needAov)}</div><div style={{fontSize:12,color:"#6B7280",marginTop:2}}>{fmt(ord)} orders</div></div>
+              <div style={{background:"#F9FAFB",borderRadius:10,padding:"12px 16px"}}><Lbl>Budget to hit {tRoas}x at {fmtC(aov)} AOV</Lbl><div style={{fontSize:22,fontWeight:700,color:"#111827"}}>{fmtC(needBudg)}</div><div style={{fontSize:12,color:"#6B7280",marginTop:2}}>{fmt(ord)} orders × {fmtC(aov)}</div></div>
+            </Grid>
+            <div style={{background:"#FFF7ED",border:"1px solid #FED7AA",borderRadius:8,padding:"10px 14px",fontSize:13,color:"#92400E",lineHeight:1.6}}><strong>Insight:</strong> {p?.name} at {fmtC(cpa)} CPA needs a <strong>{fmtC(cpa*tRoas)}</strong> AOV to hit {tRoas}x ROAS{cpa*tRoas<=aov?" — achievable at your current AOV.":` — vs. your ${fmtC(aov)} AOV. Consider bundles, upsells, or a lower CPA target.`}</div>
+          </Card>
+        </div>
+      );
+    }
+
+    function PortfolioTab({products,onCpa}) {
+      const [total,setTotal] = useState(333000);
+      const [aov,setAov] = useState(85);
+      const [shares,setShares] = useState(()=>Object.fromEntries(products.map(p=>[p.id,p.share])));
+      const totalSh = useMemo(()=>Object.values(shares).reduce((a,b)=>a+b,0),[shares]);
+      const upd = (id,v) => setShares(p=>({...p,[id]:Math.max(0,v)}));
+      const rows = useMemo(()=>products.map((p,i)=>{
+        const w=(shares[p.id]||0)/totalSh; const spend=total*w; const orders=spend/p.cpa; const rev=orders*aov; const roas=rev/spend;
+        return {...p,w,spend,orders,rev,roas,color:COLORS[i]};
+      }),[products,shares,totalSh,total,aov]);
+      const totOrd=rows.reduce((s,r)=>s+r.orders,0); const totRev=rows.reduce((s,r)=>s+r.rev,0);
+      const blendCpa=total/totOrd; const blendRoas=totRev/total;
+      const chartData=[...rows].filter(r=>r.spend>500).sort((a,b)=>b.spend-a.spend);
+      const balanced=Math.abs(totalSh-100)<0.5;
+      return (
+        <div>
+          <Card title="Channel Budget &amp; AOV">
+            <Grid cols={3}>
+              <div><Lbl>Total Meta Budget</Lbl><Inp prefix="$" value={total} onChange={e=>setTotal(+e.target.value)} min={0} /></div>
+              <div><Lbl>Blended AOV</Lbl><Inp prefix="$" value={aov} onChange={e=>setAov(+e.target.value)} min={1} /></div>
+              <div style={{background:balanced?"#F0FDF4":"#FEF2F2",borderRadius:10,padding:"10px 16px"}}>
+                <div style={{fontSize:11,fontWeight:600,color:balanced?"#166534":"#991B1B",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:4}}>Allocation check</div>
+                <div style={{fontSize:22,fontWeight:700,color:balanced?"#15803D":"#DC2626"}}>{fmt(totalSh,1)}%</div>
+                <div style={{fontSize:12,color:"#6B7280"}}>{balanced?"Balanced ✓":"Adjust to reach 100%"}</div>
+              </div>
+            </Grid>
+          </Card>
+          <Grid cols={4} gap={12} style={{marginBottom:20}}>
+            <Metric label="Total Est. Orders" value={fmt(totOrd)} sub={fmtC(total)+" spend"} />
+            <Metric label="Total Est. Revenue" value={fmtC(totRev)} />
+            <Metric label="Blended CPA" value={fmtC(blendCpa)} sub="weighted avg" />
+            <Metric label="Channel ROAS" value={fmtR(blendRoas)} accent={blendRoas>=2} />
+          </Grid>
+          <Grid cols={2} gap={20}>
+            <Card title="Allocation & Projections" sub="Edit % and CPA per product — recalculates live">
+              <div style={{overflowX:"auto"}}>
+                <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+                  <thead><tr style={{borderBottom:"2px solid #E5E7EB"}}>{["Product","CPA ($)","% Alloc","Budget","Orders","Revenue","ROAS"].map(h=>(<th key={h} style={{padding:"6px 6px",textAlign:h==="Product"?"left":"right",color:"#6B7280",fontWeight:600,fontSize:11,textTransform:"uppercase",letterSpacing:"0.04em",whiteSpace:"nowrap"}}>{h}</th>))}</tr></thead>
+                  <tbody>{rows.map((r,i)=>(<tr key={r.id} style={{borderBottom:"1px solid #F3F4F6"}}><td style={{padding:"6px 6px",whiteSpace:"nowrap"}}><span style={{display:"inline-flex",alignItems:"center",gap:5,fontWeight:500}}><span style={{width:9,height:9,borderRadius:"50%",background:r.color,flexShrink:0,display:"inline-block"}}/>{r.name}</span></td><td style={{padding:"4px 6px",textAlign:"right"}}><input type="number" value={r.cpa} min={1} onChange={e=>onCpa(r.id,+e.target.value)} style={{width:58,padding:"3px 5px",border:"1px solid #E5E7EB",borderRadius:5,textAlign:"right",fontSize:13,background:"#FFFBEB"}} /></td><td style={{padding:"4px 6px",textAlign:"right"}}><input type="number" value={(shares[r.id]||0).toFixed(1)} min={0} step="0.5" onChange={e=>upd(r.id,parseFloat(e.target.value)||0)} style={{width:52,padding:"3px 5px",border:"1px solid #E5E7EB",borderRadius:5,textAlign:"right",fontSize:13}} /></td><td style={{padding:"6px 6px",textAlign:"right",color:"#374151"}}>{fmtC(r.spend)}</td><td style={{padding:"6px 6px",textAlign:"right",color:"#374151"}}>{fmt(r.orders)}</td><td style={{padding:"6px 6px",textAlign:"right",color:"#374151"}}>{fmtC(r.rev)}</td><td style={{padding:"6px 6px",textAlign:"right",fontWeight:600,color:r.roas>=2?"#16A34A":r.roas>=1?"#D97706":"#DC2626"}}>{fmtR(r.roas)}</td></tr>))}</tbody>
+                </table>
+              </div>
+            </Card>
+            <Card title="Budget by Product">
+              <div style={{height:320}}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData} layout="vertical" margin={{left:0,right:40,top:0,bottom:0}}>
+                    <XAxis type="number" tickFormatter={v=>"$"+(v/1000).toFixed(0)+"K"} tick={{fontSize:11}} />
+                    <YAxis type="category" dataKey="name" tick={{fontSize:11}} width={88} />
+                    <Tooltip formatter={v=>["$"+fmt(v),"Budget"]} />
+                    <Bar dataKey="spend" radius={[0,4,4,0]}>{chartData.map((_,i)=><Cell key={i} fill={COLORS[i]} />)}</Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </Card>
+          </Grid>
+        </div>
+      );
+    }
+
+    function GoalsTab({products}) {
+      const [goalType,setGoalType]=useState("revenue"); const [goal,setGoal]=useState(1000000);
+      const [aov,setAov]=useState(85); const [focus,setFocus]=useState("all"); const [buf,setBuf]=useState(20);
+      const active=focus==="all"?products:products.filter(p=>p.id===focus);
+      const totSh=active.reduce((s,p)=>s+p.share,0);
+      const rows=useMemo(()=>active.map(p=>{ const w=p.share/totSh; const orders=goalType==="revenue"?(goal*w)/aov:goal*w; return {...p,w,orders,rev:orders*aov,spend:orders*p.cpa}; }),[active,goalType,goal,aov,totSh]);
+      const tOrd=rows.reduce((s,r)=>s+r.orders,0); const tRev=rows.reduce((s,r)=>s+r.rev,0); const tSpend=rows.reduce((s,r)=>s+r.spend,0);
+      const roas=tRev/tSpend; const buffSpend=tSpend*(1+buf/100); const inv=tOrd*(1+buf/100);
+      return (
+        <div>
+          <Card title="Define Your Goal">
+            <Grid cols={4}>
+              <div><Lbl>Goal Type</Lbl><Sel value={goalType} onChange={e=>setGoalType(e.target.value)}><option value="revenue">Revenue Target ($)</option><option value="orders">Order Volume (#)</option></Sel></div>
+              <div><Lbl>{goalType==="revenue"?"Target Revenue":"Target Orders"}</Lbl><Inp prefix={goalType==="revenue"?"$":"#"} value={goal} onChange={e=>setGoal(+e.target.value)} min={1} /></div>
+              <div><Lbl>Average Order Value</Lbl><Inp prefix="$" value={aov} onChange={e=>setAov(+e.target.value)} min={1} /></div>
+              <div><Lbl>Product Focus</Lbl><Sel value={focus} onChange={e=>setFocus(e.target.value)}><option value="all">All Products (historical mix)</option>{products.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</Sel></div>
+            </Grid>
+          </Card>
+          <Grid cols={4} gap={12} style={{marginBottom:20}}>
+            <Metric label="Budget Needed" value={fmtC(buffSpend)} sub={"incl. "+buf+"% buffer"} accent />
+            <Metric label="Base Budget" value={fmtC(tSpend)} sub="before buffer" />
+            <Metric label="Est. Orders" value={fmt(tOrd)} sub="7-day attributed" />
+            <Metric label="Projected ROAS" value={fmtR(roas)} sub={"at $"+aov+" AOV"} />
+          </Grid>
+          <Grid cols={2} gap={20}>
+            <Card title="Budget &amp; Inventory by Product">
+              <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+                <thead><tr style={{borderBottom:"2px solid #E5E7EB"}}>{["Product","% Mix","Budget","Est. Orders","Revenue","Inventory*"].map(h=>(<th key={h} style={{padding:"6px 8px",textAlign:h==="Product"?"left":"right",color:"#6B7280",fontWeight:600,fontSize:11,textTransform:"uppercase",letterSpacing:"0.04em"}}>{h}</th>))}</tr></thead>
+                <tbody>{rows.map(r=>(<tr key={r.id} style={{borderBottom:"1px solid #F3F4F6"}}><td style={{padding:"7px 8px",fontWeight:500}}>{r.name}</td><td style={{padding:"7px 8px",textAlign:"right",color:"#6B7280"}}>{fmt(r.w*100,1)}%</td><td style={{padding:"7px 8px",textAlign:"right",fontWeight:600}}>{fmtC(r.spend)}</td><td style={{padding:"7px 8px",textAlign:"right"}}>{fmt(r.orders)}</td><td style={{padding:"7px 8px",textAlign:"right",color:"#15803D"}}>{fmtC(r.rev)}</td><td style={{padding:"7px 8px",textAlign:"right",background:"#FFF7ED",color:"#92400E",fontWeight:600}}>{fmt(r.orders*(1+buf/100))}</td></tr>))}
+                <tr style={{borderTop:"2px solid #111827",background:"#F9FAFB",fontWeight:700}}><td style={{padding:"7px 8px"}}>Total</td><td style={{padding:"7px 8px",textAlign:"right"}}>100%</td><td style={{padding:"7px 8px",textAlign:"right"}}>{fmtC(buffSpend)}</td><td style={{padding:"7px 8px",textAlign:"right"}}>{fmt(tOrd)}</td><td style={{padding:"7px 8px",textAlign:"right",color:"#15803D"}}>{fmtC(tRev)}</td><td style={{padding:"7px 8px",textAlign:"right",background:"#FFF7ED",color:"#92400E"}}>{fmt(inv)}</td></tr>
+                </tbody>
+              </table>
+              <div style={{fontSize:12,color:"#9CA3AF",marginTop:8}}>*Includes {buf}% safety buffer</div>
+            </Card>
+            <div>
+              <Card title="Inventory Buffer"><Lbl>Safety buffer (%)</Lbl><input type="range" min={0} max={50} step={5} value={buf} onChange={e=>setBuf(+e.target.value)} style={{width:"100%",margin:"8px 0 4px"}} /><div style={{textAlign:"center",fontSize:26,fontWeight:700,color:"#D97706"}}>{buf}%</div><div style={{textAlign:"center",fontSize:13,color:"#6B7280",marginTop:4}}>+{fmtC(buffSpend-tSpend)} budget cushion<br/>+{fmt(inv-tOrd)} extra inventory units</div></Card>
+              <Card title="Attribution Gaps"><div style={{fontSize:13,color:"#374151",lineHeight:1.8}}><div style={{fontWeight:600,marginBottom:6}}>Factors not counted in Meta reporting:</div><div style={{background:"#FEF3C7",borderRadius:8,padding:"10px 12px",marginBottom:8,fontSize:12,color:"#92400E",lineHeight:1.6}}><strong>Coupon affiliates</strong> (Honey, RetailMeNot) steal last-click attribution — est. <strong>10–25%</strong> of Meta-attributed orders may be miscredited</div><div style={{background:"#EFF6FF",borderRadius:8,padding:"10px 12px",fontSize:12,color:"#1E40AF",lineHeight:1.6}}><strong>Amazon halo</strong> — Meta awareness drives untracked Amazon purchases, typically adding <strong>5–15%</strong> to true channel contribution</div><div style={{marginTop:10,fontSize:12,color:"#6B7280"}}>Adjust your reported ROAS up by <strong>15–20%</strong> for a truer economic picture.</div></div></Card>
+            </div>
+          </Grid>
+        </div>
+      );
+    }
+
+    function App() {
+      const [tab,setTab]=useState("product");
+      const [products,setProducts]=useState(DEFAULT_PRODUCTS);
+      const updateCpa=(id,val)=>setProducts(p=>p.map(x=>x.id===id?{...x,cpa:val}:x));
+      return (
+        <div style={{fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif",background:"#F3F4F6",minHeight:"100vh",paddingBottom:40}}>
+          <div style={{background:"#1E3A8A",padding:"20px 28px",marginBottom:24}}>
+            <div style={{maxWidth:980,margin:"0 auto",display:"flex",alignItems:"flex-end",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
+              <div><div style={{fontSize:11,color:"#BFDBFE",fontWeight:600,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>Knix × Meta</div><div style={{fontSize:22,fontWeight:800,color:"white"}}>Budget &amp; Performance Calculator</div><div style={{fontSize:13,color:"#93C5FD",marginTop:3}}>Historical CPAs loaded from your Meta account · all values are editable</div></div>
+              <div style={{textAlign:"right",fontSize:12,color:"#BFDBFE",lineHeight:1.7}}>Data: May 2025 – Jan 2026<br/>Attribution: 7-day click</div>
+            </div>
+          </div>
+          <div style={{maxWidth:980,margin:"0 auto",padding:"0 16px"}}>
+            <div style={{display:"inline-flex",gap:4,marginBottom:20,background:"#E5E7EB",padding:4,borderRadius:10}}>
+              <Tab active={tab==="product"} onClick={()=>setTab("product")}>Single Product</Tab>
+              <Tab active={tab==="portfolio"} onClick={()=>setTab("portfolio")}>Portfolio Mix</Tab>
+              <Tab active={tab==="goals"} onClick={()=>setTab("goals")}>Financial Goals</Tab>
+            </div>
+            {tab==="product" && <ProductTab products={products} onCpa={updateCpa} />}
+            {tab==="portfolio" && <PortfolioTab products={products} onCpa={updateCpa} />}
+            {tab==="goals" && <GoalsTab products={products} />}
+            <div style={{background:"#FEF3C7",border:"1px solid #FDE68A",borderRadius:10,padding:"12px 16px",fontSize:12,color:"#92400E"}}><strong>Data note:</strong> CPAs are 7-day click attribution averages (May 2025 – Jan 2026). Edit any CPA value directly — changes persist within your session.</div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
