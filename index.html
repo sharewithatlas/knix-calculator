@@ -1,230 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Knix × Atlas — Performance Intelligence</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leakproof Bestie &#8212; Find Your Perfect Knix</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F8F9FA;color:#0F172A;font-size:13px}
-input,select,button{font-family:inherit}
-.app{display:flex;flex-direction:column;min-height:100vh}
-.topbar{background:#0F172A;padding:0 24px;display:flex;align-items:center;height:52px;flex-shrink:0}
-.topbar-brand{color:white;font-size:14px;font-weight:700;margin-right:32px;white-space:nowrap}
-.topbar-brand span{color:#94A3B8;font-weight:400}
-.nav-tabs{display:flex;height:100%}
-.nav-tab{padding:0 18px;height:100%;display:flex;align-items:center;color:#94A3B8;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-.nav-tab:hover{color:white}
-.nav-tab.active{color:white;border-bottom-color:#3B82F6}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
-.upload-btn{background:#1E40AF;color:white;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
-.content{flex:1;padding:20px 24px;max-width:1200px;width:100%;margin:0 auto}
-.page{display:none}.page.active{display:block}
-.card{background:white;border:1px solid #E2E8F0;border-radius:10px;padding:16px 20px;margin-bottom:16px}
-.card-title{font-size:14px;font-weight:700;color:#0F172A;margin-bottom:4px}
-.card-sub{font-size:12px;color:#64748B}
-.buckets{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
-.bucket{border-radius:10px;overflow:hidden;border:1px solid #E2E8F0}
-.bucket-header{padding:12px 16px}
-.bucket-ev .bucket-header{background:#ECFDF5;border-bottom:1px solid #A7F3D0}
-.bucket-ch .bucket-header{background:#EFF6FF;border-bottom:1px solid #BFDBFE}
-.bucket-ar .bucket-header{background:#FFFBEB;border-bottom:1px solid #FDE68A}
-.bucket-name{font-size:13px;font-weight:700}
-.bucket-ev .bucket-name{color:#065F46}
-.bucket-ch .bucket-name{color:#1E40AF}
-.bucket-ar .bucket-name{color:#92400E}
-.bucket-stats{display:flex;gap:20px;margin-top:8px}
-.bstat-val{font-size:20px;font-weight:800;display:block;line-height:1.2}
-.bucket-ev .bstat-val{color:#059669}
-.bucket-ch .bstat-val{color:#2563EB}
-.bucket-ar .bstat-val{color:#D97706}
-.bstat-lbl{font-size:11px;color:#6B7280}
-.bucket-body{background:white;padding:8px}
-.bucket-item{padding:8px 10px;border-radius:6px;margin-bottom:4px;border:1px solid #F1F5F9}
-.bucket-item:last-child{margin-bottom:0}
-.bi-top{display:flex;align-items:center;justify-content:space-between}
-.bi-name{font-weight:600;font-size:12px;color:#1E293B}
-.bi-tags{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
-.tag{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:500}
-.tag-ch{background:#EFF6FF;color:#1E40AF}
-.tag-geo{background:#F0FDF4;color:#166534}
-.tag-acq{background:#FEF3C7;color:#92400E}
-.bi-budget{font-size:11px;color:#64748B;margin-top:3px}
-.grad-btn{font-size:10px;padding:2px 8px;background:#D1FAE5;color:#065F46;border:1px solid #A7F3D0;border-radius:4px;cursor:pointer;font-weight:600}
-.grad-badge{font-size:10px;padding:2px 8px;background:#FEF3C7;color:#92400E;border-radius:4px;font-weight:600}
-.cpa-good{color:#059669}.cpa-warn{color:#D97706}.cpa-bad{color:#DC2626}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.seg{display:flex;background:#F1F5F9;border-radius:6px;padding:2px}
-.seg-btn{padding:4px 12px;border:none;background:transparent;border-radius:5px;font-size:12px;font-weight:500;color:#64748B;cursor:pointer;transition:all .15s}
-.seg-btn.active{background:white;color:#0F172A;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
-table{width:100%;border-collapse:collapse}
-th{padding:8px 12px;text-align:left;font-size:11px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid #E2E8F0}
-th.r,td.r{text-align:right}
-td{padding:9px 12px;border-bottom:1px solid #F1F5F9;vertical-align:middle}
-.cpa-cell{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-.cpa-main{font-weight:700;font-size:13px}
-.bev{background:#ECFDF5;color:#065F46;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
-.bch{background:#EFF6FF;color:#1E40AF;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
-.bar{background:#FFFBEB;color:#92400E;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
-.winner td{background:#F0FDF4}
-.sig-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.sf{padding:5px 14px;border-radius:20px;border:1px solid #E2E8F0;background:white;font-size:12px;cursor:pointer;color:#64748B;transition:all .15s}
-.sf-all.on{background:#0F172A;color:white;border-color:#0F172A}
-.sf-em.on{background:#059669;color:white;border-color:#059669}
-.sf-ma.on{background:#64748B;color:white;border-color:#64748B}
-.sf-fa.on{background:#DC2626;color:white;border-color:#DC2626}
-.sf-in.on{background:#94A3B8;color:white;border-color:#94A3B8}
-.cr-grid{display:flex;flex-direction:column;gap:8px}
-.cr-row{background:white;border:1px solid #E2E8F0;border-radius:8px;padding:13px 16px;display:grid;grid-template-columns:12px 1fr auto;gap:14px;align-items:start}
-.cr-row:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.sdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.s-em{background:#059669}.s-ma{background:#94A3B8}.s-fa{background:#DC2626}.s-in{background:#E2E8F0;border:1px solid #CBD5E1}
-.cr-name{font-weight:600;font-size:13px;color:#0F172A;margin-bottom:5px}
-.sbadge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
-.sb-em{background:#ECFDF5;color:#065F46}
-.sb-ma{background:#F1F5F9;color:#475569}
-.sb-fa{background:#FEF2F2;color:#991B1B}
-.sb-in{background:#F8FAFC;color:#94A3B8}
-.uz{border:2px dashed #CBD5E1;border-radius:10px;padding:40px;text-align:center;background:#F8FAFC;cursor:pointer;transition:all .2s}
-.uz:hover{border-color:#3B82F6;background:#EFF6FF}
-.ci{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:10px 12px}
-.ci-a{border-color:#A7F3D0;background:#F0FDF4}
-.ci-m{border-color:#FDE68A;background:#FFFBEB}
-.ci-n{font-size:10px;font-weight:700;color:#0F172A;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
-.ci-v{font-size:12px;color:#64748B}
-.ci-a .ci-v{color:#059669;font-weight:600}
-.ci-m .ci-v{color:#D97706;font-weight:600}
-.pb{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;background:#ECFDF5;color:#065F46}
-.nt{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;background:#FEF3C7;color:#92400E}
-.lb-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:white;border:1px solid #E2E8F0;border-radius:6px;margin-bottom:4px}
-.lb-r{font-size:12px;font-weight:700;color:#94A3B8;width:18px;flex-shrink:0}
-.lb-r.top{color:#059669}
-.lb-bar-w{width:70px;background:#F1F5F9;border-radius:3px;height:5px;overflow:hidden;margin-top:3px}
-.lb-bar{height:100%;border-radius:3px;background:#059669}
-.mx-c{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
-.mx-l{font-size:12px;color:#64748B;font-weight:600}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f6e3db;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
+.pg{background:#f6e3db;width:100%;padding-bottom:32px;}.inn{max-width:430px;margin:0 auto;}
+.pgb{padding:18px 20px 14px;}.ptr{height:2px;background:#e5d5cf;position:relative;}
+.pfl{position:absolute;top:0;left:0;height:2px;background:#7d0044;width:6%;transition:width .7s;}
+.pdt{position:absolute;top:-13px;left:6%;transform:translateX(-50%);width:28px;height:28px;border-radius:50%;background:#f6e3db;border:2px solid #7d0044;display:flex;align-items:center;justify-content:center;transition:left .7s;}
+.lgg{text-align:center;padding:3px 0 12px;font-family:Georgia,serif;font-size:20px;font-weight:800;letter-spacing:-.03em;color:#141414;}
+.ph{background:#fbf8f3;border-radius:34px;overflow:hidden;border:1px solid #d4c8c2;margin:0 16px;position:relative;}
+.intl{position:absolute;top:0;left:0;right:0;bottom:0;background:#fbf8f3;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;opacity:0;transition:opacity .4s;pointer-events:none;}
+.intl.show{opacity:1;pointer-events:all;}.intl.hide{opacity:0;pointer-events:none;}
+.ilt{font-family:Georgia,serif;font-size:22px;font-weight:800;color:#141414;margin-bottom:6px;}
+.ils{font-size:14px;color:#707070;margin-bottom:32px;}
+.ilsp{display:flex;gap:9px;margin-bottom:28px;}
+.ilspd{width:10px;height:10px;background:#7d0044;border-radius:50%;animation:ilb 1.5s infinite;}
+.ilspd:nth-child(2){animation-delay:.22s;}.ilspd:nth-child(3){animation-delay:.44s;}
+@keyframes ilb{0%,60%,100%{transform:scale(.7);opacity:.4;}30%{transform:scale(1);opacity:1;}}
+.ilstp{font-size:13px;color:#7d0044;font-weight:600;letter-spacing:.04em;}
+.sbar{padding:14px 20px 4px;}.st{font-size:15px;font-weight:700;color:#141414;}
+.mhdr{padding:6px 14px 10px;display:flex;align-items:center;gap:8px;border-bottom:.5px solid #e7c6b7;background:#fbf8f3;}
+.hbk{font-size:22px;color:#7d0044;}.hav{width:36px;height:36px;border-radius:50%;background:#7d0044;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.hn{font-size:13px;font-weight:700;color:#141414;}.hs{font-size:11px;color:#707070;}.hm{font-size:22px;color:#7d0044;margin-left:auto;}
+.cs{height:420px;overflow-y:auto;padding:10px 14px 8px;background:#fbf8f3;}
+.cs::-webkit-scrollbar{width:3px;}.cs::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px;}
+.rt{border-top:.5px solid #e7c6b7;padding:10px 14px 12px;background:#fbf8f3;min-height:14px;}
+.ii{padding:8px 12px 22px;border-top:.5px solid #e7c6b7;display:flex;align-items:center;gap:8px;background:#fbf8f3;}
+.ib{flex:1;background:#fff;border-radius:20px;padding:8px 14px;font-size:14px;color:#707070;border:1px solid #ddd;}
+.isnd{width:30px;height:30px;border-radius:50%;background:#7d0044;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.row{display:flex;margin-bottom:4px;align-items:flex-end;gap:6px;}
+.row.ai{justify-content:flex-start;}.row.me{justify-content:flex-end;}
+.ava{width:26px;height:26px;border-radius:50%;background:#7d0044;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-bottom:2px;}
+.bub{max-width:76%;padding:9px 13px;font-size:14.5px;line-height:1.5;border-radius:18px;}
+.bub.ai{background:#f2e5df;color:#141414;border-bottom-left-radius:5px;}
+.bub.me{background:#141414;color:#fff;border-bottom-right-radius:5px;}
+.bub em{font-family:Georgia,serif;font-style:italic;}
+.trow{display:flex;align-items:flex-end;gap:6px;margin-bottom:6px;}
+.tbub{background:#f2e5df;border-radius:18px;border-bottom-left-radius:5px;padding:10px 14px;display:flex;gap:4px;align-items:center;}
+.d{width:6px;height:6px;background:#7d0044;border-radius:50%;animation:bop 1.3s infinite;}
+.d:nth-child(2){animation-delay:.18s;}.d:nth-child(3){animation-delay:.36s;}
+@keyframes bop{0%,55%,100%{transform:translateY(0);}27%{transform:translateY(-5px);}}
+.dsep{text-align:center;font-size:11px;color:#707070;margin:4px 0 12px;letter-spacing:.04em;}
+.wrow{display:flex;gap:10px;margin:6px 0 10px 30px;}
+.wc{flex:1;background:#fff;border-radius:12px;overflow:hidden;border:2px solid #ddd;cursor:pointer;transition:border-color .2s;}
+.wc:hover{border-color:#7d0044;}.wc.sel{border-color:#7d0044;pointer-events:none;}.wc.fad{pointer-events:none;opacity:.36;}
+.wph{width:100%;aspect-ratio:2/3;background-size:cover;background-position:center top;}
+.wlb{text-align:center;padding:8px 4px 10px;font-size:14px;font-weight:700;color:#141414;}
+.chips{margin:6px 0 8px 30px;}
+.chip{background:#fff;border:1.5px solid #ddd;border-radius:12px;padding:11px 14px;font-size:14px;color:#141414;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.chip:hover{border-color:#7d0044;background:#fdf5f8;}.chip.on{border-color:#7d0044;background:#fdf5f8;font-weight:600;}
+.chip.lk{pointer-events:none;}.chip.lk.on{opacity:.8;}.chip.lk:not(.on){opacity:.35;}
+.ca{color:#7d0044;font-size:14px;flex-shrink:0;margin-left:8px;}
+.strow{display:flex;gap:7px;overflow-x:auto;margin:6px 0 8px 30px;padding-bottom:3px;}.strow::-webkit-scrollbar{display:none;}
+.stc{flex-shrink:0;width:80px;background:#fff;border-radius:12px;overflow:hidden;border:1.5px solid #ddd;cursor:pointer;}
+.stc:hover{border-color:#7d0044;}.stc.on{border-color:#7d0044;background:#fdf5f8;}
+.stc.lk{pointer-events:none;}.stc.lk.on{opacity:.85;}.stc.lk:not(.on){opacity:.35;}
+.stci{height:64px;display:flex;align-items:center;justify-content:center;}
+.stcl{text-align:center;padding:4px 3px 7px;font-size:11px;font-weight:600;color:#141414;}
+.szg{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 8px 30px;}
+.szp{background:#fff;border:1.5px solid #ddd;border-radius:12px;padding:8px 10px;cursor:pointer;text-align:center;min-width:54px;}
+.szp:hover{border-color:#7d0044;background:#fdf5f8;}.szp.on{border-color:#7d0044;background:#fdf5f8;}
+.szp.lk{pointer-events:none;}.szp.lk.on{opacity:.9;}.szp.lk:not(.on){opacity:.35;}
+.szs{display:block;font-size:13px;font-weight:700;color:#141414;}.szm{display:block;font-size:10px;color:#707070;margin-top:2px;}
+.statrow{display:flex;align-items:flex-end;gap:6px;margin-bottom:4px;}
+.statb{background:#f2e5df;border-radius:18px;border-bottom-left-radius:5px;padding:12px 16px;max-width:76%;}
+.statn{font-size:28px;font-weight:800;font-family:Georgia,serif;color:#7d0044;display:block;line-height:1.1;}
+.stats{font-size:12px;color:#141414;margin-top:2px;}
+.pcw{margin:4px 0 6px 30px;}.pcard{background:#fff;border-radius:16px;overflow:hidden;border:1.5px solid #ddd;}
+.pcard.ft{border-color:#7d0044;}
+.pcim{height:90px;display:flex;align-items:center;justify-content:center;position:relative;}
+.pbdg{position:absolute;top:8px;left:8px;font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:20px;}
+.bm{background:#7d0044;color:#fff;}.bp{background:#141414;color:#fff;}.bg{background:#3d5455;color:#fff;}
+.pcbd{padding:11px 13px 13px;}.pcnm{font-family:Georgia,serif;font-size:15px;font-weight:700;color:#141414;margin-bottom:2px;}
+.pcar{display:flex;align-items:center;gap:5px;margin-bottom:7px;}
+.pcal{font-size:11px;font-weight:600;letter-spacing:.06em;color:#707070;}.pcad{display:flex;gap:3px;}
+.pcmt{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.pcsr{font-size:11px;color:#7d0044;letter-spacing:1px;}
+.pcrv{font-size:12px;color:#444;font-style:italic;line-height:1.4;padding:8px 0;border-top:.5px solid #f2e5df;margin-bottom:8px;}
+.pccare{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.pctag{font-size:10px;background:#f2e5df;color:#141414;padding:3px 9px;border-radius:20px;font-weight:600;}
+.bigbt{width:100%;padding:13px;background:#141414;border:none;border-radius:4px;color:#fff;font-size:14px;font-weight:700;letter-spacing:.04em;cursor:pointer;margin-bottom:8px;display:block;text-align:center;text-transform:uppercase;}
+.bigbt:disabled{background:#aeaeae;cursor:not-allowed;}
+a.rosbt,button.rosbt{display:block;width:100%;padding:13px;background:#7d0044;border:none;border-radius:4px;color:#fff;font-size:14px;font-weight:700;letter-spacing:.04em;text-align:center;text-decoration:none;margin-bottom:8px;text-transform:uppercase;cursor:pointer;}
+a.rosbt:hover,button.rosbt:hover{background:#5c0032;}
+.outbt{width:100%;padding:11px;background:transparent;border:1px solid #ddd;border-radius:4px;color:#141414;font-size:13px;font-weight:600;cursor:pointer;display:block;text-align:center;text-transform:uppercase;letter-spacing:.04em;}
+.outbt:hover{border-color:#7d0044;color:#7d0044;}
+.tnt{text-align:center;font-size:11px;color:#707070;padding-top:9px;line-height:1.7;}
+.eml input{display:block;width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:4px;font-size:14px;color:#141414;background:#fff;margin-bottom:8px;outline:none;}
+.eml input:focus{border-color:#7d0044;}
+@media(max-width:480px){.ph{margin:0;border-radius:0;}.inn{max-width:100%;}.cs{height:calc(100vh - 380px);min-height:300px;max-height:460px;}}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="topbar">
-    <div class="topbar-brand">Knix <span>× Atlas Intelligence</span></div>
-    <div class="nav-tabs">
-      <div class="nav-tab active" onclick="go('arch')">Budget Architecture</div>
-      <div class="nav-tab" onclick="go('mx')">Performance Matrix</div>
-      <div class="nav-tab" onclick="go('cr')">Creative Intelligence</div>
-      <div class="nav-tab" onclick="go('up')">Upload Data</div>
-      <div style="width:1px;background:#1E293B;margin:12px 0;flex-shrink:0"></div>
-      <a href="calculator.html" style="padding:0 18px;height:100%;display:flex;align-items:center;color:#94A3B8;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94A3B8'">↗ Budget Calculator</a>
+<div class="pg"><div class="inn">
+  <div class="pgb"><div class="ptr">
+    <div class="pfl" id="PFL"></div>
+    <div class="pdt" id="PDT"><svg viewBox="0 0 13 12" width="13" height="13" fill="none"><path d="M6.5 10.5S1 7 1 3.5A2.5 2.5 0 0 1 6.5 2 2.5 2.5 0 0 1 12 3.5C12 7 6.5 10.5 6.5 10.5Z" fill="#7d0044"/></svg></div>
+  </div></div>
+  <div class="lgg">knix</div>
+  <div class="ph" id="PHONE">
+    <div class="intl" id="INTL">
+      <div class="ilt">knix</div><div class="ils">Finding your perfect matches...</div>
+      <div class="ilsp"><div class="ilspd"></div><div class="ilspd"></div><div class="ilspd"></div></div>
+      <div class="ilstp" id="ILSTEP">Analyzing your profile</div>
     </div>
-    <div class="topbar-right"><span style="font-size:11px;color:#475569">Apr 7, 2026</span><button class="upload-btn" onclick="go('up')">+ Upload CSV</button></div>
+    <div class="sbar"><span class="st" id="BTIME">--:--</span></div>
+    <div class="mhdr"><span class="hbk">&#x2039;</span><div class="hav">&#x1F495;</div><div style="flex:1"><div class="hn">Leakproof Bestie</div><div class="hs">Here to find your perfect pair</div></div><span class="hm">&#x22EF;</span></div>
+    <div class="cs" id="CHAT"><div class="dsep">TODAY</div></div>
+    <div class="rt" id="TRAY"></div>
+    <div class="ii"><div class="ib">Message</div><div class="isnd"><svg viewBox="0 0 13 13" fill="none" width="13" height="13"><path d="M6.5 1v11M6.5 1L2 5.5M6.5 1L11 5.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div></div>
   </div>
-  <div class="content">
-    <div id="page-arch" class="page active">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px">
-        <div><div style="font-size:18px;font-weight:800;color:#0F172A">Budget Architecture</div><div style="font-size:13px;color:#64748B;margin-top:2px">Three protected buckets — no cannibalization between them</div></div>
-        <div class="seg"><button class="seg-btn active" onclick="setAud('acq',this)">ACQ BAU</button><button class="seg-btn" onclick="setAud('rtn',this)">RTN</button></div>
-      </div>
-      <div class="buckets" id="bkts"></div>
-      <div class="grid2">
-        <div class="card"><div class="card-title">Budget Competition Leaderboard</div><div class="card-sub" style="margin-bottom:12px">Next incremental dollar — sorted by ACQ CPA</div><div id="lb"></div></div>
-        <div class="card"><div class="card-title">Graduation Watch</div><div class="card-sub" style="margin-bottom:12px">Channel Build items approaching Evergreen (4 weeks at target)</div><div id="gw"></div></div>
-      </div>
-    </div>
-    <div id="page-mx" class="page">
-      <div style="font-size:18px;font-weight:800;color:#0F172A;margin-bottom:4px">Performance Matrix</div>
-      <div style="font-size:13px;color:#64748B;margin-bottom:16px">CPA by product × channel × geo — ACQ and RTN never blended</div>
-      <div class="mx-c">
-        <span class="mx-l">Audience:</span>
-        <div class="seg"><button class="seg-btn active" onclick="setMx('a','acq',this)">ACQ BAU</button><button class="seg-btn" onclick="setMx('a','rtn',this)">RTN</button></div>
-        <span class="mx-l" style="margin-left:8px">Geo:</span>
-        <div class="seg"><button class="seg-btn active" onclick="setMx('g','all',this)">All</button><button class="seg-btn" onclick="setMx('g','US',this)">🇺🇸 US</button><button class="seg-btn" onclick="setMx('g','CA',this)">🇨🇦 CA</button></div>
-      </div>
-      <div class="card" style="padding:0;overflow:hidden;margin-bottom:12px"><div style="overflow-x:auto"><table><thead><tr><th>Product · Geo</th><th class="r">Meta</th><th class="r">AppLovin</th><th class="r">TikTok</th><th class="r">Best ★</th><th class="r">Target</th><th>Bucket</th></tr></thead><tbody id="mx-body"></tbody></table></div></div>
-      <div style="background:#F0FDF4;border:1px solid #A7F3D0;border-radius:8px;padding:10px 14px;font-size:12px;color:#065F46;line-height:1.8"><strong>Allocation rule:</strong> Dream Boxer AppLovin ($75) beats Meta ($80) → AppLovin earns the next dollar. Swim Canada ($65) beats US ($95) → Canada grows first. ★ = winning channel.</div>
-    </div>
-    <div id="page-cr" class="page">
-      <div style="font-size:18px;font-weight:800;color:#0F172A;margin-bottom:4px">Creative Intelligence</div>
-      <div style="font-size:13px;color:#64748B;margin-bottom:12px">Wald sequential analysis — early signals, not fixed-date verdicts</div>
-      <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#1E40AF;line-height:1.7"><strong>How to read this:</strong> Each creative is scored weekly against its own trend. <strong>Emerging</strong> = scale now before it peaks. <strong>Fatiguing</strong> = cut before wasting more budget. <strong>Inconclusive</strong> = not enough data — do not touch yet.</div>
-      <div class="sig-bar"><button class="sf sf-all on" onclick="fSig('all',this)">All</button><button class="sf sf-em" onclick="fSig('em',this)">🟢 Emerging</button><button class="sf sf-ma" onclick="fSig('ma',this)">⚪ Maturing</button><button class="sf sf-fa" onclick="fSig('fa',this)">🔴 Fatiguing</button><button class="sf sf-in" onclick="fSig('in',this)">○ Inconclusive</button></div>
-      <div class="cr-grid" id="cr-grid"></div>
-    </div>    <div id="page-up" class="page">
-      <div style="font-size:18px;font-weight:800;color:#0F172A;margin-bottom:4px">Upload Data</div>
-      <div style="font-size:13px;color:#64748B;margin-bottom:20px">Weekly Meta CSV export — auto-parses product, audience type and format from ad naming convention</div>
-      <div class="grid2" style="gap:20px;align-items:start">
-        <div>
-          <div class="uz" id="dz" onclick="document.getElementById('cfi').click()">
-            <input type="file" id="cfi" accept=".csv" style="display:none" onchange="hUp(this)">
-            <div style="font-size:32px;margin-bottom:8px">📊</div>
-            <div style="font-size:15px;font-weight:600;color:#1E293B;margin-bottom:4px">Drop your Meta export here</div>
-            <div style="font-size:13px;color:#64748B">or <span style="color:#3B82F6;font-weight:600">choose a CSV file</span></div>
-            <div style="font-size:11px;color:#94A3B8;margin-top:8px">Campaigns · Ad Sets · Ads · Weekly</div>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <div class="card-title" style="margin-bottom:14px">Column Detection</div>
-            <div style="font-size:11px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Auto-parsed</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-              <div class="ci ci-a"><div class="ci-n">Product</div><div class="ci-v">✓ From ad name</div></div>
-              <div class="ci ci-a"><div class="ci-n">Audience</div><div class="ci-v">✓ BAU vs RTN</div></div>
-              <div class="ci ci-a"><div class="ci-n">Format</div><div class="ci-v">✓ Video/Static</div></div>
-              <div class="ci ci-a"><div class="ci-n">Spend &amp; CPA</div><div class="ci-v">✓ CSV columns</div></div>
-            </div>
-            <div style="font-size:11px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Manual tagging</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <div class="ci ci-m"><div class="ci-n">Angle</div><div class="ci-v">⚡ You tag this</div></div>
-              <div class="ci ci-m"><div class="ci-n">Bucket</div><div class="ci-v">⚡ You assign</div></div>
-              <div class="ci ci-m"><div class="ci-n">Geo</div><div class="ci-v">⚡ Ad set name</div></div>
-              <div class="ci ci-m"><div class="ci-n">Channel</div><div class="ci-v">⚡ Per upload</div></div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="card">
-            <div class="card-title" style="margin-bottom:12px">Example Parse — Meta Ad Name</div>
-            <div style="background:#F8FAFC;border-radius:6px;padding:10px 12px;font-size:11px;color:#475569;font-family:monospace;line-height:1.9;border:1px solid #E2E8F0;word-break:break-all;margin-bottom:14px">The_Bra_You_Forget_<strong style="color:#059669">BAU</strong>_<strong style="color:#2563EB">Revolution</strong>_<strong style="color:#7C3AED">Video_19s</strong>_<strong style="color:#0891B2">PLP</strong>_5.23.25</div>
-            <div style="display:flex;flex-direction:column;gap:1px">
-              <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F1F5F9;font-size:12px"><span style="color:#64748B">Product</span><span style="font-weight:600;color:#2563EB">Revolution <span class="pb">AUTO</span></span></div>
-              <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F1F5F9;font-size:12px"><span style="color:#64748B">Audience</span><span style="font-weight:600;color:#059669">ACQ BAU <span class="pb">AUTO</span></span></div>
-              <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F1F5F9;font-size:12px"><span style="color:#64748B">Format</span><span style="font-weight:600;color:#059669">Video 19s <span class="pb">AUTO</span></span></div>
-              <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F1F5F9;font-size:12px"><span style="color:#64748B">Angle</span><span style="font-weight:600;color:#D97706">Not in name <span class="nt">TAG IT</span></span></div>
-              <div style="display:flex;justify-content:space-between;padding:7px 0;font-size:12px"><span style="color:#64748B">Bucket</span><span style="font-weight:600;color:#D97706">Assign on upload <span class="nt">TAG IT</span></span></div>
-            </div>
-          </div>
-          <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:12px 16px">
-            <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:8px">Naming convention tip</div>
-            <div style="font-size:12px;color:#78350F;line-height:1.8">Add angle codes to new ad names to eliminate manual tagging:<br><code style="background:#FEF3C7;padding:2px 6px;border-radius:3px;font-size:11px">BAU_LeakproofCore_UGC_ANG-Incontinence_PDP_2026-04</code><br><br>Then angle becomes <span class="pb">AUTO</span> on every upload.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+</div></div>
 <script>
-const D=[{p:'Dream Boxer',c:'Meta',g:'US',bk:'ev',tc:85,ca:{a:80,r:42},bd:4500,w:8},{p:'Leakproof Core',c:'Meta',g:'US',bk:'ev',tc:150,ca:{a:145,r:68},bd:25000,w:12},{p:'Sculpt Rib',c:'Meta',g:'US',bk:'ev',tc:110,ca:{a:100,r:54},bd:13000,w:6},{p:'Swim',c:'Meta',g:'CA',bk:'ev',tc:90,ca:{a:65,r:36},bd:8000,w:5},{p:'Leakproof Core',c:'Meta',g:'CA',bk:'ev',tc:140,ca:{a:118,r:60},bd:9000,w:7},{p:'Dream Boxer',c:'AppLovin',g:'US',bk:'ch',tc:85,ca:{a:75,r:null},bd:3200,w:4},{p:'Leakproof Core',c:'TikTok',g:'US',bk:'ch',tc:150,ca:{a:165,r:null},bd:5000,w:0},{p:'Sculpt Rib',c:'AppLovin',g:'US',bk:'ch',tc:110,ca:{a:108,r:null},bd:2800,w:3},{p:'Dream Short',c:'TikTok',g:'US',bk:'ch',tc:130,ca:{a:142,r:null},bd:4000,w:1},{p:'Swim',c:'Meta',g:'US',bk:'ar',tc:110,ca:{a:95,r:48},bd:6000,w:2},{p:'DPA',c:'Meta',g:'US',bk:'ar',tc:130,ca:{a:115,r:62},bd:15000,w:0},{p:'FreeFlex',c:'Meta',g:'US',bk:'ar',tc:160,ca:{a:185,r:88},bd:4500,w:0}];
-const CR=[{n:'Dream Boxer — Comfort All Day',p:'Dream Boxer',c:'Meta',f:'UGC Video',an:'Comfort',g:'US',au:'ACQ BAU',h:[122,108,94,82,78,75],s:'em'},{n:'Leakproof — Incontinence (Founder)',p:'Leakproof Core',c:'Meta',f:'Founder Video',an:'Incontinence',g:'US',au:'ACQ BAU',h:[195,172,155,148,142],s:'em'},{n:'Swim Canada — Summer Confidence',p:'Swim',c:'Meta',f:'UGC Video',an:'Confidence',g:'CA',au:'ACQ BAU',h:[88,75,70,65],s:'em'},{n:'Dream Boxer — AppLovin Static',p:'Dream Boxer',c:'AppLovin',f:'Static',an:'Value',g:'US',au:'ACQ BAU',h:[90,85,80,76,75],s:'em'},{n:'Sculpt Rib — Back to School',p:'Sculpt Rib',c:'Meta',f:'Static Promo',an:'Lifestyle',g:'US',au:'ACQ BAU',h:[104,102,101,103,102],s:'ma'},{n:'Leakproof — 7-Day Risk Free',p:'Leakproof Core',c:'Meta',f:'Static Promo',an:'Offer',g:'US',au:'ACQ BAU',h:[148,145,147,146,148],s:'ma'},{n:'DPA Carousel — All Collection',p:'DPA',c:'Meta',f:'Carousel',an:'Catalogue',g:'US',au:'RTN',h:[68,65,66,67,68],s:'ma'},{n:'Leakproof — Sweat (Killed)',p:'Leakproof Core',c:'Meta',f:'UGC Video',an:'Sweat',g:'US',au:'ACQ BAU',h:[182,190,205,218],s:'fa'},{n:'FreeFlex — Wireless Freedom',p:'FreeFlex',c:'Meta',f:'UGC Video',an:'Wire-free',g:'US',au:'ACQ BAU',h:[168,175,188,195],s:'fa'},{n:'Dream Short — Postpartum',p:'Dream Short',c:'TikTok',f:'UGC Video',an:'Postpartum',g:'US',au:'ACQ BAU',h:[210,188],s:'in'},{n:'Sculpt Rib — AppLovin Static',p:'Sculpt Rib',c:'AppLovin',f:'Static',an:'Comfort',g:'US',au:'ACQ BAU',h:[112,108],s:'in'}];
-let aud='acq',mxA='acq',mxG='all',sf='all';
-const fC=n=>n==null?'—':'$'+Math.round(n).toLocaleString();
-const gBL=b=>({ev:'Evergreen',ch:'Channel Build',ar:'At-Risk'}[b]);
-const gBC=b=>({ev:'bev',ch:'bch',ar:'bar'}[b]);
-const cC=(c,t)=>!c?'':c<=t?'cpa-good':c<=t*1.2?'cpa-warn':'cpa-bad';
-function rArch(){const bd={ev:{l:'Evergreen',s:'Protected floor — never touched',cl:'bucket-ev',ic:'🛡️'},ch:{l:'Channel Build',s:'Additive — not from Evergreen',cl:'bucket-ch',ic:'📈'},ar:{l:'At-Risk',s:'ROAS dilution accepted',cl:'bucket-ar',ic:'⚠️'}};
-document.getElementById('bkts').innerHTML=['ev','ch','ar'].map(b=>{const it=D.filter(d=>d.bk===b);const gC=d=>aud==='rtn'?d.ca.r:d.ca.a;const tot=it.reduce((s,i)=>s+i.bd,0);const vl=it.filter(d=>gC(d)!=null);const av=vl.length?vl.reduce((s,d)=>s+gC(d),0)/vl.length:0;return'<div class="bucket '+bd[b].cl+'"><div class="bucket-header"><div style="display:flex;align-items:flex-start;gap:8px"><span style="font-size:18px;line-height:1">'+bd[b].ic+'</span><div><div class="bucket-name">'+bd[b].l+'</div><div style="font-size:11px;color:#6B7280;margin-top:1px">'+bd[b].s+'</div></div></div><div class="bucket-stats" style="margin-top:10px"><div><span class="bstat-val">'+fC(tot)+'</span><span class="bstat-lbl">/wk</span></div><div><span class="bstat-val">'+fC(av)+'</span><span class="bstat-lbl">avg CPA</span></div></div></div><div class="bucket-body">'+it.map(d=>{const cp=gC(d);const at=cp&&cp<=d.tc;return'<div class="bucket-item"><div class="bi-top"><div class="bi-name">'+d.p+'</div><div style="display:flex;align-items:center;gap:5px">'+(b==='ch'&&d.w>=4?'<button class="grad-btn">↑ Graduate</button>':'')+(b==='ch'&&d.w>=2&&d.w<4?'<span class="grad-badge">'+d.w+'w</span>':'')+'<span class="'+cC(cp,d.tc)+'">'+fC(cp)+'</span></div></div><div class="bi-tags"><span class="tag tag-ch">'+d.c+'</span><span class="tag tag-geo">'+d.g+'</span>'+(at?'<span class="tag" style="background:#ECFDF5;color:#065F46">✓ target</span>':'<span class="tag" style="background:#FEF2F2;color:#991B1B">$'+d.tc+'</span>')+'</div><div class="bi-budget">'+fC(d.bd)+'/wk · '+d.w+'w</div></div>';}).join('')+'</div></div>';}).join('');
-const s=[...D].filter(d=>d.ca.a).sort((a,b)=>a.ca.a-b.ca.a);const mx=Math.max(...s.map(d=>d.ca.a));
-document.getElementById('lb').innerHTML=s.slice(0,8).map((d,i)=>'<div class="lb-item"><div class="lb-r '+(i<3?'top':'')+'">'+( i+1)+'</div><div style="flex:1"><div style="font-size:12px;font-weight:600">'+d.p+' · '+d.c+' · '+d.g+'</div><div style="display:flex;gap:4px;margin-top:3px"><span class="tag tag-ch" style="font-size:10px">'+d.c+'</span><span class="'+gBC(d.bk)+'">'+gBL(d.bk)+'</span></div></div><div style="text-align:right"><div class="cpa-good" style="font-weight:700;font-size:13px">'+fC(d.ca.a)+'</div><div class="lb-bar-w"><div class="lb-bar" style="width:'+((1-d.ca.a/mx)*100).toFixed(0)+'%"></div></div></div></div>').join('');
-const g=D.filter(d=>d.bk==='ch'&&d.ca.a&&d.ca.a<=d.tc);
-document.getElementById('gw').innerHTML=!g.length?'<div style="font-size:13px;color:#94A3B8;padding:4px 0">No items ready yet</div>':g.map(d=>'<div style="padding:10px 12px;background:'+(d.w>=4?'#ECFDF5':'#FFFBEB')+';border:1px solid '+(d.w>=4?'#A7F3D0':'#FDE68A')+';border-radius:8px;margin-bottom:8px"><div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:700;font-size:13px">'+d.p+' · '+d.c+' · '+d.g+'</div><div style="font-size:12px;color:#6B7280;margin-top:2px">'+fC(d.ca.a)+' vs $'+d.tc+' · '+d.w+'w</div></div><div style="font-size:11px;font-weight:700;color:'+(d.w>=4?'#059669':'#D97706')+'">'+(d.w>=4?'✓ READY':'+'+(4-d.w)+'w')+'</div></div></div>').join('');}
-function setAud(v,b){aud=v;b.closest('.seg').querySelectorAll('.seg-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');rArch();}
-function rMx(){const rows=[{p:'Dream Boxer',g:'US',cp:{Meta:{a:80,r:42},AppLovin:{a:75,r:null},TikTok:{a:null,r:null}},t:85,bk:'ev'},{p:'Leakproof Core',g:'US',cp:{Meta:{a:145,r:68},AppLovin:{a:null,r:null},TikTok:{a:165,r:null}},t:150,bk:'ev'},{p:'Leakproof Core',g:'CA',cp:{Meta:{a:118,r:60},AppLovin:{a:null,r:null},TikTok:{a:null,r:null}},t:140,bk:'ev'},{p:'Sculpt Rib',g:'US',cp:{Meta:{a:100,r:54},AppLovin:{a:108,r:null},TikTok:{a:null,r:null}},t:110,bk:'ev'},{p:'Swim',g:'CA',cp:{Meta:{a:65,r:36},AppLovin:{a:null,r:null},TikTok:{a:null,r:null}},t:90,bk:'ev'},{p:'Swim',g:'US',cp:{Meta:{a:95,r:48},AppLovin:{a:null,r:null},TikTok:{a:null,r:null}},t:110,bk:'ar'},{p:'Dream Short',g:'US',cp:{Meta:{a:165,r:82},AppLovin:{a:null,r:null},TikTok:{a:142,r:null}},t:130,bk:'ch'},{p:'DPA',g:'US',cp:{Meta:{a:115,r:62},AppLovin:{a:null,r:null},TikTok:{a:null,r:null}},t:130,bk:'ar'}];
-const fl=mxG==='all'?rows:rows.filter(r=>r.g===mxG);
-document.getElementById('mx-body').innerHTML=fl.map(r=>{const chs=['Meta','AppLovin','TikTok'];const cs=chs.map(c=>mxA==='rtn'?r.cp[c]?.r:r.cp[c]?.a);const vl=cs.filter(x=>x!=null);const best=vl.length?Math.min(...vl):null;const bCh=best?chs[cs.indexOf(best)]:'—';const iW=best&&best<=r.t;return'<tr '+(iW?'class="winner"':'')+'><td><div style="font-weight:600;font-size:13px">'+r.p+'</div><div style="font-size:11px;color:#94A3B8;margin-top:1px">'+r.g+'</div></td>'+chs.map((ch,i)=>{const cp=cs[i];const ib=cp===best&&vl.length>1;return'<td><div class="cpa-cell">'+(cp?'<div class="cpa-main '+cC(cp,r.t)+'">'+fC(cp)+(ib?' ★':'')+'</div>':'<div style="color:#CBD5E1;font-size:12px;text-align:right">—</div>')+'</div></td>';}).join('')+'<td><div class="cpa-cell">'+(best?'<div class="cpa-main cpa-good" style="font-size:14px">'+fC(best)+'</div><div style="font-size:11px;color:#059669;font-weight:600;text-align:right">'+bCh+'</div>':'<div style="color:#CBD5E1">—</div>')+'</div></td><td class="r"><span style="font-weight:600;color:#64748B">'+fC(r.t)+'</span></td><td><span class="'+gBC(r.bk)+'">'+gBL(r.bk)+'</span></td></tr>';}).join('');}
-function setMx(t,v,b){if(t==='a')mxA=v;else mxG=v;b.closest('.seg').querySelectorAll('.seg-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');rMx();}
-function spk(h,s){if(h.length<2)return'';const c={em:'#059669',ma:'#94A3B8',fa:'#DC2626',in:'#CBD5E1'}[s];const W=84,H=28,P=2,hi=Math.max(...h)+5,lo=Math.min(...h)-5;const pts=h.map((v,i)=>P+(W-P*2)*(i/(h.length-1))+','+( P+(H-P*2)*(1-(v-lo)/(hi-lo)))).join(' ');const lx=P+(W-P*2),ly=P+(H-P*2)*(1-(h[h.length-1]-lo)/(hi-lo));return'<svg width="'+W+'" height="'+H+'"><polyline points="'+pts+'" fill="none" stroke="'+c+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="'+lx+'" cy="'+ly+'" r="3" fill="'+c+'"/></svg>';}
-function rCr(){const lb={em:'Emerging — scale now',ma:'Maturing — hold',fa:'Fatiguing — cut',in:'Inconclusive — wait'};const sc={em:'sb-em',ma:'sb-ma',fa:'sb-fa',in:'sb-in'};const fl=sf==='all'?CR:CR.filter(c=>c.s===sf);document.getElementById('cr-grid').innerHTML=fl.map(c=>{const d=c.h[c.h.length-1]-c.h[0];return'<div class="cr-row"><div class="sdot s-'+c.s+'"></div><div><div class="cr-name">'+c.n+'</div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px"><span class="tag tag-ch">'+c.c+'</span><span class="tag tag-geo">'+c.g+'</span><span class="tag tag-acq">'+c.au+'</span><span class="tag" style="background:#F5F3FF;color:#5B21B6">'+c.f+'</span><span class="tag" style="background:#F0F9FF;color:#0369A1">∠ '+c.an+'</span><span class="tag" style="background:#F8FAFC;color:#475569">'+c.h.length+'w</span></div><div style="font-size:11px;color:#64748B">$'+c.h[0]+' → $'+c.h[c.h.length-1]+'  <strong style="color:'+(d<0?'#059669':d>0?'#DC2626':'#94A3B8')+'">'+(d<0?'▼':'▲')+'$'+Math.abs(d)+' '+(d<0?'improvement':'increase')+'</strong></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0"><span class="sbadge '+sc[c.s]+'">'+lb[c.s]+'</span>'+spk(c.h,c.s)+'<div style="font-size:10px;color:#94A3B8">'+c.h.length+'w trend →</div></div></div>';}).join('');}
-function fSig(v,b){sf=v;document.querySelectorAll('.sf').forEach(x=>x.classList.remove('on'));b.classList.add('on');rCr();}
-function hUp(i){if(!i.files.length)return;document.getElementById('dz').innerHTML='<div style="font-size:24px;margin-bottom:8px">✅</div><div style="font-size:14px;font-weight:600;color:#059669">'+i.files[0].name+' ready</div>';}
-function go(p){document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');document.querySelectorAll('.nav-tab').forEach((t,i)=>{t.classList.toggle('active',['arch','mx','cr','up'][i]===p);});}
-rArch();rMx();rCr();
+var TIDS={'ap':'1776177755411','teen':'1776174568175'};
+var FB={sweat:'https://knix.com/collections/sweat-discharge',discharge:'https://knix.com/collections/sweat-discharge',bladder:'https://knix.com/collections/incontinence-underwear',postpartum:'https://knix.com/collections/maternity-postpartum'};
+var PID={'superplus-leakproof-no-show-high-rise':7719316619306,'superplus-leakproof-no-show-bikini':7719310131242,'super-leakproof-dream-short':7692327518250,'super-leakproof-dream-boxer':7669113618474,'super-leakproof-no-show-high-rise':7708683141162,'super-leakproof-no-show-bikini':7706939424810,'super-leakproof-no-show-french-cut':7708677668906,'super-leakproof-cotton-high-rise':7819308105770,'super-leakproof-cotton-bikini':7819307614250,'light-leakproof-no-show-high-rise':7640940150826,'light-leakproof-no-show-bikini':7640937594922,'light-leakproof-no-show-thong':7640938479658,'light-leakproof-no-show-boyshort':7640939397162,'leakproof-corelove-high-rise':7640927273002,'teen-super-leakproof-sleepover-boxer':7679971786794,'teen-leakproof-luxe-modal-sleep-boxer':7640930451498,'teen-leakproof-ultrathin-no-show-boyshort':7640934318122,'teen-leakproof-ultrathin-no-show-bikini':7640934416426,'teen-leakproof-cotton-bikini':7640920031274};
+var PN={'superplus-leakproof-no-show-high-rise':'SuperPlus Leakproof No-Show High Rise','superplus-leakproof-no-show-bikini':'SuperPlus Leakproof No-Show Bikini','super-leakproof-dream-short':'Super Leakproof Dream Short','super-leakproof-dream-boxer':'Super Leakproof Dream Boxer','super-leakproof-no-show-high-rise':'Super Leakproof No-Show High Rise','super-leakproof-no-show-bikini':'Super Leakproof No-Show Bikini','super-leakproof-no-show-french-cut':'Super Leakproof No-Show French Cut','super-leakproof-cotton-high-rise':'Super Leakproof Cotton High Rise','super-leakproof-cotton-bikini':'Super Leakproof Cotton Bikini','light-leakproof-no-show-high-rise':'Light Leakproof No-Show High Rise','light-leakproof-no-show-bikini':'Light Leakproof No-Show Bikini','light-leakproof-no-show-thong':'Light Leakproof No-Show Thong','light-leakproof-no-show-boyshort':'Light Leakproof No-Show Boyshort','leakproof-corelove-high-rise':'Leakproof CoreLove High Rise','teen-super-leakproof-sleepover-boxer':'Teen Super Leakproof Sleepover Boxer','teen-leakproof-luxe-modal-sleep-boxer':'Teen Leakproof Luxe Modal Sleep Boxer','teen-leakproof-ultrathin-no-show-boyshort':'Teen Leakproof UltraThin No-Show Boyshort','teen-leakproof-ultrathin-no-show-bikini':'Teen Leakproof UltraThin No-Show Bikini','teen-leakproof-cotton-bikini':'Teen Leakproof Cotton Bikini'};
+var PV={'teen-super-leakproof-sleepover-boxer':'"My daughter refused to go back to pads." - Sarah M.','teen-leakproof-luxe-modal-sleep-boxer':'"So soft. She wears these every cycle now." - Melissa T.','teen-leakproof-ultrathin-no-show-boyshort':'"Zero leaks, zero bulk." - Amanda K.','teen-leakproof-ultrathin-no-show-bikini':'"Exactly like regular underwear." - Rachel D.','teen-leakproof-cotton-bikini':'"Feels normal and actually works." - Jess P.','super-leakproof-dream-short':'"I donated every tampon after one cycle." - Jamie K.','super-leakproof-dream-boxer':'"Bought 3 more. Perfect for heavy nights." - Tanya R.','super-leakproof-no-show-high-rise':'"Skeptical at first. Now I own 7 pairs." - Priya L.','super-leakproof-no-show-bikini':'"Wore it on my heaviest day. Life changing." - Chris M.','super-leakproof-no-show-french-cut':'"Perfect everyday pair." - Diane W.','super-leakproof-cotton-high-rise':'"Feels like regular underwear but holds everything." - Sofia R.','super-leakproof-cotton-bikini':'"Recommended to everyone I know." - Beth A.','light-leakproof-no-show-high-rise':'"Invisible under everything." - Nat C.','light-leakproof-no-show-bikini':'"My new everyday favourite." - Amy H.','light-leakproof-no-show-thong':'"Completely invisible and works." - Lauren B.','light-leakproof-no-show-boyshort':'"Extra coverage without bulk." - Maya S.','leakproof-corelove-high-rise':'"Felt fully supported postpartum." - Erin F.'};
+var IMGS={teen:'https://forms.knix.ca/s3awjbnctc/vendors/3eb2af7f-892e-4355-bf67-36947ac5de54/uploads/7b283c13-4b78-460f-a38f-e51fa63d2ded/Teen.png',adult:'https://forms.knix.ca/s3awjbnctc/vendors/3eb2af7f-892e-4355-bf67-36947ac5de54/uploads/bb29dc48-b3d8-43e0-9d9d-52dd5bf31dc7/Adult.png'};
+
+function tick(){var n=new Date(),h=n.getHours(),m=n.getMinutes(),a=h>=12?'PM':'AM';h=h%12||12;document.getElementById('BTIME').textContent=h+':'+(m<10?'0':'')+m+' '+a;}
+tick();setInterval(tick,30000);
+
+function getHandles(){
+  var flow=S.flow||[];
+  var hi=flow.indexOf('extraheavy')>-1?'ultra':flow.indexOf('heavy')>-1?'heavy':flow.indexOf('moderate')>-1?'moderate':'light';
+  if(S.leakAmt==='more')hi='heavy';
+  var p=S.adultProt,pu=S.periodUsage;
+  if(S.who==='teen'){if(hi==='heavy'||hi==='ultra')return['teen-super-leakproof-sleepover-boxer','teen-leakproof-luxe-modal-sleep-boxer','teen-leakproof-ultrathin-no-show-boyshort'];return['teen-leakproof-ultrathin-no-show-bikini','teen-leakproof-ultrathin-no-show-boyshort','teen-leakproof-cotton-bikini'];}
+  if(p==='periods'){if(pu==='overnight')return['super-leakproof-dream-short','super-leakproof-dream-boxer','superplus-leakproof-no-show-high-rise'];if(pu==='lightday')return['light-leakproof-no-show-high-rise','light-leakproof-no-show-bikini','light-leakproof-no-show-thong'];if(pu==='backup'){if(hi==='heavy'||hi==='ultra')return['super-leakproof-no-show-high-rise','super-leakproof-no-show-bikini','super-leakproof-no-show-french-cut'];return['super-leakproof-cotton-high-rise','super-leakproof-cotton-bikini','light-leakproof-no-show-high-rise'];}if(hi==='ultra')return['superplus-leakproof-no-show-high-rise','superplus-leakproof-no-show-bikini','super-leakproof-dream-short'];if(hi==='heavy')return['super-leakproof-dream-short','super-leakproof-no-show-high-rise','super-leakproof-no-show-bikini'];if(hi==='moderate')return['super-leakproof-cotton-high-rise','super-leakproof-cotton-bikini','super-leakproof-no-show-french-cut'];return['light-leakproof-no-show-high-rise','light-leakproof-no-show-bikini','light-leakproof-no-show-thong'];}
+  if(p==='sweat'||p==='discharge')return['light-leakproof-no-show-thong','light-leakproof-no-show-bikini','light-leakproof-no-show-high-rise'];
+  if(p==='bladder'){if(S.leakAmt==='more')return['super-leakproof-no-show-high-rise','super-leakproof-cotton-high-rise','super-leakproof-no-show-bikini'];return['light-leakproof-no-show-high-rise','super-leakproof-cotton-high-rise','light-leakproof-no-show-bikini'];}
+  return['leakproof-corelove-high-rise','super-leakproof-no-show-high-rise','super-leakproof-dream-short'];
+}
+function getPL(){if(S.who==='teen')return{backup:'Backup Protection',sweat:'Sweat and Sports',everyday:'Every Day Period Protection'}[S.teenProt]||'Period Protection';return{periods:'Periods',sweat:'Sweat',discharge:'Discharge',bladder:'Light Bladder Leaks',postpartum:'Pregnancy and Postpartum'}[S.adultProt]||'Periods';}
+function getRU(){var p=S.adultProt;if(S.who==='teen'||p==='periods'){var hh=getHandles();var ids=hh.map(function(h){return PID[h];}).filter(Boolean);return'https://knix.com/pages/quiz-results?max_products=3&rowlen=3&hide_oos=true&show_hero=false&products='+hh.join(',')+'&ids='+ids.join(',')+'&name='+encodeURIComponent(S.name||'')+'&underwear_size='+encodeURIComponent(S.size||'')+'&period_protection='+encodeURIComponent(getPL())+'&type='+TIDS[S.who==='teen'?'teen':'ap'];}return FB[p]||'https://knix.com/pages/category-all-underwear';}
+
+var CH,TR,S,lk,_ms,_ss,sqc;
+function init(){CH=document.getElementById('CHAT');TR=document.getElementById('TRAY');S={who:'',teenProt:'',adultProt:'',periodUsage:'',ppUsage:'',bladderRoutine:'',bladderCurrent:[],leakAmt:'',styles:[],cycleLen:'',flow:[],size:'',name:'',email:''};lk=false;_ms={};_ss={};sqc=0;}
+function sc(){CH.scrollTop=CH.scrollHeight;}
+function prog(p){document.getElementById('PFL').style.width=p+'%';document.getElementById('PDT').style.left=p+'%';}
+function setTray(h){TR.innerHTML=h;}
+function aAI(h){var r=document.createElement('div');r.className='row ai';var a=document.createElement('div');a.className='ava';a.textContent='\u{1F495}';var b=document.createElement('div');b.className='bub ai';b.innerHTML=h;r.appendChild(a);r.appendChild(b);CH.appendChild(r);sc();}
+function aMe(h){var r=document.createElement('div');r.className='row me';var b=document.createElement('div');b.className='bub me';b.innerHTML=h;r.appendChild(b);CH.appendChild(r);sc();}
+function aEl(el){CH.appendChild(el);sc();}
+function aT(){var r=document.createElement('div');r.className='trow';var a=document.createElement('div');a.className='ava';a.textContent='\u{1F495}';var t=document.createElement('div');t.className='tbub';t.innerHTML='<div class="d"></div><div class="d"></div><div class="d"></div>';r.appendChild(a);r.appendChild(t);CH.appendChild(r);sc();return r;}
+function rT(el){if(el&&el.parentNode)el.parentNode.removeChild(el);}
+function seq(steps){var i=0;function nx(){if(i>=steps.length)return;var s=steps[i++];if(s.t==='typ'){var el=aT();setTimeout(function(){rT(el);nx();},s.d||850);}else if(s.t==='bub'){aAI(s.h);setTimeout(nx,s.a||220);}else if(s.t==='el'){aEl(s.e);setTimeout(nx,s.a||100);}else if(s.t==='fn'){s.f();setTimeout(nx,s.a||0);}else if(s.t==='wait'){setTimeout(nx,s.d||400);}}nx();}
+
+var STY=[{v:'thong',l:'Thong',s:'th',c1:'#A8836E',c2:'#8A6454',bg:'#F5EEEA'},{v:'bikini',l:'Bikini',s:'bk',c1:'#9B6B5A',c2:'#7A5040',bg:'#F0E8E2'},{v:'french',l:'French Cut',s:'fc',c1:'#8A7FA8',c2:'#6B6087',bg:'#EEEAF4'},{v:'highrise',l:'High Rise',s:'hr',c1:'#5A7A72',c2:'#3D5E57',bg:'#E4EEEC'},{v:'boyshort',l:'Boyshort',s:'bs',c1:'#C17B6E',c2:'#A05E55',bg:'#FAF0EB'},{v:'boxer',l:'Boxer',s:'bx',c1:'#4A6FA5',c2:'#3A5A8A',bg:'#E8EEF5'}];
+
+function uw(s,c1,c2,bg){
+  var x='<svg viewBox="0 0 90 78" xmlns="http://www.w3.org/2000/svg" width="60" height="52"><rect width="90" height="78" fill="'+bg+'"/>';
+  if(s==='th'){x+='<rect x="18" y="16" width="54" height="8" rx="4" fill="'+c2+'"/><path d="M18 21 Q24 27 30 31 L45 65 Q45 65 60 31 Q66 27 72 21" fill="'+c1+'"/>';}
+  else if(s==='bk'){x+='<path d="M20 24 Q45 14 70 24 L66 54 Q55 46 45 50 Q35 46 24 54Z" fill="'+c1+'"/><rect x="20" y="19" width="50" height="8" rx="4" fill="'+c2+'"/>';}
+  else if(s==='fc'){x+='<path d="M15 20 Q45 9 75 20 L70 54 Q59 46 45 49 Q31 46 20 54Z" fill="'+c1+'"/><rect x="15" y="15" width="60" height="8" rx="4" fill="'+c2+'"/>';}
+  else if(s==='hr'){x+='<path d="M12 15 Q45 4 78 15 L74 58 Q60 48 45 52 Q30 48 16 58Z" fill="'+c1+'"/><rect x="12" y="10" width="66" height="9" rx="4.5" fill="'+c2+'"/>';}
+  else if(s==='bs'){x+='<path d="M14 22 Q45 11 76 22 L72 60 Q58 50 45 54 Q32 50 18 60Z" fill="'+c1+'"/><rect x="14" y="17" width="62" height="9" rx="4.5" fill="'+c2+'"/>';}
+  else{x+='<path d="M12 19 Q45 8 78 19 L76 60 Q60 50 45 54 Q30 50 14 60Z" fill="'+c1+'"/><rect x="12" y="14" width="66" height="9" rx="4.5" fill="'+c2+'"/>';}
+  return x+'</svg>';
+}
+
+var TSZ=[{s:'XXS',m:'25-27"'},{s:'XS',m:'28-30"'},{s:'S',m:'31-34"'},{s:'M',m:'35-38"'},{s:'L',m:'39-42"'},{s:'XL',m:'43-46"'},{s:'XXL',m:'47-50"'}];
+var ASZ=[{s:'XS',m:'33-35"'},{s:'S',m:'36-38"'},{s:'M',m:'39-41"'},{s:'L',m:'42-44"'},{s:'XL',m:'45-47"'},{s:'XXL',m:'48-50"'},{s:'XXXL',m:'51-53"'},{s:'XXXXL',m:'54-56"'}];
+
+function mkWho(){
+  var w=document.createElement('div');w.className='wrow';
+  [{v:'teen',l:'Teen',img:IMGS.teen},{v:'adult',l:'Adult',img:IMGS.adult}].forEach(function(c){
+    var d=document.createElement('div');d.className='wc';
+    var ph=document.createElement('div');ph.className='wph';ph.style.backgroundImage='url('+c.img+')';
+    var lb=document.createElement('div');lb.className='wlb';lb.textContent=c.l;
+    d.appendChild(ph);d.appendChild(lb);
+    d.onclick=function(){if(lk)return;lk=true;d.classList.add('sel');[].forEach.call(w.querySelectorAll('.wc'),function(x){if(x!==d)x.classList.add('fad');});S.who=c.v;aMe(c.l);setTimeout(function(){lk=false;afterWho(c.v);},350);};
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function mkChips(id,items,fn){
+  var w=document.createElement('div');w.className='chips';w.id=id;
+  items.forEach(function(it){
+    var d=document.createElement('div');d.className='chip';
+    var sp=document.createElement('span');sp.textContent=it.l;
+    var ca=document.createElement('span');ca.className='ca';ca.textContent='\u203a';
+    d.appendChild(sp);d.appendChild(ca);
+    d.onclick=function(){if(lk)return;lk=true;d.classList.add('on');[].forEach.call(w.querySelectorAll('.chip'),function(x){x.classList.add('lk');});aMe(it.l);setTray('');setTimeout(function(){lk=false;fn(it.v);},350);};
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function mkMulti(id,items){
+  _ms[id]=[];
+  var w=document.createElement('div');w.className='chips';w.id=id;
+  items.forEach(function(it){
+    var d=document.createElement('div');d.className='chip';
+    var sp=document.createElement('span');sp.textContent=it.l;
+    var ca=document.createElement('span');ca.className='ca';ca.textContent='\u203a';
+    d.appendChild(sp);d.appendChild(ca);
+    d.onclick=function(){
+      var sel=_ms[id],idx=sel.indexOf(it.v);
+      if(idx>-1){sel.splice(idx,1);d.classList.remove('on');ca.textContent='\u203a';}
+      else{sel.push(it.v);d.classList.add('on');ca.textContent='\u2713';}
+      var btn=document.getElementById(id+'B');if(btn)btn.disabled=sel.length===0;
+    };
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function setMT(id,items,label,fn){
+  var btn=document.createElement('button');btn.className='bigbt';btn.id=id+'B';btn.disabled=true;btn.textContent=label;
+  btn.onclick=function(){cMT(id);};
+  setTray('');TR.appendChild(btn);
+  window['_mf_'+id]=function(){
+    var sel=(_ms[id]||[]).slice();if(!sel.length)return;
+    var el=document.getElementById(id);if(el)[].forEach.call(el.querySelectorAll('.chip'),function(d){d.classList.add('lk');});
+    var labels=[];items.forEach(function(it){if(sel.indexOf(it.v)>-1)labels.push(it.l);});
+    aMe(labels.join(' / '));setTray('');fn(sel);
+  };
+}
+function cMT(id){if(window['_mf_'+id])window['_mf_'+id]();}
+
+function mkSC(id,keys,max){
+  _ss[id]=[];
+  var w=document.createElement('div');w.className='strow';w.id=id;
+  STY.filter(function(s){return keys.indexOf(s.v)>-1;}).forEach(function(st){
+    var c=document.createElement('div');c.className='stc';
+    var ci=document.createElement('div');ci.className='stci';ci.innerHTML=uw(st.s,st.c1,st.c2,st.bg);
+    var cl=document.createElement('div');cl.className='stcl';cl.textContent=st.l;
+    c.appendChild(ci);c.appendChild(cl);
+    c.onclick=function(){
+      var sel=_ss[id],idx=sel.indexOf(st.v);
+      if(idx>-1){sel.splice(idx,1);c.classList.remove('on');}
+      else if(sel.length<max){sel.push(st.v);c.classList.add('on');}
+      var btn=document.getElementById(id+'B');if(btn)btn.disabled=sel.length===0;
+    };
+    w.appendChild(c);
+  });
+  return w;
+}
+
+function setST(id,fn){
+  var btn=document.createElement('button');btn.className='bigbt';btn.id=id+'B';btn.disabled=true;btn.textContent='These are my styles \u2192';
+  btn.onclick=function(){cST(id);};
+  setTray('');TR.appendChild(btn);
+  window['_sf_'+id]=function(){
+    var sel=(_ss[id]||[]).slice();if(!sel.length)return;
+    var el=document.getElementById(id);if(el)[].forEach.call(el.querySelectorAll('.stc'),function(c){c.classList.add('lk');});
+    var labels=[];STY.forEach(function(s){if(sel.indexOf(s.v)>-1)labels.push(s.l);});
+    aMe(labels.join(' / '));setTray('');S.styles=sel;fn();
+  };
+}
+function cST(id){if(window['_sf_'+id])window['_sf_'+id]();}
+
+function mkSz(sizes,fn){
+  var w=document.createElement('div');w.className='szg';
+  sizes.forEach(function(sz){
+    var d=document.createElement('div');d.className='szp';
+    var ss=document.createElement('span');ss.className='szs';ss.textContent=sz.s;
+    var sm=document.createElement('span');sm.className='szm';sm.textContent=sz.m;
+    d.appendChild(ss);d.appendChild(sm);
+    d.onclick=function(){if(lk)return;lk=true;d.classList.add('on');[].forEach.call(w.querySelectorAll('.szp'),function(x){x.classList.add('lk');});S.size=sz.s;aMe('Size '+sz.s);setTray('');setTimeout(function(){lk=false;fn();},350);};
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function askSty(keys,max,cb){sqc++;var id='qS'+sqc;var iT=S.who==='teen';var el=mkSC(id,keys,max);seq([{t:'typ',d:800},{t:'bub',h:'What are '+(iT?'her':'your')+' favourite <em>styles?</em> Pick up to '+max,a:300},{t:'el',e:el,a:0},{t:'fn',f:function(){setST(id,cb);},a:120}]);}
+
+function startQuiz(){prog(6);seq([{t:'typ',d:1000},{t:'bub',h:'Hey! Welcome to Knix \u2014 so happy you\u2019re here \uD83E\uDE77',a:360},{t:'typ',d:800},{t:'bub',h:'I\u2019m your Leakproof Bestie. A few quick questions and I\u2019ll find your <em>perfect</em> match!',a:380},{t:'typ',d:700},{t:'bub',h:'Who are we shopping for today?',a:300},{t:'el',e:mkWho(),a:0}]);}
+
+function afterWho(v){prog(14);if(v==='teen'){seq([{t:'typ',d:800},{t:'bub',h:'She\u2019s lucky to have you \uD83D\uDC95 What does she need protection for?',a:300},{t:'el',e:mkChips('qTP',[{v:'backup',l:'Backup Protection \u2014 alongside tampons or pads'},{v:'sweat',l:'Sweat and Sports \u2014 gym to after-school practice'},{v:'everyday',l:'Every Day Period Protection \u2014 replacing tampons and pads'}],pickTP),a:0}]);}else{seq([{t:'typ',d:800},{t:'bub',h:'Got it! What do you need protection from?',a:300},{t:'el',e:mkChips('qAP',[{v:'periods',l:'Periods \u2014 from light spotting to overnight'},{v:'sweat',l:'Sweat \u2014 pilates to HIIT, or just summer heat'},{v:'discharge',l:'Discharge \u2014 extra freshness any day of the month'},{v:'bladder',l:'Light Bladder Leaks \u2014 sneezing, laughing, trampolines'},{v:'postpartum',l:'Pregnancy and Postpartum \u2014 pre and post baby'}],pickAP),a:0}]);}}
+
+function pickTP(v){S.teenProt=v;prog(26);var ack={backup:'Smart \u2014 backup gives extra confidence.',sweat:'Love that! \uD83D\uDE4C',everyday:'Going full leakproof \u2014 she\u2019s going to <em>love</em> this!'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);if(v==='everyday')setTimeout(askCL,1100);else setTimeout(function(){askSty(['thong','bikini','boyshort','boxer'],3,function(){prog(52);setTimeout(askFlow,400);});},1100);}
+
+function pickAP(v){S.adultProt=v;prog(26);var ack={periods:'Period protection coming right up \uD83D\uDC95',sweat:'Staying fresh no matter how hard you work \uD83D\uDCAA',discharge:'Daily freshness sorted.',bladder:'No judgment at all \u2014 we\u2019ve got you.',postpartum:'Your body just did something incredible \uD83D\uDC95'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);setTimeout(function(){if(v==='periods')askPU();else if(v==='sweat'||v==='discharge')askSty(['thong','bikini','french','highrise','boyshort'],3,function(){setTimeout(askAS,400);});else if(v==='bladder')askBR();else if(v==='postpartum')askPP();},1100);}
+
+function askPU(){prog(36);seq([{t:'typ',d:800},{t:'bub',h:'How do you want to use leakproof for your period?',a:300},{t:'el',e:mkChips('qPU',[{v:'everyday',l:'Every Day \u2014 replacing tampons and pads'},{v:'backup',l:'Backup \u2014 alongside tampons or a cup'},{v:'overnight',l:'Overnight \u2014 extra absorbency while you sleep'},{v:'lightday',l:'Light Day \u2014 for light spotting'}],pickPU),a:0}]);}
+function pickPU(v){S.periodUsage=v;prog(48);var ack={everyday:'Going full leakproof \u2014 this will change <em>everything</em>!',backup:'Perfect for just-in-case moments.',overnight:'A full night\u2019s sleep without worry \uD83C\uDF19',lightday:'Light days deserve gorgeous options too.'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);setTimeout(function(){if(v==='everyday')askCL();else if(v==='backup'||v==='overnight')askSty(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});else if(v==='lightday')askSty(['thong','bikini','french','highrise','boyshort'],3,function(){setTimeout(askAS,400);});},1100);}
+
+function askBR(){prog(38);seq([{t:'typ',d:800},{t:'bub',h:'Are you currently using anything for leaks?',a:300},{t:'el',e:mkChips('qBR',[{v:'yes',l:'Yes \u2014 I\u2019ve got a routine'},{v:'no',l:'Not yet. Ready for something better'}],function(v){S.bladderRoutine=v;prog(48);if(v==='yes'){var ci=[{v:'liner',l:'Panty Liner'},{v:'lpad',l:'Light Pad'},{v:'pad',l:'Regular Pad'},{v:'disp',l:'Disposable Underwear'}];seq([{t:'typ',d:800},{t:'bub',h:'What do you currently use? Tap all that apply.',a:300},{t:'el',e:mkMulti('qBC',ci),a:0},{t:'fn',f:function(){setMT('qBC',ci,'Got it \u2192',function(sel){S.bladderCurrent=sel;prog(58);setTimeout(askLA,600);});},a:120}]);}else setTimeout(askLA,800);}),a:0}]);}
+
+function askLA(){prog(64);seq([{t:'typ',d:800},{t:'bub',h:'How much do you usually <em>leak?</em>',a:300},{t:'el',e:mkChips('qLA',[{v:'little',l:'Just a little \u2014 sneezing, laughing, coughing'},{v:'more',l:'More than a little \u2014 I avoid high-impact moves'},{v:'unsure',l:'Still figuring it out'}],function(v){S.leakAmt=v;prog(74);setTimeout(function(){askSty(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});},1100);}),a:0}]);}
+
+function askPP(){prog(38);seq([{t:'typ',d:800},{t:'bub',h:'How do you plan on using leakproof right now?',a:300},{t:'el',e:mkChips('qPPU',[{v:'discharge',l:'Discharge \u2014 staying fresh while your body does its thing'},{v:'postbirth',l:'Post Birth \u2014 extra protection after your baby arrives'},{v:'core',l:'Core Support \u2014 a gentle hug for your bump'},{v:'lbl',l:'Light Bladder Leaks \u2014 baby-on-your-bladder phase'}],function(v){S.ppUsage=v;prog(54);setTimeout(function(){if(v==='core')setTimeout(askAS,800);else askSty(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});},1100);}),a:0}]);}
+
+function askCL(){prog(S.who==='teen'?36:54);var iT=S.who==='teen';seq([{t:'typ',d:800},{t:'bub',h:'How many <em>days</em> is '+(iT?'her':'your')+' period on average?',a:300},{t:'el',e:mkChips('qCL',[{v:'3',l:'3 days'},{v:'5',l:'5 days'},{v:'8',l:'8 days or more'},{v:'unknown',l:'Not sure \u2014 skip this'}],function(v){S.cycleLen=v;prog(S.who==='teen'?44:62);setTimeout(askFlow,v!=='unknown'?1000:400);}),a:0}]);}
+
+function askFlow(){prog(S.who==='teen'?52:68);var iT=S.who==='teen';var fi=[{v:'light',l:'Light \u2014 1-2 regular tampons'},{v:'moderate',l:'Moderate \u2014 2-4 super tampons'},{v:'heavy',l:'Heavy \u2014 4-7 super tampons'},{v:'extraheavy',l:'Extra Heavy \u2014 7-11 super tampons'}];seq([{t:'typ',d:800},{t:'bub',h:'Describe '+(iT?'her':'your')+' <em>flow.</em> Select all that apply.',a:300},{t:'el',e:mkMulti('qFL',fi),a:0},{t:'fn',f:function(){setMT('qFL',fi,'That\u2019s my flow \u2192',function(sel){S.flow=sel;if(S.who==='teen'){if(S.teenProt==='everyday')setTimeout(function(){askSty(['thong','bikini','boyshort','boxer'],3,function(){setTimeout(askTS,400);});},1000);else setTimeout(askTS,1000);}else{if(S.periodUsage==='everyday')setTimeout(function(){askSty(['thong','bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});},1000);else setTimeout(askAS,1000);}});},a:120}]);}
+
+function askTS(){prog(80);seq([{t:'typ',d:800},{t:'bub',h:'What\u2019s her <em>size?</em>',a:300},{t:'el',e:mkSz(TSZ,function(){prog(90);setTimeout(askEmail,600);}),a:0}]);}
+function askAS(){prog(82);seq([{t:'typ',d:800},{t:'bub',h:'What\u2019s your <em>size?</em>',a:160},{t:'bub',h:'May feel snug at first \u2014 relax after washing. If between sizes, size up.',a:300},{t:'el',e:mkSz(ASZ,function(){prog(90);setTimeout(askEmail,600);}),a:0}]);}
+
+function askEmail(){seq([{t:'typ',d:800},{t:'bub',h:'Last step \u2014 new customers get <em>15% off</em> \uD83C\uDF89',a:300},{t:'fn',f:function(){
+  var wrap=document.createElement('div');wrap.className='eml';
+  var ni=document.createElement('input');ni.type='text';ni.id='EN';ni.placeholder='Your name';
+  var ei=document.createElement('input');ei.type='email';ei.id='EE';ei.placeholder='Your email';
+  var rb=document.createElement('button');rb.className='rosbt';rb.textContent='Get 15% off and see my matches';rb.onclick=function(){doEmail(false);};
+  var sb=document.createElement('button');sb.className='outbt';sb.style.marginTop='7px';sb.textContent='Skip to results';sb.onclick=function(){doEmail(true);};
+  wrap.appendChild(ni);wrap.appendChild(ei);wrap.appendChild(rb);wrap.appendChild(sb);
+  setTray('');TR.appendChild(wrap);
+},a:0}]);}
+
+function doEmail(skip){var n=document.getElementById('EN').value.trim();var e=document.getElementById('EE').value.trim();S.name=n;S.email=e;aMe(!skip&&e?(n?n+' / ':'')+e:'Skip');setTray('');setTimeout(showInt,400);}
+
+function showInt(){var il=document.getElementById('INTL'),step=document.getElementById('ILSTEP');il.classList.add('show');var msgs=['Analyzing your profile','Matching absorbency','Building your bundle','Almost ready...'];var idx=0;var iv=setInterval(function(){idx++;if(idx<msgs.length)step.textContent=msgs[idx];},800);setTimeout(function(){clearInterval(iv);il.classList.remove('show');il.classList.add('hide');setTimeout(showResults,600);},3400);}
+
+function showResults(){
+  prog(100);
+  var nm=S.name?S.name+', ':'';
+  var flow=S.flow||[];
+  var hi=flow.indexOf('extraheavy')>-1?'ultra heavy':flow.indexOf('heavy')>-1?'heavy':flow.indexOf('moderate')>-1?'moderate':'light';
+  var am={light:'Starting on <em>light absorbency</em> \u2014 1-2 tampons worth.',moderate:'Matched to <em>moderate</em> \u2014 2-4 super tampons.',heavy:'Going <em>heavy absorbency</em> \u2014 4-7 super tampons.','ultra heavy':'<em>Ultra absorbency</em> \u2014 up to 11 tampons.'};
+  if(S.adultProt==='sweat'||S.adultProt==='discharge')am[hi]='These feel like regular underwear and keep you completely fresh.';
+  if(S.adultProt==='bladder')am[hi]='Locks in moisture instantly \u2014 completely dry, no bulk.';
+  if(S.ppUsage==='core')am[hi]='Gentle core support while keeping you protected.';
+  var rU=getRU();var hh=getHandles();var iT=S.who==='teen';
+  var steps=[{t:'typ',d:1000},{t:'bub',h:nm+'I found '+(iT?'her':'your')+' <em>perfect matches!</em>',a:380},{t:'typ',d:800},{t:'bub',h:am[hi],a:380}];
+  var sv=document.createElement('div');sv.className='statrow';
+  var sa=document.createElement('div');sa.className='ava';sa.textContent='\u{1F495}';
+  var sb=document.createElement('div');sb.className='statb';sb.innerHTML='<span class="statn">13M+</span><span class="stats">pairs sold \u2014 you\u2019re in great company!</span>';
+  sv.appendChild(sa);sv.appendChild(sb);
+  steps.push({t:'el',e:sv,a:350});
+  hh.forEach(function(h,i){
+    if(!PID[h])return;
+    var badge=i===0?'Best Match':i===1?'Great Option':'Also Love';
+    var bc=i===0?'bm':i===1?'bp':'bg';
+    var lv=h.indexOf('superplus')>-1?5:h.indexOf('dream')>-1?5:h.indexOf('super-leakproof')>-1?4:2;
+    var sm={'thong':'th','bikini':'bk','french':'fc','high-rise':'hr','boyshort':'bs','boxer':'bx','dream':'bs','short':'bs'};
+    var s='bk';Object.keys(sm).forEach(function(k){if(h.indexOf(k)>-1)s=sm[k];});
+    var cm={th:{c1:'#A8836E',c2:'#8A6454',bg:'#F5EEEA'},bk:{c1:'#9B6B5A',c2:'#7A5040',bg:'#F0E8E2'},fc:{c1:'#8A7FA8',c2:'#6B6087',bg:'#EEEAF4'},hr:{c1:'#5A7A72',c2:'#3D5E57',bg:'#E4EEEC'},bs:{c1:'#C17B6E',c2:'#A05E55',bg:'#FAF0EB'},bx:{c1:'#4A6FA5',c2:'#3A5A8A',bg:'#E8EEF5'}};
+    var c=cm[s]||cm.bk;
+    var dots='';for(var j=0;j<5;j++)dots+='<div style="width:7px;height:7px;border-radius:50%;background:'+(j<lv?'#7d0044':'#e5e7eb')+'"></div>';
+    var rv=PV[h]||'"Genuinely feels like regular underwear."';
+    var wrap=document.createElement('div');wrap.className='pcw';
+    var card=document.createElement('div');card.className='pcard'+(i===0?' ft':'');
+    var im=document.createElement('div');im.className='pcim';im.style.background=c.bg;im.innerHTML=uw(s,c.c1,c.c2,c.bg);
+    var bdg=document.createElement('div');bdg.className='pbdg '+bc;bdg.textContent=badge;im.appendChild(bdg);
+    var bd=document.createElement('div');bd.className='pcbd';
+    var lnk='https://knix.com/products/'+h;
+    bd.innerHTML='<div class="pcnm">'+(PN[h]||h)+'</div>'
+      +'<div class="pcar"><span class="pcal">ABSORBENCY</span><div class="pcad">'+dots+'</div></div>'
+      +'<div class="pcmt"><span class="pcsr">&#9733;&#9733;&#9733;&#9733;&#9733;</span><a href="'+lnk+'" target="_blank" style="font-size:12px;color:#7d0044;font-weight:600;text-decoration:none;">View &#x2197;</a></div>'
+      +'<div class="pcrv">'+rv+'</div>'
+      +'<div class="pccare"><span class="pctag">Machine washable</span><span class="pctag">Air dry</span><span class="pctag">Fresh Fix Technology</span></div>';
+    card.appendChild(im);card.appendChild(bd);wrap.appendChild(card);
+    var ex=i===0?'This is exactly where I\u2019d start \u2014 Fresh Fix Technology feels like regular underwear.':i===1?'Same protection, different silhouette.':'For the heaviest days \u2014 maximum coverage.';
+    steps.push({t:'typ',d:750});steps.push({t:'bub',h:ex,a:280});steps.push({t:'el',e:wrap,a:380});
+  });
+  steps.push({t:'bub',h:'See all three on Knix \u2014 30-day risk-free guarantee. \uD83D\uDC95',a:400});
+  steps.push({t:'fn',f:function(){
+    var a=document.createElement('a');a.href=rU;a.target='_blank';a.className='rosbt';a.textContent='View my full results on Knix';
+    var ob=document.createElement('button');ob.className='outbt';ob.style.marginTop='8px';ob.textContent='Start over';ob.onclick=restartQuiz;
+    var tn=document.createElement('div');tn.className='tnt';tn.innerHTML='30-day returns \u00b7 Free shipping over $65<br>13M+ pairs sold \uD83D\uDC95';
+    setTray('');TR.appendChild(a);TR.appendChild(ob);TR.appendChild(tn);
+  },a:0});
+  seq(steps);
+}
+
+function restartQuiz(){CH.innerHTML='<div class="dsep">TODAY</div>';setTray('');init();setTimeout(startQuiz,300);}
+init();setTimeout(startQuiz,500);
 </script>
 </body>
 </html>
