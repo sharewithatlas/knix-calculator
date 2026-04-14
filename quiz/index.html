@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leakproof Bestie — Find Your Perfect Knix</title>
+<title>Leakproof Bestie &#8212; Find Your Perfect Knix</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}body{background:#f6e3db;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f6e3db;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
 .pg{background:#f6e3db;width:100%;padding-bottom:32px;}.inn{max-width:430px;margin:0 auto;}
 .pgb{padding:18px 20px 14px;}.ptr{height:2px;background:#e5d5cf;position:relative;}
 .pfl{position:absolute;top:0;left:0;height:2px;background:#7d0044;width:6%;transition:width .7s;}
@@ -25,7 +26,7 @@
 .mhdr{padding:6px 14px 10px;display:flex;align-items:center;gap:8px;border-bottom:.5px solid #e7c6b7;background:#fbf8f3;}
 .hbk{font-size:22px;color:#7d0044;}.hav{width:36px;height:36px;border-radius:50%;background:#7d0044;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .hn{font-size:13px;font-weight:700;color:#141414;}.hs{font-size:11px;color:#707070;}.hm{font-size:22px;color:#7d0044;margin-left:auto;}
-.cs{height:420px;overflow-y:auto;padding:10px 14px 8px;background:#fbf8f3;-webkit-overflow-scrolling:touch;}
+.cs{height:420px;overflow-y:auto;padding:10px 14px 8px;background:#fbf8f3;}
 .cs::-webkit-scrollbar{width:3px;}.cs::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px;}
 .rt{border-top:.5px solid #e7c6b7;padding:10px 14px 12px;background:#fbf8f3;min-height:14px;}
 .ii{padding:8px 12px 22px;border-top:.5px solid #e7c6b7;display:flex;align-items:center;gap:8px;background:#fbf8f3;}
@@ -115,58 +116,253 @@ a.rosbt:hover,button.rosbt:hover{background:#5c0032;}
   </div>
 </div></div>
 <script>
-var TYPE_IDS={'adult-periods':'1776177755411','teen':'1776174568175'};
-var FALLBACKS={sweat:'https://knix.com/collections/sweat-discharge',discharge:'https://knix.com/collections/sweat-discharge',bladder:'https://knix.com/collections/incontinence-underwear',postpartum:'https://knix.com/collections/maternity-postpartum'};
-var PIDS={'superplus-leakproof-no-show-high-rise':7719316619306,'superplus-leakproof-no-show-bikini':7719310131242,'super-leakproof-dream-short':7692327518250,'super-leakproof-dream-boxer':7669113618474,'super-leakproof-no-show-high-rise':7708683141162,'super-leakproof-no-show-bikini':7706939424810,'super-leakproof-no-show-french-cut':7708677668906,'super-leakproof-cotton-high-rise':7819308105770,'super-leakproof-cotton-bikini':7819307614250,'light-leakproof-no-show-high-rise':7640940150826,'light-leakproof-no-show-bikini':7640937594922,'light-leakproof-no-show-thong':7640938479658,'light-leakproof-no-show-boyshort':7640939397162,'leakproof-corelove-high-rise':7640927273002,'teen-super-leakproof-sleepover-boxer':7679971786794,'teen-leakproof-luxe-modal-sleep-boxer':7640930451498,'teen-leakproof-ultrathin-no-show-boyshort':7640934318122,'teen-leakproof-ultrathin-no-show-bikini':7640934416426,'teen-leakproof-cotton-bikini':7640920031274};
-var PNAMES={'superplus-leakproof-no-show-high-rise':'SuperPlus Leakproof® No-Show High Rise','superplus-leakproof-no-show-bikini':'SuperPlus Leakproof® No-Show Bikini','super-leakproof-dream-short':'Super Leakproof® Dream Short™','super-leakproof-dream-boxer':'Super Leakproof® Dream Boxer™','super-leakproof-no-show-high-rise':'Super Leakproof® No-Show High Rise','super-leakproof-no-show-bikini':'Super Leakproof® No-Show Bikini','super-leakproof-no-show-french-cut':'Super Leakproof® No-Show French Cut','super-leakproof-cotton-high-rise':'Super Leakproof® Cotton High Rise','super-leakproof-cotton-bikini':'Super Leakproof® Cotton Bikini','light-leakproof-no-show-high-rise':'Light Leakproof No-Show High Rise','light-leakproof-no-show-bikini':'Light Leakproof No-Show Bikini','light-leakproof-no-show-thong':'Light Leakproof No-Show Thong','light-leakproof-no-show-boyshort':'Light Leakproof No-Show Boyshort','leakproof-corelove-high-rise':'Leakproof CoreLove High Rise','teen-super-leakproof-sleepover-boxer':'Teen Super Leakproof® Sleepover Boxer','teen-leakproof-luxe-modal-sleep-boxer':'Teen Leakproof Luxe Modal Sleep Boxer','teen-leakproof-ultrathin-no-show-boyshort':'Teen Leakproof UltraThin No-Show Boyshort','teen-leakproof-ultrathin-no-show-bikini':'Teen Leakproof UltraThin No-Show Bikini','teen-leakproof-cotton-bikini':'Teen Leakproof Cotton Bikini'};
-var PREVIEWS={'teen-super-leakproof-sleepover-boxer':'"My daughter refused to go back to pads after one wear." — Sarah M.','teen-leakproof-luxe-modal-sleep-boxer':'"So soft. She wears these every cycle now." — Melissa T.','teen-leakproof-ultrathin-no-show-boyshort':'"Zero leaks, zero bulk." — Amanda K.','teen-leakproof-ultrathin-no-show-bikini':'"Exactly like regular underwear." — Rachel D.','teen-leakproof-cotton-bikini':'"Feels normal and actually works." — Jess P.','super-leakproof-dream-short':'"I donated every tampon after one cycle." — Jamie K.','super-leakproof-dream-boxer':'"Bought 3 more immediately. Perfect for heavy nights." — Tanya R.','super-leakproof-no-show-high-rise':'"Skeptical at first. Now I own 7 pairs." — Priya L.','super-leakproof-no-show-bikini':'"Wore it on my heaviest day. Life changing." — Chris M.','super-leakproof-no-show-french-cut':'"Perfect everyday pair." — Diane W.','super-leakproof-cotton-high-rise':'"Feels like regular underwear but holds everything." — Sofía R.','super-leakproof-cotton-bikini':'"Recommended to literally everyone I know." — Beth A.','light-leakproof-no-show-high-rise':'"Invisible under everything." — Nat C.','light-leakproof-no-show-bikini':'"My new everyday favourite." — Amy H.','light-leakproof-no-show-thong':'"Completely invisible and works." — Lauren B.','light-leakproof-no-show-boyshort':'"Extra coverage without bulk." — Maya S.','leakproof-corelove-high-rise':'"Felt fully supported postpartum." — Erin F.'};
+var TIDS={'ap':'1776177755411','teen':'1776174568175'};
+var FB={sweat:'https://knix.com/collections/sweat-discharge',discharge:'https://knix.com/collections/sweat-discharge',bladder:'https://knix.com/collections/incontinence-underwear',postpartum:'https://knix.com/collections/maternity-postpartum'};
+var PID={'superplus-leakproof-no-show-high-rise':7719316619306,'superplus-leakproof-no-show-bikini':7719310131242,'super-leakproof-dream-short':7692327518250,'super-leakproof-dream-boxer':7669113618474,'super-leakproof-no-show-high-rise':7708683141162,'super-leakproof-no-show-bikini':7706939424810,'super-leakproof-no-show-french-cut':7708677668906,'super-leakproof-cotton-high-rise':7819308105770,'super-leakproof-cotton-bikini':7819307614250,'light-leakproof-no-show-high-rise':7640940150826,'light-leakproof-no-show-bikini':7640937594922,'light-leakproof-no-show-thong':7640938479658,'light-leakproof-no-show-boyshort':7640939397162,'leakproof-corelove-high-rise':7640927273002,'teen-super-leakproof-sleepover-boxer':7679971786794,'teen-leakproof-luxe-modal-sleep-boxer':7640930451498,'teen-leakproof-ultrathin-no-show-boyshort':7640934318122,'teen-leakproof-ultrathin-no-show-bikini':7640934416426,'teen-leakproof-cotton-bikini':7640920031274};
+var PN={'superplus-leakproof-no-show-high-rise':'SuperPlus Leakproof No-Show High Rise','superplus-leakproof-no-show-bikini':'SuperPlus Leakproof No-Show Bikini','super-leakproof-dream-short':'Super Leakproof Dream Short','super-leakproof-dream-boxer':'Super Leakproof Dream Boxer','super-leakproof-no-show-high-rise':'Super Leakproof No-Show High Rise','super-leakproof-no-show-bikini':'Super Leakproof No-Show Bikini','super-leakproof-no-show-french-cut':'Super Leakproof No-Show French Cut','super-leakproof-cotton-high-rise':'Super Leakproof Cotton High Rise','super-leakproof-cotton-bikini':'Super Leakproof Cotton Bikini','light-leakproof-no-show-high-rise':'Light Leakproof No-Show High Rise','light-leakproof-no-show-bikini':'Light Leakproof No-Show Bikini','light-leakproof-no-show-thong':'Light Leakproof No-Show Thong','light-leakproof-no-show-boyshort':'Light Leakproof No-Show Boyshort','leakproof-corelove-high-rise':'Leakproof CoreLove High Rise','teen-super-leakproof-sleepover-boxer':'Teen Super Leakproof Sleepover Boxer','teen-leakproof-luxe-modal-sleep-boxer':'Teen Leakproof Luxe Modal Sleep Boxer','teen-leakproof-ultrathin-no-show-boyshort':'Teen Leakproof UltraThin No-Show Boyshort','teen-leakproof-ultrathin-no-show-bikini':'Teen Leakproof UltraThin No-Show Bikini','teen-leakproof-cotton-bikini':'Teen Leakproof Cotton Bikini'};
+var PV={'teen-super-leakproof-sleepover-boxer':'"My daughter refused to go back to pads." - Sarah M.','teen-leakproof-luxe-modal-sleep-boxer':'"So soft. She wears these every cycle now." - Melissa T.','teen-leakproof-ultrathin-no-show-boyshort':'"Zero leaks, zero bulk." - Amanda K.','teen-leakproof-ultrathin-no-show-bikini':'"Exactly like regular underwear." - Rachel D.','teen-leakproof-cotton-bikini':'"Feels normal and actually works." - Jess P.','super-leakproof-dream-short':'"I donated every tampon after one cycle." - Jamie K.','super-leakproof-dream-boxer':'"Bought 3 more. Perfect for heavy nights." - Tanya R.','super-leakproof-no-show-high-rise':'"Skeptical at first. Now I own 7 pairs." - Priya L.','super-leakproof-no-show-bikini':'"Wore it on my heaviest day. Life changing." - Chris M.','super-leakproof-no-show-french-cut':'"Perfect everyday pair." - Diane W.','super-leakproof-cotton-high-rise':'"Feels like regular underwear but holds everything." - Sofia R.','super-leakproof-cotton-bikini':'"Recommended to everyone I know." - Beth A.','light-leakproof-no-show-high-rise':'"Invisible under everything." - Nat C.','light-leakproof-no-show-bikini':'"My new everyday favourite." - Amy H.','light-leakproof-no-show-thong':'"Completely invisible and works." - Lauren B.','light-leakproof-no-show-boyshort':'"Extra coverage without bulk." - Maya S.','leakproof-corelove-high-rise':'"Felt fully supported postpartum." - Erin F.'};
 var IMGS={teen:'https://forms.knix.ca/s3awjbnctc/vendors/3eb2af7f-892e-4355-bf67-36947ac5de54/uploads/7b283c13-4b78-460f-a38f-e51fa63d2ded/Teen.png',adult:'https://forms.knix.ca/s3awjbnctc/vendors/3eb2af7f-892e-4355-bf67-36947ac5de54/uploads/bb29dc48-b3d8-43e0-9d9d-52dd5bf31dc7/Adult.png'};
-function tick(){var n=new Date(),h=n.getHours(),m=n.getMinutes(),a=h>=12?'PM':'AM';h=h%12||12;document.getElementById('BTIME').textContent=h+':'+(m<10?'0':'')+m+' '+a;}tick();setInterval(tick,30000);
-function getHandles(){var flow=S.flow||[];var highest=flow.indexOf('extraheavy')>-1?'ultra':flow.indexOf('heavy')>-1?'heavy':flow.indexOf('moderate')>-1?'moderate':'light';if(S.leakAmt==='more')highest='heavy';var p=S.adultProt,pu=S.periodUsage;if(S.who==='teen'){if(highest==='heavy'||highest==='ultra')return['teen-super-leakproof-sleepover-boxer','teen-leakproof-luxe-modal-sleep-boxer','teen-leakproof-ultrathin-no-show-boyshort'];return['teen-leakproof-ultrathin-no-show-bikini','teen-leakproof-ultrathin-no-show-boyshort','teen-leakproof-cotton-bikini'];}if(p==='periods'){if(pu==='overnight')return['super-leakproof-dream-short','super-leakproof-dream-boxer','superplus-leakproof-no-show-high-rise'];if(pu==='lightday')return['light-leakproof-no-show-high-rise','light-leakproof-no-show-bikini','light-leakproof-no-show-thong'];if(pu==='backup'){if(highest==='heavy'||highest==='ultra')return['super-leakproof-no-show-high-rise','super-leakproof-no-show-bikini','super-leakproof-no-show-french-cut'];return['super-leakproof-cotton-high-rise','super-leakproof-cotton-bikini','light-leakproof-no-show-high-rise'];}if(highest==='ultra')return['superplus-leakproof-no-show-high-rise','superplus-leakproof-no-show-bikini','super-leakproof-dream-short'];if(highest==='heavy')return['super-leakproof-dream-short','super-leakproof-no-show-high-rise','super-leakproof-no-show-bikini'];if(highest==='moderate')return['super-leakproof-cotton-high-rise','super-leakproof-cotton-bikini','super-leakproof-no-show-french-cut'];return['light-leakproof-no-show-high-rise','light-leakproof-no-show-bikini','light-leakproof-no-show-thong'];}if(p==='sweat'||p==='discharge')return['light-leakproof-no-show-thong','light-leakproof-no-show-bikini','light-leakproof-no-show-high-rise'];if(p==='bladder'){if(S.leakAmt==='more')return['super-leakproof-no-show-high-rise','super-leakproof-cotton-high-rise','super-leakproof-no-show-bikini'];return['light-leakproof-no-show-high-rise','super-leakproof-cotton-high-rise','light-leakproof-no-show-bikini'];}return['leakproof-corelove-high-rise','super-leakproof-no-show-high-rise','super-leakproof-dream-short'];}
-function getProtLabel(){if(S.who==='teen')return{backup:'Backup Protection',sweat:'Sweat & Sports',everyday:'Every Day Period Protection'}[S.teenProt]||'Period Protection';return{periods:'Periods',sweat:'Sweat',discharge:'Discharge',bladder:'Light Bladder Leaks',postpartum:'Pregnancy & Postpartum'}[S.adultProt]||'Periods';}
-function getResultsURL(){var p=S.adultProt;if(S.who==='teen'||p==='periods'){var handles=getHandles();var ids=handles.map(function(h){return PIDS[h];}).filter(Boolean);return'https://knix.com/pages/quiz-results?max_products=3&rowlen=3&hide_oos=true&show_hero=false&products='+handles.join(',')+'&ids='+ids.join(',')+'&name='+encodeURIComponent(S.name||'')+'&underwear_size='+encodeURIComponent(S.size||'')+'&period_protection='+encodeURIComponent(getProtLabel())+'&type='+TYPE_IDS[S.who==='teen'?'teen':'adult-periods'];}return FALLBACKS[p]||'https://knix.com/pages/category-all-underwear';}
-var CH,TR,S,lk,_msel,_ssel,sqc;
-function init(){CH=document.getElementById('CHAT');TR=document.getElementById('TRAY');S={who:'',teenProt:'',adultProt:'',periodUsage:'',ppUsage:'',bladderRoutine:'',bladderCurrent:[],leakAmt:'',styles:[],cycleLen:'',flow:[],size:'',name:'',email:''};lk=false;_msel={};_ssel={};sqc=0;}
+
+function tick(){var n=new Date(),h=n.getHours(),m=n.getMinutes(),a=h>=12?'PM':'AM';h=h%12||12;document.getElementById('BTIME').textContent=h+':'+(m<10?'0':'')+m+' '+a;}
+tick();setInterval(tick,30000);
+
+function getHandles(){
+  var flow=S.flow||[];
+  var hi=flow.indexOf('extraheavy')>-1?'ultra':flow.indexOf('heavy')>-1?'heavy':flow.indexOf('moderate')>-1?'moderate':'light';
+  if(S.leakAmt==='more')hi='heavy';
+  var p=S.adultProt,pu=S.periodUsage;
+  if(S.who==='teen'){if(hi==='heavy'||hi==='ultra')return['teen-super-leakproof-sleepover-boxer','teen-leakproof-luxe-modal-sleep-boxer','teen-leakproof-ultrathin-no-show-boyshort'];return['teen-leakproof-ultrathin-no-show-bikini','teen-leakproof-ultrathin-no-show-boyshort','teen-leakproof-cotton-bikini'];}
+  if(p==='periods'){if(pu==='overnight')return['super-leakproof-dream-short','super-leakproof-dream-boxer','superplus-leakproof-no-show-high-rise'];if(pu==='lightday')return['light-leakproof-no-show-high-rise','light-leakproof-no-show-bikini','light-leakproof-no-show-thong'];if(pu==='backup'){if(hi==='heavy'||hi==='ultra')return['super-leakproof-no-show-high-rise','super-leakproof-no-show-bikini','super-leakproof-no-show-french-cut'];return['super-leakproof-cotton-high-rise','super-leakproof-cotton-bikini','light-leakproof-no-show-high-rise'];}if(hi==='ultra')return['superplus-leakproof-no-show-high-rise','superplus-leakproof-no-show-bikini','super-leakproof-dream-short'];if(hi==='heavy')return['super-leakproof-dream-short','super-leakproof-no-show-high-rise','super-leakproof-no-show-bikini'];if(hi==='moderate')return['super-leakproof-cotton-high-rise','super-leakproof-cotton-bikini','super-leakproof-no-show-french-cut'];return['light-leakproof-no-show-high-rise','light-leakproof-no-show-bikini','light-leakproof-no-show-thong'];}
+  if(p==='sweat'||p==='discharge')return['light-leakproof-no-show-thong','light-leakproof-no-show-bikini','light-leakproof-no-show-high-rise'];
+  if(p==='bladder'){if(S.leakAmt==='more')return['super-leakproof-no-show-high-rise','super-leakproof-cotton-high-rise','super-leakproof-no-show-bikini'];return['light-leakproof-no-show-high-rise','super-leakproof-cotton-high-rise','light-leakproof-no-show-bikini'];}
+  return['leakproof-corelove-high-rise','super-leakproof-no-show-high-rise','super-leakproof-dream-short'];
+}
+function getPL(){if(S.who==='teen')return{backup:'Backup Protection',sweat:'Sweat and Sports',everyday:'Every Day Period Protection'}[S.teenProt]||'Period Protection';return{periods:'Periods',sweat:'Sweat',discharge:'Discharge',bladder:'Light Bladder Leaks',postpartum:'Pregnancy and Postpartum'}[S.adultProt]||'Periods';}
+function getRU(){var p=S.adultProt;if(S.who==='teen'||p==='periods'){var hh=getHandles();var ids=hh.map(function(h){return PID[h];}).filter(Boolean);return'https://knix.com/pages/quiz-results?max_products=3&rowlen=3&hide_oos=true&show_hero=false&products='+hh.join(',')+'&ids='+ids.join(',')+'&name='+encodeURIComponent(S.name||'')+'&underwear_size='+encodeURIComponent(S.size||'')+'&period_protection='+encodeURIComponent(getPL())+'&type='+TIDS[S.who==='teen'?'teen':'ap'];}return FB[p]||'https://knix.com/pages/category-all-underwear';}
+
+var CH,TR,S,lk,_ms,_ss,sqc;
+function init(){CH=document.getElementById('CHAT');TR=document.getElementById('TRAY');S={who:'',teenProt:'',adultProt:'',periodUsage:'',ppUsage:'',bladderRoutine:'',bladderCurrent:[],leakAmt:'',styles:[],cycleLen:'',flow:[],size:'',name:'',email:''};lk=false;_ms={};_ss={};sqc=0;}
 function sc(){CH.scrollTop=CH.scrollHeight;}
 function prog(p){document.getElementById('PFL').style.width=p+'%';document.getElementById('PDT').style.left=p+'%';}
 function setTray(h){TR.innerHTML=h;}
-function aAI(html){var r=document.createElement('div');r.className='row ai';var a=document.createElement('div');a.className='ava';a.textContent='💕';var b=document.createElement('div');b.className='bub ai';b.innerHTML=html;r.appendChild(a);r.appendChild(b);CH.appendChild(r);sc();}
-function aMe(html){var r=document.createElement('div');r.className='row me';var b=document.createElement('div');b.className='bub me';b.innerHTML=html;r.appendChild(b);CH.appendChild(r);sc();}
+function aAI(h){var r=document.createElement('div');r.className='row ai';var a=document.createElement('div');a.className='ava';a.textContent='\u{1F495}';var b=document.createElement('div');b.className='bub ai';b.innerHTML=h;r.appendChild(a);r.appendChild(b);CH.appendChild(r);sc();}
+function aMe(h){var r=document.createElement('div');r.className='row me';var b=document.createElement('div');b.className='bub me';b.innerHTML=h;r.appendChild(b);CH.appendChild(r);sc();}
 function aEl(el){CH.appendChild(el);sc();}
-function aT(){var r=document.createElement('div');r.className='trow';var a=document.createElement('div');a.className='ava';a.textContent='💕';var t=document.createElement('div');t.className='tbub';t.innerHTML='<div class="d"></div><div class="d"></div><div class="d"></div>';r.appendChild(a);r.appendChild(t);CH.appendChild(r);sc();return r;}
+function aT(){var r=document.createElement('div');r.className='trow';var a=document.createElement('div');a.className='ava';a.textContent='\u{1F495}';var t=document.createElement('div');t.className='tbub';t.innerHTML='<div class="d"></div><div class="d"></div><div class="d"></div>';r.appendChild(a);r.appendChild(t);CH.appendChild(r);sc();return r;}
 function rT(el){if(el&&el.parentNode)el.parentNode.removeChild(el);}
 function seq(steps){var i=0;function nx(){if(i>=steps.length)return;var s=steps[i++];if(s.t==='typ'){var el=aT();setTimeout(function(){rT(el);nx();},s.d||850);}else if(s.t==='bub'){aAI(s.h);setTimeout(nx,s.a||220);}else if(s.t==='el'){aEl(s.e);setTimeout(nx,s.a||100);}else if(s.t==='fn'){s.f();setTimeout(nx,s.a||0);}else if(s.t==='wait'){setTimeout(nx,s.d||400);}}nx();}
-var STYLES=[{v:'thong',l:'Thong',s:'th',c1:'#A8836E',c2:'#8A6454',bg:'#F5EEEA'},{v:'bikini',l:'Bikini',s:'bk',c1:'#9B6B5A',c2:'#7A5040',bg:'#F0E8E2'},{v:'french',l:'French Cut',s:'fc',c1:'#8A7FA8',c2:'#6B6087',bg:'#EEEAF4'},{v:'highrise',l:'High Rise',s:'hr',c1:'#5A7A72',c2:'#3D5E57',bg:'#E4EEEC'},{v:'boyshort',l:'Boyshort',s:'bs',c1:'#C17B6E',c2:'#A05E55',bg:'#FAF0EB'},{v:'boxer',l:'Boxer',s:'bx',c1:'#4A6FA5',c2:'#3A5A8A',bg:'#E8EEF5'}];
-function uw(s,c1,c2,bg){var x='<svg viewBox="0 0 90 78" xmlns="http://www.w3.org/2000/svg" width="60" height="52"><rect width="90" height="78" fill="'+bg+'"/>';if(s==='th'){x+='<rect x="18" y="16" width="54" height="8" rx="4" fill="'+c2+'"/><path d="M18 21 Q24 27 30 31 L45 65 Q45 65 60 31 Q66 27 72 21" fill="'+c1+'"/>';}else if(s==='bk'){x+='<path d="M20 24 Q45 14 70 24 L66 54 Q55 46 45 50 Q35 46 24 54Z" fill="'+c1+'"/><rect x="20" y="19" width="50" height="8" rx="4" fill="'+c2+'"/>';}else if(s==='fc'){x+='<path d="M15 20 Q45 9 75 20 L70 54 Q59 46 45 49 Q31 46 20 54Z" fill="'+c1+'"/><rect x="15" y="15" width="60" height="8" rx="4" fill="'+c2+'"/>';}else if(s==='hr'){x+='<path d="M12 15 Q45 4 78 15 L74 58 Q60 48 45 52 Q30 48 16 58Z" fill="'+c1+'"/><rect x="12" y="10" width="66" height="9" rx="4.5" fill="'+c2+'"/>';}else if(s==='bs'){x+='<path d="M14 22 Q45 11 76 22 L72 60 Q58 50 45 54 Q32 50 18 60Z" fill="'+c1+'"/><rect x="14" y="17" width="62" height="9" rx="4.5" fill="'+c2+'"/>';}else{x+='<path d="M12 19 Q45 8 78 19 L76 60 Q60 50 45 54 Q30 50 14 60Z" fill="'+c1+'"/><rect x="12" y="14" width="66" height="9" rx="4.5" fill="'+c2+'"/>';}return x+'</svg>';}
-var TEEN_SZ=[{s:'XXS',m:'25–27"'},{s:'XS',m:'28–30"'},{s:'S',m:'31–34"'},{s:'M',m:'35–38"'},{s:'L',m:'39–42"'},{s:'XL',m:'43–46"'},{s:'XXL',m:'47–50"'}];
-var ADULT_SZ=[{s:'XS',m:'33–35"'},{s:'S',m:'36–38"'},{s:'M',m:'39–41"'},{s:'L',m:'42–44"'},{s:'XL',m:'45–47"'},{s:'XXL',m:'48–50"'},{s:'XXXL',m:'51–53"'},{s:'XXXXL',m:'54–56"'}];
-function mkWho(){var w=document.createElement('div');w.className='wrow';[{v:'teen',l:'Teen',img:IMGS.teen},{v:'adult',l:'Adult',img:IMGS.adult}].forEach(function(c){var d=document.createElement('div');d.className='wc';d.innerHTML='<div class="wph" style="background-image:url(''+c.img+'')"></div><div class="wlb">'+c.l+'</div>';d.onclick=function(){if(lk)return;lk=true;d.classList.add('sel');[].forEach.call(w.querySelectorAll('.wc'),function(x){if(x!==d){x.classList.add('fad');}});S.who=c.v;aMe(c.l);setTimeout(function(){lk=false;afterWho(c.v);},350);};w.appendChild(d);});return w;}
-function mkChips(id,items,fn){var w=document.createElement('div');w.className='chips';w.id=id;items.forEach(function(it){var d=document.createElement('div');d.className='chip';d.innerHTML='<span>'+it.l+'</span><span class="ca">›</span>';d.onclick=function(){if(lk)return;lk=true;d.classList.add('on');[].forEach.call(w.querySelectorAll('.chip'),function(x){x.classList.add('lk');});aMe(it.l);setTray('');setTimeout(function(){lk=false;fn(it.v);},350);};w.appendChild(d);});return w;}
-function mkMulti(id,items){_msel[id]=[];var w=document.createElement('div');w.className='chips';w.id=id;items.forEach(function(it){var d=document.createElement('div');d.className='chip';d.innerHTML='<span>'+it.l+'</span><span class="ca">›</span>';d.onclick=function(){var sel=_msel[id],idx=sel.indexOf(it.v);if(idx>-1){sel.splice(idx,1);d.classList.remove('on');d.querySelector('.ca').textContent='›';}else{sel.push(it.v);d.classList.add('on');d.querySelector('.ca').textContent='✓';}var btn=document.getElementById(id+'B');if(btn)btn.disabled=sel.length===0;};w.appendChild(d);});return w;}
-function setMultiTray(id,items,label,fn){setTray('<button class="bigbt" id="'+id+'B" disabled onclick="cMulti(''+id+'')">'+label+'</button>');window['_mf_'+id]=function(){var sel=(_msel[id]||[]).slice();if(!sel.length)return;var el=document.getElementById(id);if(el)[].forEach.call(el.querySelectorAll('.chip'),function(d){d.classList.add('lk');});var labels=[];items.forEach(function(it){if(sel.indexOf(it.v)>-1)labels.push(it.l);});aMe(labels.join(' · '));setTray('');fn(sel);};}
-function cMulti(id){if(window['_mf_'+id])window['_mf_'+id]();}
-function mkStyleCards(id,keys,max){_ssel[id]=[];var w=document.createElement('div');w.className='strow';w.id=id;STYLES.filter(function(s){return keys.indexOf(s.v)>-1;}).forEach(function(st){var c=document.createElement('div');c.className='stc';c.innerHTML='<div class="stci">'+uw(st.s,st.c1,st.c2,st.bg)+'</div><div class="stcl">'+st.l+'</div>';c.onclick=function(){var sel=_ssel[id],idx=sel.indexOf(st.v);if(idx>-1){sel.splice(idx,1);c.classList.remove('on');}else if(sel.length<max){sel.push(st.v);c.classList.add('on');}var btn=document.getElementById(id+'B');if(btn)btn.disabled=sel.length===0;};w.appendChild(c);});return w;}
-function setStyleTray(id,fn){setTray('<button class="bigbt" id="'+id+'B" disabled onclick="cStyle(''+id+'')">These are my styles →</button>');window['_sf_'+id]=function(){var sel=(_ssel[id]||[]).slice();if(!sel.length)return;var el=document.getElementById(id);if(el)[].forEach.call(el.querySelectorAll('.stc'),function(c){c.classList.add('lk');});var labels=[];STYLES.forEach(function(s){if(sel.indexOf(s.v)>-1)labels.push(s.l);});aMe(labels.join(' · '));setTray('');S.styles=sel;fn();};}
-function cStyle(id){if(window['_sf_'+id])window['_sf_'+id]();}
-function mkSize(sizes,fn){var w=document.createElement('div');w.className='szg';sizes.forEach(function(sz){var d=document.createElement('div');d.className='szp';d.innerHTML='<span class="szs">'+sz.s+'</span><span class="szm">'+sz.m+'</span>';d.onclick=function(){if(lk)return;lk=true;d.classList.add('on');[].forEach.call(w.querySelectorAll('.szp'),function(x){x.classList.add('lk');});S.size=sz.s;aMe('Size '+sz.s);setTray('');setTimeout(function(){lk=false;fn();},350);};w.appendChild(d);});return w;}
-function askStyles(keys,max,cb){sqc++;var id='qS'+sqc;var isTeen=S.who==='teen';var el=mkStyleCards(id,keys,max);seq([{t:'typ',d:800},{t:'bub',h:'What are '+(isTeen?'her':'your')+' favourite <em>styles?</em> Pick up to '+max,a:300},{t:'el',e:el,a:0},{t:'fn',f:function(){setStyleTray(id,cb);},a:120}]);}
-function startQuiz(){prog(6);seq([{t:'typ',d:1000},{t:'bub',h:'Hey! Welcome to Knix — so happy you’re here 🩷',a:360},{t:'typ',d:800},{t:'bub',h:'I’m your Leakproof Bestie. A few quick questions and I’ll find your <em>perfect</em> match!',a:380},{t:'typ',d:700},{t:'bub',h:'Who are we shopping for today?',a:300},{t:'el',e:mkWho(),a:0}]);}
-function afterWho(v){prog(14);if(v==='teen'){seq([{t:'typ',d:800},{t:'bub',h:'She’s lucky to have you 💕 What does she need protection for?',a:300},{t:'el',e:mkChips('qTP',[{v:'backup',l:'Backup Protection — alongside tampons or pads'},{v:'sweat',l:'Sweat & Sports — gym to after-school practice'},{v:'everyday',l:'Every Day Period Protection — replacing tampons & pads'}],pickTeenProt),a:0}]);}else{seq([{t:'typ',d:800},{t:'bub',h:'Got it! What do you need protection from?',a:300},{t:'el',e:mkChips('qAP',[{v:'periods',l:'Periods — from light spotting to overnight'},{v:'sweat',l:'Sweat — pilates to HIIT, or just summer heat'},{v:'discharge',l:'Discharge — extra freshness any day of the month'},{v:'bladder',l:'Light Bladder Leaks — sneezing, laughing, trampolines'},{v:'postpartum',l:'Pregnancy & Postpartum — pre and post baby'}],pickAdultProt),a:0}]);}}
-function pickTeenProt(v){S.teenProt=v;prog(26);var ack={backup:'Smart — backup gives her extra confidence.',sweat:'Love that! 🙌',everyday:'Going full leakproof — she’s going to <em>love</em> this!'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);if(v==='everyday')setTimeout(askCycleLen,1100);else setTimeout(function(){askStyles(['thong','bikini','boyshort','boxer'],3,function(){prog(52);setTimeout(askFlow,400);});},1100);}
-function pickAdultProt(v){S.adultProt=v;prog(26);var ack={periods:'Period protection coming right up 💕',sweat:'Staying fresh no matter how hard you work 💪',discharge:'Daily freshness sorted.',bladder:'No judgment at all — we’ve got you.',postpartum:'Your body just did something incredible 💕'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);setTimeout(function(){if(v==='periods')askPeriodUsage();else if(v==='sweat'||v==='discharge')askStyles(['thong','bikini','french','highrise','boyshort'],3,function(){setTimeout(askAdultSize,400);});else if(v==='bladder')askBladderRoutine();else if(v==='postpartum')askPPUsage();},1100);}
-function askPeriodUsage(){prog(36);seq([{t:'typ',d:800},{t:'bub',h:'How do you want to use leakproof for your period?',a:300},{t:'el',e:mkChips('qPU',[{v:'everyday',l:'Every Day Protection — replacing tampons & pads'},{v:'backup',l:'Backup — alongside tampons or a cup'},{v:'overnight',l:'Overnight — extra absorbency while you sleep'},{v:'lightday',l:'Light Day — for light spotting'}],pickPeriodUsage),a:0}]);}
-function pickPeriodUsage(v){S.periodUsage=v;prog(48);var ack={everyday:'Going full leakproof — this will change <em>everything</em>!',backup:'Perfect for just-in-case moments.',overnight:'A full night’s sleep without worry 🌙',lightday:'Light days deserve gorgeous options too.'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);setTimeout(function(){if(v==='everyday')askCycleLen();else if(v==='backup'||v==='overnight')askStyles(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAdultSize,400);});else if(v==='lightday')askStyles(['thong','bikini','french','highrise','boyshort'],3,function(){setTimeout(askAdultSize,400);});},1100);}
-function askBladderRoutine(){prog(38);seq([{t:'typ',d:800},{t:'bub',h:'Are you currently using anything for leaks?',a:300},{t:'el',e:mkChips('qBR',[{v:'yes',l:'Yes — I’ve got a routine'},{v:'no',l:'Not yet. Ready for something better'}],function(v){S.bladderRoutine=v;prog(48);if(v==='yes'){var cpItems=[{v:'liner',l:'Panty Liner'},{v:'lpad',l:'Light Pad'},{v:'pad',l:'Regular Pad'},{v:'disp',l:'Disposable Underwear'}];seq([{t:'typ',d:800},{t:'bub',h:'What do you currently use? Tap all that apply.',a:300},{t:'el',e:mkMulti('qBC',cpItems),a:0},{t:'fn',f:function(){setMultiTray('qBC',cpItems,'Got it →',function(sel){S.bladderCurrent=sel;prog(58);setTimeout(askLeakAmt,600);});},a:120}]);}else setTimeout(askLeakAmt,800);}),a:0}]);}
-function askLeakAmt(){prog(64);seq([{t:'typ',d:800},{t:'bub',h:'How much do you usually <em>leak?</em>',a:300},{t:'el',e:mkChips('qLA',[{v:'little',l:'Just a little — sneezing, laughing, coughing'},{v:'more',l:'More than a little — I avoid high-impact moves'},{v:'unsure',l:'Still figuring it out'}],function(v){S.leakAmt=v;prog(74);setTimeout(function(){askStyles(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAdultSize,400);});},1100);}),a:0}]);}
-function askPPUsage(){prog(38);seq([{t:'typ',d:800},{t:'bub',h:'How do you plan on using leakproof right now?',a:300},{t:'el',e:mkChips('qPPU',[{v:'discharge',l:'Discharge — staying fresh while your body does its thing'},{v:'postbirth',l:'Post Birth — extra protection after your baby arrives'},{v:'core',l:'Core Support — a gentle hug for your bump'},{v:'lbl',l:'Light Bladder Leaks — baby-on-your-bladder phase'}],function(v){S.ppUsage=v;prog(54);setTimeout(function(){if(v==='core')setTimeout(askAdultSize,800);else askStyles(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAdultSize,400);});},1100);}),a:0}]);}
-function askCycleLen(){prog(S.who==='teen'?36:54);var isTeen=S.who==='teen';seq([{t:'typ',d:800},{t:'bub',h:'How many <em>days</em> is '+(isTeen?'her':'your')+' period on average?',a:300},{t:'el',e:mkChips('qCL',[{v:'3',l:'3 days'},{v:'5',l:'5 days'},{v:'8',l:'8 days or more'},{v:'unknown',l:'Not sure — skip this'}],function(v){S.cycleLen=v;prog(S.who==='teen'?44:62);setTimeout(askFlow,v!=='unknown'?1000:400);}),a:0}]);}
-function askFlow(){prog(S.who==='teen'?52:68);var isTeen=S.who==='teen';var flowItems=[{v:'light',l:'Light — 1–2 regular tampons'},{v:'moderate',l:'Moderate — 2–4 super tampons'},{v:'heavy',l:'Heavy — 4–7 super tampons'},{v:'extraheavy',l:'Extra Heavy — 7–11 super tampons'}];seq([{t:'typ',d:800},{t:'bub',h:'Describe '+(isTeen?'her':'your')+' <em>flow.</em> Select all that apply.',a:300},{t:'el',e:mkMulti('qFL',flowItems),a:0},{t:'fn',f:function(){setMultiTray('qFL',flowItems,'That’s my flow →',function(sel){S.flow=sel;if(S.who==='teen'){if(S.teenProt==='everyday')setTimeout(function(){askStyles(['thong','bikini','boyshort','boxer'],3,function(){setTimeout(askTeenSize,400);});},1000);else setTimeout(askTeenSize,1000);}else{if(S.periodUsage==='everyday')setTimeout(function(){askStyles(['thong','bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAdultSize,400);});},1000);else setTimeout(askAdultSize,1000);}});},a:120}]);}
-function askTeenSize(){prog(80);seq([{t:'typ',d:800},{t:'bub',h:'What’s her <em>size?</em>',a:300},{t:'el',e:mkSize(TEEN_SZ,function(){prog(90);setTimeout(askEmail,600);}),a:0}]);}
-function askAdultSize(){prog(82);seq([{t:'typ',d:800},{t:'bub',h:'What’s your <em>size?</em>',a:160},{t:'bub',h:'May feel snug at first — relax after washing. If between sizes, size up.',a:300},{t:'el',e:mkSize(ADULT_SZ,function(){prog(90);setTimeout(askEmail,600);}),a:0}]);}
-function askEmail(){seq([{t:'typ',d:800},{t:'bub',h:'Last step — new customers get <em>15% off</em> 🎉',a:300},{t:'fn',f:function(){setTray('<div class="eml"><input type="text" id="EN" placeholder="Your name"/><input type="email" id="EE" placeholder="Your email"/><button class="rosbt" onclick="doEmail(false)">Get 15% off & see my matches</button><button class="outbt" style="margin-top:7px" onclick="doEmail(true)">Skip to results</button></div>');},a:0}]);}
-function doEmail(skip){var n=document.getElementById('EN').value.trim();var e=document.getElementById('EE').value.trim();S.name=n;S.email=e;aMe(!skip&&e?(n?n+' · ':'')+e:'Skip');setTray('');setTimeout(showInterstitial,400);}
-function showInterstitial(){var il=document.getElementById('INTL'),step=document.getElementById('ILSTEP');il.classList.add('show');var msgs=['Analyzing your profile','Matching absorbency','Building your bundle','Almost ready...'];var idx=0;var iv=setInterval(function(){idx++;if(idx<msgs.length)step.textContent=msgs[idx];},800);setTimeout(function(){clearInterval(iv);il.classList.remove('show');il.classList.add('hide');setTimeout(showResults,600);},3400);}
-function showResults(){prog(100);var nm=S.name?S.name+', ':'';var flow=S.flow||[];var highest=flow.indexOf('extraheavy')>-1?'ultra heavy':flow.indexOf('heavy')>-1?'heavy':flow.indexOf('moderate')>-1?'moderate':'light';var absMsg={light:'Starting on <em>light absorbency</em> — 1–2 tampons worth.',moderate:'Matched to <em>moderate</em> — 2–4 super tampons.',heavy:'Going <em>heavy absorbency</em> — 4–7 super tampons.','ultra heavy':'<em>Ultra absorbency</em> — up to 11 tampons.'};if(S.adultProt==='sweat'||S.adultProt==='discharge')absMsg[highest]='These feel like regular underwear and keep you completely fresh.';if(S.adultProt==='bladder')absMsg[highest]='Locks in moisture instantly — completely dry, no bulk.';if(S.ppUsage==='core')absMsg[highest]='Gentle core support while keeping you protected.';var resultsURL=getResultsURL();var handles=getHandles();var isTeen=S.who==='teen';var steps=[{t:'typ',d:1000},{t:'bub',h:nm+'I found '+(isTeen?'her':'your')+' <em>perfect matches!</em>',a:380},{t:'typ',d:800},{t:'bub',h:absMsg[highest],a:380}];steps.push({t:'el',e:(function(){var r=document.createElement('div');r.className='statrow';var a=document.createElement('div');a.className='ava';a.textContent='💕';var b=document.createElement('div');b.className='statb';b.innerHTML='<span class="statn">13M+</span><span class="stats">pairs sold — you’re in great company!</span>';r.appendChild(a);r.appendChild(b);return r;})(),a:350});handles.forEach(function(h,i){if(!PIDS[h])return;var badge=i===0?'Best Match':i===1?'Great Option':'Also Love';var bc=i===0?'bm':i===1?'bp':'bg';var lv=h.indexOf('superplus')>-1?5:h.indexOf('dream')>-1?5:h.indexOf('super-leakproof')>-1?4:2;var stMap={'thong':'th','bikini':'bk','french':'fc','high-rise':'hr','boyshort':'bs','boxer':'bx','dream':'bs','short':'bs'};var s='bk';Object.keys(stMap).forEach(function(k){if(h.indexOf(k)>-1)s=stMap[k];});var cmap={th:{c1:'#A8836E',c2:'#8A6454',bg:'#F5EEEA'},bk:{c1:'#9B6B5A',c2:'#7A5040',bg:'#F0E8E2'},fc:{c1:'#8A7FA8',c2:'#6B6087',bg:'#EEEAF4'},hr:{c1:'#5A7A72',c2:'#3D5E57',bg:'#E4EEEC'},bs:{c1:'#C17B6E',c2:'#A05E55',bg:'#FAF0EB'},bx:{c1:'#4A6FA5',c2:'#3A5A8A',bg:'#E8EEF5'}};var cm=cmap[s]||cmap.bk;var dots='';for(var j=0;j<5;j++)dots+='<div style="width:7px;height:7px;border-radius:50%;background:'+(j<lv?'#7d0044':'#e5e7eb')+'"></div>';var rvtxt=PREVIEWS[h]||'"Genuinely feels like regular underwear."';var wrap=document.createElement('div');wrap.className='pcw';var card=document.createElement('div');card.className='pcard'+(i===0?' ft':'');card.innerHTML='<div class="pcim" style="background:'+cm.bg+'">'+uw(s,cm.c1,cm.c2,cm.bg)+'<div class="pbdg '+bc+'">'+badge+'</div></div><div class="pcbd"><div class="pcnm">'+(PNAMES[h]||h)+'</div><div class="pcar"><span class="pcal">ABSORBENCY</span><div class="pcad">'+dots+'</div></div><div class="pcmt"><span class="pcsr">★★★★★</span><a href="https://knix.com/products/'+h+'" target="_blank" style="font-size:12px;color:#7d0044;font-weight:600;text-decoration:none;">View ↗</a></div><div class="pcrv">'+rvtxt+'</div><div class="pccare"><span class="pctag">🔄 Machine washable</span><span class="pctag">🌬 Air dry</span><span class="pctag">✨ Fresh Fix Technology®</span></div></div>';wrap.appendChild(card);steps.push({t:'typ',d:750});steps.push({t:'bub',h:i===0?'This is exactly where I’d start — Fresh Fix Technology® feels like regular underwear.':i===1?'Same protection, different silhouette.':'For the heaviest days — maximum coverage.',a:280});steps.push({t:'el',e:wrap,a:380});});steps.push({t:'bub',h:'See all three on Knix — 30-day risk-free guarantee. 💕',a:400});steps.push({t:'fn',f:function(){setTray('<a href="'+resultsURL+'" target="_blank" class="rosbt">View my full results on Knix</a><button class="outbt" style="margin-top:8px" onclick="restartQuiz()">Start over</button><div class="tnt">30-day returns · Free shipping over $65<br>13M+ pairs sold 💕</div>');},a:0});seq(steps);}
+
+var STY=[{v:'thong',l:'Thong',s:'th',c1:'#A8836E',c2:'#8A6454',bg:'#F5EEEA'},{v:'bikini',l:'Bikini',s:'bk',c1:'#9B6B5A',c2:'#7A5040',bg:'#F0E8E2'},{v:'french',l:'French Cut',s:'fc',c1:'#8A7FA8',c2:'#6B6087',bg:'#EEEAF4'},{v:'highrise',l:'High Rise',s:'hr',c1:'#5A7A72',c2:'#3D5E57',bg:'#E4EEEC'},{v:'boyshort',l:'Boyshort',s:'bs',c1:'#C17B6E',c2:'#A05E55',bg:'#FAF0EB'},{v:'boxer',l:'Boxer',s:'bx',c1:'#4A6FA5',c2:'#3A5A8A',bg:'#E8EEF5'}];
+
+function uw(s,c1,c2,bg){
+  var x='<svg viewBox="0 0 90 78" xmlns="http://www.w3.org/2000/svg" width="60" height="52"><rect width="90" height="78" fill="'+bg+'"/>';
+  if(s==='th'){x+='<rect x="18" y="16" width="54" height="8" rx="4" fill="'+c2+'"/><path d="M18 21 Q24 27 30 31 L45 65 Q45 65 60 31 Q66 27 72 21" fill="'+c1+'"/>';}
+  else if(s==='bk'){x+='<path d="M20 24 Q45 14 70 24 L66 54 Q55 46 45 50 Q35 46 24 54Z" fill="'+c1+'"/><rect x="20" y="19" width="50" height="8" rx="4" fill="'+c2+'"/>';}
+  else if(s==='fc'){x+='<path d="M15 20 Q45 9 75 20 L70 54 Q59 46 45 49 Q31 46 20 54Z" fill="'+c1+'"/><rect x="15" y="15" width="60" height="8" rx="4" fill="'+c2+'"/>';}
+  else if(s==='hr'){x+='<path d="M12 15 Q45 4 78 15 L74 58 Q60 48 45 52 Q30 48 16 58Z" fill="'+c1+'"/><rect x="12" y="10" width="66" height="9" rx="4.5" fill="'+c2+'"/>';}
+  else if(s==='bs'){x+='<path d="M14 22 Q45 11 76 22 L72 60 Q58 50 45 54 Q32 50 18 60Z" fill="'+c1+'"/><rect x="14" y="17" width="62" height="9" rx="4.5" fill="'+c2+'"/>';}
+  else{x+='<path d="M12 19 Q45 8 78 19 L76 60 Q60 50 45 54 Q30 50 14 60Z" fill="'+c1+'"/><rect x="12" y="14" width="66" height="9" rx="4.5" fill="'+c2+'"/>';}
+  return x+'</svg>';
+}
+
+var TSZ=[{s:'XXS',m:'25-27"'},{s:'XS',m:'28-30"'},{s:'S',m:'31-34"'},{s:'M',m:'35-38"'},{s:'L',m:'39-42"'},{s:'XL',m:'43-46"'},{s:'XXL',m:'47-50"'}];
+var ASZ=[{s:'XS',m:'33-35"'},{s:'S',m:'36-38"'},{s:'M',m:'39-41"'},{s:'L',m:'42-44"'},{s:'XL',m:'45-47"'},{s:'XXL',m:'48-50"'},{s:'XXXL',m:'51-53"'},{s:'XXXXL',m:'54-56"'}];
+
+function mkWho(){
+  var w=document.createElement('div');w.className='wrow';
+  [{v:'teen',l:'Teen',img:IMGS.teen},{v:'adult',l:'Adult',img:IMGS.adult}].forEach(function(c){
+    var d=document.createElement('div');d.className='wc';
+    var ph=document.createElement('div');ph.className='wph';ph.style.backgroundImage='url('+c.img+')';
+    var lb=document.createElement('div');lb.className='wlb';lb.textContent=c.l;
+    d.appendChild(ph);d.appendChild(lb);
+    d.onclick=function(){if(lk)return;lk=true;d.classList.add('sel');[].forEach.call(w.querySelectorAll('.wc'),function(x){if(x!==d)x.classList.add('fad');});S.who=c.v;aMe(c.l);setTimeout(function(){lk=false;afterWho(c.v);},350);};
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function mkChips(id,items,fn){
+  var w=document.createElement('div');w.className='chips';w.id=id;
+  items.forEach(function(it){
+    var d=document.createElement('div');d.className='chip';
+    var sp=document.createElement('span');sp.textContent=it.l;
+    var ca=document.createElement('span');ca.className='ca';ca.textContent='\u203a';
+    d.appendChild(sp);d.appendChild(ca);
+    d.onclick=function(){if(lk)return;lk=true;d.classList.add('on');[].forEach.call(w.querySelectorAll('.chip'),function(x){x.classList.add('lk');});aMe(it.l);setTray('');setTimeout(function(){lk=false;fn(it.v);},350);};
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function mkMulti(id,items){
+  _ms[id]=[];
+  var w=document.createElement('div');w.className='chips';w.id=id;
+  items.forEach(function(it){
+    var d=document.createElement('div');d.className='chip';
+    var sp=document.createElement('span');sp.textContent=it.l;
+    var ca=document.createElement('span');ca.className='ca';ca.textContent='\u203a';
+    d.appendChild(sp);d.appendChild(ca);
+    d.onclick=function(){
+      var sel=_ms[id],idx=sel.indexOf(it.v);
+      if(idx>-1){sel.splice(idx,1);d.classList.remove('on');ca.textContent='\u203a';}
+      else{sel.push(it.v);d.classList.add('on');ca.textContent='\u2713';}
+      var btn=document.getElementById(id+'B');if(btn)btn.disabled=sel.length===0;
+    };
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function setMT(id,items,label,fn){
+  var btn=document.createElement('button');btn.className='bigbt';btn.id=id+'B';btn.disabled=true;btn.textContent=label;
+  btn.onclick=function(){cMT(id);};
+  setTray('');TR.appendChild(btn);
+  window['_mf_'+id]=function(){
+    var sel=(_ms[id]||[]).slice();if(!sel.length)return;
+    var el=document.getElementById(id);if(el)[].forEach.call(el.querySelectorAll('.chip'),function(d){d.classList.add('lk');});
+    var labels=[];items.forEach(function(it){if(sel.indexOf(it.v)>-1)labels.push(it.l);});
+    aMe(labels.join(' / '));setTray('');fn(sel);
+  };
+}
+function cMT(id){if(window['_mf_'+id])window['_mf_'+id]();}
+
+function mkSC(id,keys,max){
+  _ss[id]=[];
+  var w=document.createElement('div');w.className='strow';w.id=id;
+  STY.filter(function(s){return keys.indexOf(s.v)>-1;}).forEach(function(st){
+    var c=document.createElement('div');c.className='stc';
+    var ci=document.createElement('div');ci.className='stci';ci.innerHTML=uw(st.s,st.c1,st.c2,st.bg);
+    var cl=document.createElement('div');cl.className='stcl';cl.textContent=st.l;
+    c.appendChild(ci);c.appendChild(cl);
+    c.onclick=function(){
+      var sel=_ss[id],idx=sel.indexOf(st.v);
+      if(idx>-1){sel.splice(idx,1);c.classList.remove('on');}
+      else if(sel.length<max){sel.push(st.v);c.classList.add('on');}
+      var btn=document.getElementById(id+'B');if(btn)btn.disabled=sel.length===0;
+    };
+    w.appendChild(c);
+  });
+  return w;
+}
+
+function setST(id,fn){
+  var btn=document.createElement('button');btn.className='bigbt';btn.id=id+'B';btn.disabled=true;btn.textContent='These are my styles \u2192';
+  btn.onclick=function(){cST(id);};
+  setTray('');TR.appendChild(btn);
+  window['_sf_'+id]=function(){
+    var sel=(_ss[id]||[]).slice();if(!sel.length)return;
+    var el=document.getElementById(id);if(el)[].forEach.call(el.querySelectorAll('.stc'),function(c){c.classList.add('lk');});
+    var labels=[];STY.forEach(function(s){if(sel.indexOf(s.v)>-1)labels.push(s.l);});
+    aMe(labels.join(' / '));setTray('');S.styles=sel;fn();
+  };
+}
+function cST(id){if(window['_sf_'+id])window['_sf_'+id]();}
+
+function mkSz(sizes,fn){
+  var w=document.createElement('div');w.className='szg';
+  sizes.forEach(function(sz){
+    var d=document.createElement('div');d.className='szp';
+    var ss=document.createElement('span');ss.className='szs';ss.textContent=sz.s;
+    var sm=document.createElement('span');sm.className='szm';sm.textContent=sz.m;
+    d.appendChild(ss);d.appendChild(sm);
+    d.onclick=function(){if(lk)return;lk=true;d.classList.add('on');[].forEach.call(w.querySelectorAll('.szp'),function(x){x.classList.add('lk');});S.size=sz.s;aMe('Size '+sz.s);setTray('');setTimeout(function(){lk=false;fn();},350);};
+    w.appendChild(d);
+  });
+  return w;
+}
+
+function askSty(keys,max,cb){sqc++;var id='qS'+sqc;var iT=S.who==='teen';var el=mkSC(id,keys,max);seq([{t:'typ',d:800},{t:'bub',h:'What are '+(iT?'her':'your')+' favourite <em>styles?</em> Pick up to '+max,a:300},{t:'el',e:el,a:0},{t:'fn',f:function(){setST(id,cb);},a:120}]);}
+
+function startQuiz(){prog(6);seq([{t:'typ',d:1000},{t:'bub',h:'Hey! Welcome to Knix \u2014 so happy you\u2019re here \uD83E\uDE77',a:360},{t:'typ',d:800},{t:'bub',h:'I\u2019m your Leakproof Bestie. A few quick questions and I\u2019ll find your <em>perfect</em> match!',a:380},{t:'typ',d:700},{t:'bub',h:'Who are we shopping for today?',a:300},{t:'el',e:mkWho(),a:0}]);}
+
+function afterWho(v){prog(14);if(v==='teen'){seq([{t:'typ',d:800},{t:'bub',h:'She\u2019s lucky to have you \uD83D\uDC95 What does she need protection for?',a:300},{t:'el',e:mkChips('qTP',[{v:'backup',l:'Backup Protection \u2014 alongside tampons or pads'},{v:'sweat',l:'Sweat and Sports \u2014 gym to after-school practice'},{v:'everyday',l:'Every Day Period Protection \u2014 replacing tampons and pads'}],pickTP),a:0}]);}else{seq([{t:'typ',d:800},{t:'bub',h:'Got it! What do you need protection from?',a:300},{t:'el',e:mkChips('qAP',[{v:'periods',l:'Periods \u2014 from light spotting to overnight'},{v:'sweat',l:'Sweat \u2014 pilates to HIIT, or just summer heat'},{v:'discharge',l:'Discharge \u2014 extra freshness any day of the month'},{v:'bladder',l:'Light Bladder Leaks \u2014 sneezing, laughing, trampolines'},{v:'postpartum',l:'Pregnancy and Postpartum \u2014 pre and post baby'}],pickAP),a:0}]);}}
+
+function pickTP(v){S.teenProt=v;prog(26);var ack={backup:'Smart \u2014 backup gives extra confidence.',sweat:'Love that! \uD83D\uDE4C',everyday:'Going full leakproof \u2014 she\u2019s going to <em>love</em> this!'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);if(v==='everyday')setTimeout(askCL,1100);else setTimeout(function(){askSty(['thong','bikini','boyshort','boxer'],3,function(){prog(52);setTimeout(askFlow,400);});},1100);}
+
+function pickAP(v){S.adultProt=v;prog(26);var ack={periods:'Period protection coming right up \uD83D\uDC95',sweat:'Staying fresh no matter how hard you work \uD83D\uDCAA',discharge:'Daily freshness sorted.',bladder:'No judgment at all \u2014 we\u2019ve got you.',postpartum:'Your body just did something incredible \uD83D\uDC95'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);setTimeout(function(){if(v==='periods')askPU();else if(v==='sweat'||v==='discharge')askSty(['thong','bikini','french','highrise','boyshort'],3,function(){setTimeout(askAS,400);});else if(v==='bladder')askBR();else if(v==='postpartum')askPP();},1100);}
+
+function askPU(){prog(36);seq([{t:'typ',d:800},{t:'bub',h:'How do you want to use leakproof for your period?',a:300},{t:'el',e:mkChips('qPU',[{v:'everyday',l:'Every Day \u2014 replacing tampons and pads'},{v:'backup',l:'Backup \u2014 alongside tampons or a cup'},{v:'overnight',l:'Overnight \u2014 extra absorbency while you sleep'},{v:'lightday',l:'Light Day \u2014 for light spotting'}],pickPU),a:0}]);}
+function pickPU(v){S.periodUsage=v;prog(48);var ack={everyday:'Going full leakproof \u2014 this will change <em>everything</em>!',backup:'Perfect for just-in-case moments.',overnight:'A full night\u2019s sleep without worry \uD83C\uDF19',lightday:'Light days deserve gorgeous options too.'};seq([{t:'typ',d:700},{t:'bub',h:ack[v],a:280}]);setTimeout(function(){if(v==='everyday')askCL();else if(v==='backup'||v==='overnight')askSty(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});else if(v==='lightday')askSty(['thong','bikini','french','highrise','boyshort'],3,function(){setTimeout(askAS,400);});},1100);}
+
+function askBR(){prog(38);seq([{t:'typ',d:800},{t:'bub',h:'Are you currently using anything for leaks?',a:300},{t:'el',e:mkChips('qBR',[{v:'yes',l:'Yes \u2014 I\u2019ve got a routine'},{v:'no',l:'Not yet. Ready for something better'}],function(v){S.bladderRoutine=v;prog(48);if(v==='yes'){var ci=[{v:'liner',l:'Panty Liner'},{v:'lpad',l:'Light Pad'},{v:'pad',l:'Regular Pad'},{v:'disp',l:'Disposable Underwear'}];seq([{t:'typ',d:800},{t:'bub',h:'What do you currently use? Tap all that apply.',a:300},{t:'el',e:mkMulti('qBC',ci),a:0},{t:'fn',f:function(){setMT('qBC',ci,'Got it \u2192',function(sel){S.bladderCurrent=sel;prog(58);setTimeout(askLA,600);});},a:120}]);}else setTimeout(askLA,800);}),a:0}]);}
+
+function askLA(){prog(64);seq([{t:'typ',d:800},{t:'bub',h:'How much do you usually <em>leak?</em>',a:300},{t:'el',e:mkChips('qLA',[{v:'little',l:'Just a little \u2014 sneezing, laughing, coughing'},{v:'more',l:'More than a little \u2014 I avoid high-impact moves'},{v:'unsure',l:'Still figuring it out'}],function(v){S.leakAmt=v;prog(74);setTimeout(function(){askSty(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});},1100);}),a:0}]);}
+
+function askPP(){prog(38);seq([{t:'typ',d:800},{t:'bub',h:'How do you plan on using leakproof right now?',a:300},{t:'el',e:mkChips('qPPU',[{v:'discharge',l:'Discharge \u2014 staying fresh while your body does its thing'},{v:'postbirth',l:'Post Birth \u2014 extra protection after your baby arrives'},{v:'core',l:'Core Support \u2014 a gentle hug for your bump'},{v:'lbl',l:'Light Bladder Leaks \u2014 baby-on-your-bladder phase'}],function(v){S.ppUsage=v;prog(54);setTimeout(function(){if(v==='core')setTimeout(askAS,800);else askSty(['bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});},1100);}),a:0}]);}
+
+function askCL(){prog(S.who==='teen'?36:54);var iT=S.who==='teen';seq([{t:'typ',d:800},{t:'bub',h:'How many <em>days</em> is '+(iT?'her':'your')+' period on average?',a:300},{t:'el',e:mkChips('qCL',[{v:'3',l:'3 days'},{v:'5',l:'5 days'},{v:'8',l:'8 days or more'},{v:'unknown',l:'Not sure \u2014 skip this'}],function(v){S.cycleLen=v;prog(S.who==='teen'?44:62);setTimeout(askFlow,v!=='unknown'?1000:400);}),a:0}]);}
+
+function askFlow(){prog(S.who==='teen'?52:68);var iT=S.who==='teen';var fi=[{v:'light',l:'Light \u2014 1-2 regular tampons'},{v:'moderate',l:'Moderate \u2014 2-4 super tampons'},{v:'heavy',l:'Heavy \u2014 4-7 super tampons'},{v:'extraheavy',l:'Extra Heavy \u2014 7-11 super tampons'}];seq([{t:'typ',d:800},{t:'bub',h:'Describe '+(iT?'her':'your')+' <em>flow.</em> Select all that apply.',a:300},{t:'el',e:mkMulti('qFL',fi),a:0},{t:'fn',f:function(){setMT('qFL',fi,'That\u2019s my flow \u2192',function(sel){S.flow=sel;if(S.who==='teen'){if(S.teenProt==='everyday')setTimeout(function(){askSty(['thong','bikini','boyshort','boxer'],3,function(){setTimeout(askTS,400);});},1000);else setTimeout(askTS,1000);}else{if(S.periodUsage==='everyday')setTimeout(function(){askSty(['thong','bikini','french','highrise','boyshort','boxer'],3,function(){setTimeout(askAS,400);});},1000);else setTimeout(askAS,1000);}});},a:120}]);}
+
+function askTS(){prog(80);seq([{t:'typ',d:800},{t:'bub',h:'What\u2019s her <em>size?</em>',a:300},{t:'el',e:mkSz(TSZ,function(){prog(90);setTimeout(askEmail,600);}),a:0}]);}
+function askAS(){prog(82);seq([{t:'typ',d:800},{t:'bub',h:'What\u2019s your <em>size?</em>',a:160},{t:'bub',h:'May feel snug at first \u2014 relax after washing. If between sizes, size up.',a:300},{t:'el',e:mkSz(ASZ,function(){prog(90);setTimeout(askEmail,600);}),a:0}]);}
+
+function askEmail(){seq([{t:'typ',d:800},{t:'bub',h:'Last step \u2014 new customers get <em>15% off</em> \uD83C\uDF89',a:300},{t:'fn',f:function(){
+  var wrap=document.createElement('div');wrap.className='eml';
+  var ni=document.createElement('input');ni.type='text';ni.id='EN';ni.placeholder='Your name';
+  var ei=document.createElement('input');ei.type='email';ei.id='EE';ei.placeholder='Your email';
+  var rb=document.createElement('button');rb.className='rosbt';rb.textContent='Get 15% off and see my matches';rb.onclick=function(){doEmail(false);};
+  var sb=document.createElement('button');sb.className='outbt';sb.style.marginTop='7px';sb.textContent='Skip to results';sb.onclick=function(){doEmail(true);};
+  wrap.appendChild(ni);wrap.appendChild(ei);wrap.appendChild(rb);wrap.appendChild(sb);
+  setTray('');TR.appendChild(wrap);
+},a:0}]);}
+
+function doEmail(skip){var n=document.getElementById('EN').value.trim();var e=document.getElementById('EE').value.trim();S.name=n;S.email=e;aMe(!skip&&e?(n?n+' / ':'')+e:'Skip');setTray('');setTimeout(showInt,400);}
+
+function showInt(){var il=document.getElementById('INTL'),step=document.getElementById('ILSTEP');il.classList.add('show');var msgs=['Analyzing your profile','Matching absorbency','Building your bundle','Almost ready...'];var idx=0;var iv=setInterval(function(){idx++;if(idx<msgs.length)step.textContent=msgs[idx];},800);setTimeout(function(){clearInterval(iv);il.classList.remove('show');il.classList.add('hide');setTimeout(showResults,600);},3400);}
+
+function showResults(){
+  prog(100);
+  var nm=S.name?S.name+', ':'';
+  var flow=S.flow||[];
+  var hi=flow.indexOf('extraheavy')>-1?'ultra heavy':flow.indexOf('heavy')>-1?'heavy':flow.indexOf('moderate')>-1?'moderate':'light';
+  var am={light:'Starting on <em>light absorbency</em> \u2014 1-2 tampons worth.',moderate:'Matched to <em>moderate</em> \u2014 2-4 super tampons.',heavy:'Going <em>heavy absorbency</em> \u2014 4-7 super tampons.','ultra heavy':'<em>Ultra absorbency</em> \u2014 up to 11 tampons.'};
+  if(S.adultProt==='sweat'||S.adultProt==='discharge')am[hi]='These feel like regular underwear and keep you completely fresh.';
+  if(S.adultProt==='bladder')am[hi]='Locks in moisture instantly \u2014 completely dry, no bulk.';
+  if(S.ppUsage==='core')am[hi]='Gentle core support while keeping you protected.';
+  var rU=getRU();var hh=getHandles();var iT=S.who==='teen';
+  var steps=[{t:'typ',d:1000},{t:'bub',h:nm+'I found '+(iT?'her':'your')+' <em>perfect matches!</em>',a:380},{t:'typ',d:800},{t:'bub',h:am[hi],a:380}];
+  var sv=document.createElement('div');sv.className='statrow';
+  var sa=document.createElement('div');sa.className='ava';sa.textContent='\u{1F495}';
+  var sb=document.createElement('div');sb.className='statb';sb.innerHTML='<span class="statn">13M+</span><span class="stats">pairs sold \u2014 you\u2019re in great company!</span>';
+  sv.appendChild(sa);sv.appendChild(sb);
+  steps.push({t:'el',e:sv,a:350});
+  hh.forEach(function(h,i){
+    if(!PID[h])return;
+    var badge=i===0?'Best Match':i===1?'Great Option':'Also Love';
+    var bc=i===0?'bm':i===1?'bp':'bg';
+    var lv=h.indexOf('superplus')>-1?5:h.indexOf('dream')>-1?5:h.indexOf('super-leakproof')>-1?4:2;
+    var sm={'thong':'th','bikini':'bk','french':'fc','high-rise':'hr','boyshort':'bs','boxer':'bx','dream':'bs','short':'bs'};
+    var s='bk';Object.keys(sm).forEach(function(k){if(h.indexOf(k)>-1)s=sm[k];});
+    var cm={th:{c1:'#A8836E',c2:'#8A6454',bg:'#F5EEEA'},bk:{c1:'#9B6B5A',c2:'#7A5040',bg:'#F0E8E2'},fc:{c1:'#8A7FA8',c2:'#6B6087',bg:'#EEEAF4'},hr:{c1:'#5A7A72',c2:'#3D5E57',bg:'#E4EEEC'},bs:{c1:'#C17B6E',c2:'#A05E55',bg:'#FAF0EB'},bx:{c1:'#4A6FA5',c2:'#3A5A8A',bg:'#E8EEF5'}};
+    var c=cm[s]||cm.bk;
+    var dots='';for(var j=0;j<5;j++)dots+='<div style="width:7px;height:7px;border-radius:50%;background:'+(j<lv?'#7d0044':'#e5e7eb')+'"></div>';
+    var rv=PV[h]||'"Genuinely feels like regular underwear."';
+    var wrap=document.createElement('div');wrap.className='pcw';
+    var card=document.createElement('div');card.className='pcard'+(i===0?' ft':'');
+    var im=document.createElement('div');im.className='pcim';im.style.background=c.bg;im.innerHTML=uw(s,c.c1,c.c2,c.bg);
+    var bdg=document.createElement('div');bdg.className='pbdg '+bc;bdg.textContent=badge;im.appendChild(bdg);
+    var bd=document.createElement('div');bd.className='pcbd';
+    var lnk='https://knix.com/products/'+h;
+    bd.innerHTML='<div class="pcnm">'+(PN[h]||h)+'</div>'
+      +'<div class="pcar"><span class="pcal">ABSORBENCY</span><div class="pcad">'+dots+'</div></div>'
+      +'<div class="pcmt"><span class="pcsr">&#9733;&#9733;&#9733;&#9733;&#9733;</span><a href="'+lnk+'" target="_blank" style="font-size:12px;color:#7d0044;font-weight:600;text-decoration:none;">View &#x2197;</a></div>'
+      +'<div class="pcrv">'+rv+'</div>'
+      +'<div class="pccare"><span class="pctag">Machine washable</span><span class="pctag">Air dry</span><span class="pctag">Fresh Fix Technology</span></div>';
+    card.appendChild(im);card.appendChild(bd);wrap.appendChild(card);
+    var ex=i===0?'This is exactly where I\u2019d start \u2014 Fresh Fix Technology feels like regular underwear.':i===1?'Same protection, different silhouette.':'For the heaviest days \u2014 maximum coverage.';
+    steps.push({t:'typ',d:750});steps.push({t:'bub',h:ex,a:280});steps.push({t:'el',e:wrap,a:380});
+  });
+  steps.push({t:'bub',h:'See all three on Knix \u2014 30-day risk-free guarantee. \uD83D\uDC95',a:400});
+  steps.push({t:'fn',f:function(){
+    var a=document.createElement('a');a.href=rU;a.target='_blank';a.className='rosbt';a.textContent='View my full results on Knix';
+    var ob=document.createElement('button');ob.className='outbt';ob.style.marginTop='8px';ob.textContent='Start over';ob.onclick=restartQuiz;
+    var tn=document.createElement('div');tn.className='tnt';tn.innerHTML='30-day returns \u00b7 Free shipping over $65<br>13M+ pairs sold \uD83D\uDC95';
+    setTray('');TR.appendChild(a);TR.appendChild(ob);TR.appendChild(tn);
+  },a:0});
+  seq(steps);
+}
+
 function restartQuiz(){CH.innerHTML='<div class="dsep">TODAY</div>';setTray('');init();setTimeout(startQuiz,300);}
 init();setTimeout(startQuiz,500);
 </script>
